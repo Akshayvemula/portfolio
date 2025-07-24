@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akshay Vemula - Futuristic Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter & Poppins (for more expressive typography) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- GSAP CDN for advanced animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollToPlugin.min.js"></script>
+    <style>
+        /* Custom CSS for enhanced styling and animations */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a1a2e; /* Dark background for modern feel */
+            color: #e0e0e0; /* Light text */
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        /* Section Title Styling */
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 3rem;
+            font-size: 3.2rem; /* Larger, bolder titles */
+            font-weight: 800;
+            color: #e0e0e0;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Subtle text shadow */
+            opacity: 0; /* Initial state for reveal */
+            transform: translateY(30px);
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -15px; /* More space for underline */
+            width: 80%; /* Wider underline */
+            height: 6px; /* Thicker underline */
+            background: linear-gradient(to right, #6a0572, #8e2de2); /* Vibrant gradient underline */
+            border-radius: 3px;
+            transform: scaleX(0); /* Initial state for animation */
+            transform-origin: left;
+        }
+
+        /* Card Styling - Glassmorphism/Neumorphism inspired */
+        .card {
+            background-color: rgba(255, 255, 255, 0.08); /* Frosted glass effect */
+            border-radius: 1.5rem; /* More rounded */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1); /* Deeper shadow with inner border */
+            padding: 2.5rem;
+            backdrop-filter: blur(10px); /* Frosted glass blur */
+            -webkit-backdrop-filter: blur(10px);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.4s ease;
+            opacity: 0; /* Initial state for reveal */
+            transform: translateY(30px);
+        }
+        .card:hover {
+            transform: translateY(-12px) scale(1.02); /* More pronounced lift and scale */
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.15); /* Even deeper shadow */
+            background-color: rgba(255, 255, 255, 0.15); /* Slightly brighter on hover */
+        }
+
+        /* Primary Button Styling - Gradient & Hover */
+        .btn-primary {
+            background-image: linear-gradient(to right, #6a0572, #8e2de2); /* Vibrant gradient */
+            color: white;
+            padding: 1rem 2.5rem; /* Larger padding */
+            border-radius: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            border: none; /* Remove default border */
+        }
+        .btn-primary:hover {
+            background-position: right center; /* Shift gradient on hover */
+            transform: translateY(-3px) scale(1.03); /* More lift and scale */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Icon Styling */
+        .icon {
+            width: 3rem;
+            height: 3rem;
+            fill: url(#gradientIcon); /* Use SVG gradient fill */
+            flex-shrink: 0;
+        }
+
+        /* Skill Tag Styling - Bubble/Neumorphic */
+        .skill-tag {
+            background-color: #2a2a4a; /* Darker background */
+            color: #90caf9; /* Lighter blue text */
+            padding: 0.6rem 1.2rem;
+            border-radius: 1.5rem; /* Pill shape */
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3), inset -2px -2px 5px rgba(255,255,255,0.05); /* Neumorphic inset shadow */
+        }
+        .skill-tag:hover {
+            transform: scale(1.05);
+            background-color: #3a3a5a; /* Slightly lighter on hover */
+            box-shadow: inset 1px 1px 3px rgba(0,0,0,0.2), inset -1px -1px 3px rgba(255,255,255,0.08);
+        }
+
+        /* Header Styling */
+        header {
+            background-color: rgba(26, 26, 46, 0.8); /* Semi-transparent dark background */
+            backdrop-filter: blur(10px); /* Glassmorphism for header */
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            transition: padding 0.3s ease, background-color 0.3s ease; /* Smooth transition for shrinking */
+        }
+        header.header-scrolled {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            background-color: rgba(26, 26, 46, 0.95); /* More opaque when scrolled */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+        header .logo-text {
+            transition: font-size 0.3s ease;
+        }
+        header.header-scrolled .logo-text {
+            font-size: 2.5rem; /* Smaller font size when scrolled */
+        }
+        header .nav-link {
+            transition: color 0.3s ease, transform 0.2s ease, text-shadow 0.3s ease;
+            font-weight: 600;
+            color: #e0e0e0;
+        }
+        header .nav-link:hover {
+            color: #a0d9ff;
+            transform: translateY(-3px);
+            text-shadow: 0 0 10px #a0d9ff;
+        }
+
+        /* Section backgrounds - subtle patterns/gradients */
+        section:nth-of-type(odd) {
+            background-color: #1a1a2e;
+        }
+        section:nth-of-type(even) {
+            background-color: #20203a; /* Slightly different dark shade */
+        }
+
+        /* Scroll Reveal Animations - Initial state */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            /* Transition handled by GSAP, not CSS transition property here for initial state */
+        }
+
+        /* Hero Section Specifics */
+        #hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #3a005a 100%); /* Deep, rich gradient */
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-background-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.05); /* Light, transparent shapes */
+            border-radius: 50%;
+            animation: float 15s infinite ease-in-out alternate;
+            filter: blur(20px); /* Soft blur */
+            opacity: 0; /* Controlled by GSAP */
+        }
+        .shape:nth-child(1) { width: 150px; height: 150px; top: 10%; left: 15%; animation-delay: 0s; }
+        .shape:nth-child(2) { width: 200px; height: 200px; bottom: 20%; right: 10%; animation-delay: 2s; }
+        .shape:nth-child(3) { width: 100px; height: 100px; top: 30%; right: 30%; animation-delay: 4s; }
+        .shape:nth-child(4) { width: 180px; height: 180px; bottom: 5%; left: 40%; animation-delay: 6s; }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        /* Mobile Navigation Overlay */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom right, #6a0572, #8e2de2);
+            z-index: 55;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+        }
+        .mobile-nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .mobile-nav-overlay ul {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+        }
+        .mobile-nav-overlay ul li {
+            margin: 1.5rem 0;
+            opacity: 0; /* For staggered animation */
+            transform: translateY(20px); /* For staggered animation */
+        }
+        .mobile-nav-overlay ul li a {
+            color: white;
+            font-size: 2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .mobile-nav-overlay ul li a:hover {
+            color: #ffcc00; /* Gold hover for mobile nav */
+        }
+
+        /* Skill Bar Animation */
+        .skill-bar-fill {
+            height: 100%;
+            background: linear-gradient(to right, #6a0572, #8e2de2); /* Gradient fill */
+            border-radius: inherit;
+            width: 0; /* Initial state */
+        }
+
+        /* Project Modal Styles */
+        .project-modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(15px); /* Stronger blur for modal */
+            -webkit-backdrop-filter: blur(15px);
+        }
+        .project-modal-content {
+            background-color: rgba(30, 30, 50, 0.95); /* Darker, semi-transparent modal background */
+            color: #e0e0e0;
+            padding: 3rem;
+            border-radius: 2rem; /* More rounded */
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.1);
+            width: 90%;
+            max-width: 900px; /* Larger modal */
+            position: relative;
+            transform: translateY(50px) scale(0.8);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .project-modal.active .project-modal-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+        .project-modal .close-button {
+            color: #e0e0e0;
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            font-size: 3rem; /* Larger close button */
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .project-modal .close-button:hover,
+        .project-modal .close-button:focus {
+            color: #ffcc00; /* Gold hover */
+        }
+        .project-modal img {
+            border-radius: 1rem; /* Rounded image in modal */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2.2rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+            .btn-primary {
+                padding: 0.8rem 1.8rem;
+                font-size: 0.9rem;
+            }
+            header nav ul {
+                display: none; /* Hide desktop nav links */
+            }
+            .hamburger-menu {
+                display: flex; /* Show hamburger on mobile */
+            }
+            #hero h1 {
+                font-size: 4rem;
+            }
+            #hero p {
+                font-size: 1.5rem;
+            }
+            header.header-scrolled .logo-text {
+                font-size: 2rem; /* Smaller font size when scrolled on mobile */
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- SVG for Icon Gradient -->
+    <svg width="0" height="0" style="position:absolute;z-index:-1;">
+        <defs>
+            <linearGradient id="gradientIcon" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#6a0572;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#8e2de2;stop-opacity:1" />
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <!-- Header Section -->
+    <header class="py-8" id="mainHeader">
+        <div class="container flex flex-col md:flex-row items-center justify-between">
+            <div class="text-center md:text-left mb-4 md:mb-0">
+                <h1 class="text-5xl font-extrabold mb-2 logo-text text-white">AKSHAY VEMULA</h1>
+                <p class="text-xl font-light text-gray-300">Motivated Computer Science Engineering Student specializing in AI & ML</p>
+            </div>
+            <nav class="flex items-center space-x-6">
+                <ul class="flex space-x-8 text-lg hidden md:flex"> <!-- Hide on small screens -->
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#skills" class="nav-link">Skills</a></li>
+                    <li><a href="#projects" class="nav-link">Projects</a></li>
+                    <li><a href="#certifications" class="nav-link">Certifications</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+                <!-- Download Resume Button -->
+                <a href="./assets/akshayresume.pdf" download="Akshay_Vemula_Resume.pdf" class="btn-primary ml-6 hidden md:inline-block">
+                    Download Resume
+                </a>
+                <!-- Hamburger Menu for Mobile -->
+                <div class="hamburger-menu md:hidden" id="hamburgerMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+        <ul>
+            <li><a href="#about" class="mobile-nav-link">About</a></li>
+            <li><a href="#skills" class="mobile-nav-link">Skills</a></li>
+            <li><a href="#projects" class="mobile-nav-link">Projects</a></li>
+            <li><a href="#certifications" class="mobile-nav-link">Certifications</a></li>
+            <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+            <li>
+                <a href="./assets/akshayresume.pdf" download="Akshay_Vemula_Resume.pdf" class="btn-primary mt-8 mobile-nav-link">
+                    Download Resume
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="hero-background-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+        <div class="container relative z-10 text-white text-center">
+            <h1 class="text-6xl md:text-7xl font-extrabold mb-4 hero-title">Innovate. Create. Impact.</h1>
+            <p class="text-2xl md:text-3xl font-light mb-8 hero-subtitle">Building the future with AI & Software Development</p>
+            <div class="space-x-4 hero-buttons">
+                <a href="#projects" class="btn-primary bg-white text-blue-600 hover:bg-gray-100">View My Work</a>
+                <a href="#contact" class="btn-primary border border-white hover:bg-white hover:text-blue-600">Get in Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about" class="py-20">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="flex flex-col md:flex-row items-center md:space-x-8 mt-8">
+                <div class="md:w-1/3 mb-6 md:mb-0">
+                    <!-- Your photo. Ensure this path is correct relative to your HTML file. -->
+                    <img src="./assets/akshay.jpeg" alt="Akshay Vemula" class="rounded-full w-48 h-48 object-cover mx-auto md:mx-0 border-4 border-purple-500 shadow-lg-xl">
+                </div>
+                <div class="md:w-2/3 text-lg leading-relaxed text-gray-300">
+                    <p class="mb-4">
+                        As a motivated Computer Science Engineering student specializing in AI & ML, I possess a strong foundation in software
+                        development and leadership. I am passionate about applying innovative solutions to real-world challenges using technology.
+                    </p>
+                    <p>
+                        Eager to contribute to dynamic teams and fast-paced environments, I am always seeking to expand my knowledge and
+                        hone my skills in cutting-edge technologies. My goal is to leverage my expertise to build impactful applications and systems.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20">
+        <div class="container">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+                <!-- Programming Languages -->
+                <div class="card flex items-center space-x-4">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M16 18l-6-6 6-6"/></svg>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-semibold mb-1 text-gray-100">Programming Languages</h3>
+                        <p class="text-gray-300 text-sm">C/C++, Python, HTML, CSS, JavaScript, Java (Basics)</p>
+                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden">
+                            <div class="skill-bar-fill h-2.5 rounded-full" data-skill-level="85%"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Database -->
+                <div class="card flex items-center space-x-4">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15H9V7h2v10zm4 0h-2V7h2v10z"/></svg>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-semibold mb-1 text-gray-100">Databases</h3>
+                        <p class="text-gray-300 text-sm">SQL, MongoDB</p>
+                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden">
+                            <div class="skill-bar-fill h-2.5 rounded-full" data-skill-level="75%"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Frameworks -->
+                <div class="card flex items-center space-x-4">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15H9V7h2v10zm4 0h-2V7h2v10z"/></svg>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-semibold mb-1 text-gray-100">Frameworks</h3>
+                        <p class="text-gray-300 text-sm">React.js, Bootstrap</p>
+                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden">
+                            <div class="skill-bar-fill h-2.5 rounded-full" data-skill-level="80%"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Personal Skills -->
+                <div class="card flex items-center space-x-4">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15H9V7h2v10zm4 0h-2V7h2v10z"/></svg>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-semibold mb-1 text-gray-100">Personal Skills</h3>
+                        <p class="text-gray-300 text-sm">Effective Communication, Problem-Solving, Adaptability & Leadership</p>
+                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden">
+                            <div class="skill-bar-fill h-2.5 rounded-full" data-skill-level="90%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20">
+        <div class="container">
+            <h2 class="section-title">Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                <!-- Project Card 1: WEB BASED CROWDFUNDING USING BLOCKCHAIN -->
+                <div class="card project-card" data-project-id="blockchain-project">
+                    <img src="./assets/blockchain.jpeg" alt="Web Based Crowdfunding using Blockchain" class="rounded-lg mb-4 w-full h-48 object-cover">
+                    <h3 class="text-2xl font-semibold mb-2 text-gray-100">Web Based Crowdfunding using Blockchain</h3>
+                    <p class="text-gray-300 mb-4 line-clamp-3">
+                        Developed a decentralized platform for transparent and tamper-proof fundraising. Improved funding security
+                        with encrypted authentication and smart contract automation. Gained experience in Blockchain integration,
+                        real-time tracking, and secure web architecture.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="skill-tag">Blockchain</span>
+                        <span class="skill-tag">Smart Contracts</span>
+                        <span class="skill-tag">Web Architecture</span>
+                        <span class="skill-tag">Security</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <a href="https://github.com/Akshayvemula" class="btn-primary inline-block">View Project</a>
+                        <button class="text-purple-400 hover:underline text-sm font-medium ml-4 view-details-btn">View Details</button>
+                    </div>
+                </div>
+                <!-- Project Card 2: MONKEY POX DETECTION USING DEEP LEARNING -->
+                <div class="card project-card" data-project-id="monkeypox-project">
+                    <img src="./assets/deeplearning.jpeg" alt="Monkey Pox Detection using Deep Learning" class="rounded-lg mb-4 w-full h-48 object-cover">
+                    <h3 class="text-2xl font-semibold mb-2 text-gray-100">Monkey Pox Detection using Deep Learning</h3>
+                    <p class="text-gray-300 mb-4 line-clamp-3">
+                        Built a deep learning model for automatic Monkeypox detection using medical images. Achieved accurate
+                        classification through optimized CNN architecture and preprocessing. Gained experience in medical imaging,
+                        model tuning, and data augmentation.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="skill-tag">Deep Learning</span>
+                        <span class="skill-tag">CNN</span>
+                        <span class="skill-tag">Medical Imaging</span>
+                        <span class="skill-tag">Data Augmentation</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <a href="https://github.com/Akshayvemula" class="btn-primary inline-block">View Project</a>
+                        <button class="text-purple-400 hover:underline text-sm font-medium ml-4 view-details-btn">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications & Training Section -->
+    <section id="certifications" class="py-20">
+        <div class="container">
+            <h2 class="section-title">Certifications & Training</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+                <!-- Certification cards -->
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-100">C++ Programming</h3>
+                    <p class="text-gray-300">By UDEMY</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-100">Web Development</h3>
+                    <p class="text-gray-300">By UDEMY</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-100">Python Programming</h3>
+                    <p class="text-gray-300">By UDEMY</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-100">Cyber Security</h3>
+                    <p class="text-gray-300">By CISCO</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-100">Data Analytics</h3>
+                    <p class="text-gray-300">By CISCO</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-100">GenAI Powered Data Analytics</h3>
+                    <p class="text-gray-300">By TATA Forage</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20">
+        <div class="container">
+            <h2 class="section-title">Contact Me</h2>
+            <div class="mt-8 text-center">
+                <p class="text-lg text-gray-300 mb-8">
+                    I'm always open to new opportunities, collaborations, and interesting projects.
+                    Feel free to reach out!
+                </p>
+                <div class="flex justify-center space-x-6 mt-10">
+                    <a href="https://www.linkedin.com/in/akshay-vemula-111910250" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 transition-colors duration-300 transform hover:scale-125">
+                        <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <a href="https://github.com/Akshayvemula" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 transition-colors duration-300 transform hover:scale-125">
+                        <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.08-.731.084-.716.084-.716 1.192.085 1.816 1.229 1.816 1.229 1.062 1.815 2.781 1.299 3.45.993.108-.775.418-1.299.762-1.594-2.646-.295-5.43-1.321-5.43-5.921 0-1.31.465-2.381 1.236-3.221-.124-.295-.536-1.523.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.003.404 2.293-1.552 3.301-1.23 3.301-1.23.653 1.653.241 2.881.117 3.176.77.84 1.235 1.911 1.235 3.221 0 4.61-2.783 5.624-5.445 5.91-.42.365-.793.947-.793 1.903v2.809c0 .319.192.694.8.576 4.766-1.587 8.205-6.085 8.205-11.385 0-6.627-5.373-12-12-12z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 text-gray-400 py-8 text-center">
+        <div class="container">
+            <p>&copy; 2025 Akshay Vemula. All rights reserved.</p>
+            <p class="text-sm mt-2">Designed and Developed with Passion</p>
+        </div>
+    </footer>
+
+    <!-- Project Detail Modal -->
+    <div id="projectModal" class="project-modal">
+        <div class="project-modal-content">
+            <span class="close-button" id="closeProjectModal">&times;</span>
+            <h3 class="text-3xl font-bold text-gray-100 mb-4" id="modalProjectTitle"></h3>
+            <img src="" alt="Project Image" id="modalProjectImage" class="rounded-lg mb-4 w-full h-64 object-cover">
+            <p class="text-gray-300 mb-4" id="modalProjectDescription"></p>
+            <div class="flex flex-wrap gap-2 mb-4" id="modalProjectTags"></div>
+            <a href="#" class="btn-primary" id="modalProjectLink" target="_blank" rel="noopener noreferrer">Visit Project</a>
+        </div>
+    </div>
+
+    <script>
+        // Register GSAP plugins
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOM Content Loaded. Initializing animations.");
+
+            const mainHeader = document.getElementById('mainHeader');
+            const logoText = mainHeader.querySelector('.logo-text');
+            const navLinks = mainHeader.querySelectorAll('.nav-link');
+            const downloadResumeBtn = mainHeader.querySelector('.btn-primary.ml-6');
+
+            // --- Header Animations (Initial Load) ---
+            gsap.from(logoText, { duration: 1, y: -50, opacity: 0, ease: "power3.out" });
+            gsap.from(navLinks, { duration: 0.8, y: -30, opacity: 0, stagger: 0.1, ease: "power2.out", delay: 0.2 });
+            gsap.from(downloadResumeBtn, { duration: 0.8, y: -30, opacity: 0, ease: "power2.out", delay: 0.5 });
+
+
+            // --- Smooth Scrolling for Navigation ---
+            document.querySelectorAll('nav a.nav-link, .mobile-nav-overlay a.mobile-nav-link').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        // Close mobile menu if open
+                        if (mobileNavOverlay.classList.contains('active')) {
+                            toggleMobileMenu();
+                        }
+                        // Use GSAP's ScrollToPlugin for smooth scrolling
+                        gsap.to(window, { duration: 1, scrollTo: {y: targetElement.offsetTop, offsetY: 70}, ease: "power2.inOut" }); // Added offsetY for sticky header
+                    }
+                });
+            });
+
+            // --- Scroll-Triggered Header Shrink/Expand ---
+            ScrollTrigger.create({
+                trigger: "body",
+                start: "top top", // When the top of the body hits the top of the viewport
+                end: 99999, // A large number to ensure it stays active
+                onUpdate: (self) => {
+                    if (self.direction === 1 && self.progress > 0.05) { // Scrolling down
+                        mainHeader.classList.add('header-scrolled');
+                    } else if (self.direction === -1 && self.progress < 0.05) { // Scrolling up
+                        mainHeader.classList.remove('header-scrolled');
+                    }
+                }
+            });
+
+
+            // --- Scroll Reveal Animation (using IntersectionObserver for robustness) ---
+            const revealElements = document.querySelectorAll('.section-title, #about .md\\:w-1\\/3, #about .md\\:w-2\\/3, #contact .text-center, .card');
+
+            const observerOptions = {
+                root: null, // viewport
+                rootMargin: '0px',
+                threshold: 0.1 // 10% of the element must be visible
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const el = entry.target;
+                        let delay = 0;
+
+                        // Apply staggered delay for cards and other specific elements
+                        if (el.classList.contains('card')) {
+                            const cardIndex = Array.from(el.parentNode.children).indexOf(el);
+                            delay = cardIndex * 0.1; // Stagger by 0.1s for each card
+                        } else if (el.classList.contains('section-title')) {
+                            // Section titles animate with their own underline animation
+                            gsap.to(el, { opacity: 1, y: 0, duration: 1, ease: "power2.out" });
+                            gsap.to(el.querySelector('::after'), {
+                                scaleX: 1,
+                                duration: 0.8,
+                                ease: "power2.out",
+                                delay: 0.5 // Delay underline after title appears
+                            });
+                            observer.unobserve(el); // Stop observing once revealed
+                            return; // Skip default reveal for section titles as they have custom animation
+                        } else if (el.id === 'about' || el.id === 'contact') {
+                             // Specific delays for about/contact sections
+                             if (el.querySelector('.md\\:w-1\\/3')) { // About image
+                                gsap.to(el.querySelector('.md\\:w-1\\/3'), { opacity: 1, y: 0, duration: 1, ease: "power2.out", delay: 0.1 });
+                             }
+                             if (el.querySelector('.md\\:w-2\\/3')) { // About text
+                                gsap.to(el.querySelector('.md\\:w-2\\/3'), { opacity: 1, y: 0, duration: 1, ease: "power2.out", delay: 0.2 });
+                             }
+                             // Social icons for contact section
+                             if (el.querySelector('.flex.justify-center.space-x-6')) {
+                                gsap.from(el.querySelectorAll('.flex.justify-center.space-x-6 a'), { opacity: 0, scale: 0.5, duration: 0.8, stagger: 0.1, ease: "back.out(1.7)", delay: 0.4 });
+                             }
+                             observer.unobserve(el); // Stop observing once revealed
+                             return; // Skip default reveal
+                        }
+
+
+                        gsap.to(el, {
+                            opacity: 1,
+                            y: 0,
+                            duration: 1,
+                            ease: "power2.out",
+                            delay: delay,
+                        });
+                        observer.unobserve(el); // Stop observing once revealed
+                    }
+                });
+            }, observerOptions);
+
+            revealElements.forEach(el => {
+                observer.observe(el);
+            });
+
+
+            // --- Hero Section Animations (GSAP Timelines for sequence) ---
+            const heroTimeline = gsap.timeline({ defaults: { ease: "power3.out" } });
+            heroTimeline.from(".hero-title", { duration: 1.2, y: 50, opacity: 0 })
+                        .from(".hero-subtitle", { duration: 1.2, y: 50, opacity: 0 }, "-=0.8")
+                        .from(".hero-buttons a", { duration: 1, y: 30, opacity: 0, stagger: 0.2 }, "-=0.7");
+
+            // Animate background shapes
+            gsap.to(".hero-background-shapes .shape", {
+                opacity: 0.1, // Make them visible
+                scale: 1.2,
+                duration: 15,
+                repeat: -1,
+                yoyo: true,
+                ease: "power1.inOut",
+                stagger: {
+                    each: 0.5,
+                    from: "random"
+                }
+            });
+
+
+            // --- Hamburger Menu Functionality (GSAP for transitions) ---
+            const hamburgerMenu = document.getElementById('hamburgerMenu');
+            const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-overlay .mobile-nav-link');
+
+            const mobileMenuTimeline = gsap.timeline({ paused: true, reversed: true });
+            mobileMenuTimeline.to(mobileNavOverlay, { opacity: 1, visibility: 'visible', duration: 0.4, ease: "power2.inOut" })
+                              .from(mobileNavLinks, { opacity: 0, y: 20, stagger: 0.1, duration: 0.3 }, "-=0.2");
+
+            const toggleMobileMenu = () => {
+                hamburgerMenu.classList.toggle('active');
+                mobileMenuTimeline.reversed() ? mobileMenuTimeline.play() : mobileMenuTimeline.reverse();
+                document.body.style.overflow = mobileNavOverlay.classList.contains('active') ? 'hidden' : '';
+            };
+            hamburgerMenu.addEventListener('click', toggleMobileMenu);
+
+            // Close mobile menu when a link is clicked
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (mobileNavOverlay.classList.contains('active')) {
+                        toggleMobileMenu();
+                    }
+                });
+            });
+
+            // --- Skill Bar Animation (GSAP with ScrollTrigger) ---
+            const skillBars = document.querySelectorAll('.skill-bar-fill');
+            skillBars.forEach(bar => {
+                gsap.to(bar, {
+                    width: bar.dataset.skillLevel, // Animate to the data-skill-level
+                    duration: 1.8,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: bar.closest('.card'), // Trigger when the parent card is in view
+                        start: "top 80%",
+                        toggleActions: "play none none none", // Play animation once
+                    }
+                });
+            });
+
+            // --- Project Modal Functionality (GSAP for smooth transitions) ---
+            const projectModal = document.getElementById('projectModal');
+            const closeProjectModalBtn = document.getElementById('closeProjectModal');
+            const modalProjectTitle = document.getElementById('modalProjectTitle');
+            const modalProjectImage = document.getElementById('modalProjectImage');
+            const modalProjectDescription = document.getElementById('modalProjectDescription');
+            const modalProjectTags = document.getElementById('modalProjectTags');
+            const modalProjectLink = document.getElementById('modalProjectLink');
+
+            document.querySelectorAll('.view-details-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const projectId = e.target.closest('.project-card').dataset.projectId;
+                    // Hardcoded project data - replace with dynamic fetching in real app
+                    const projectData = {
+                        'blockchain-project': {
+                            title: 'Web Based Crowdfunding using Blockchain',
+                            image: './assets/blockchain.jpeg',
+                            description: 'This decentralized platform revolutionized fundraising by ensuring transparency and tamper-proof transactions. Leveraging smart contracts, it automated funding distribution and enhanced security through encrypted authentication. Key learnings included deep dives into blockchain integration, real-time data tracking, and designing secure, scalable web architectures.',
+                            tags: ['Blockchain', 'Smart Contracts', 'Web3', 'Security', 'Decentralized'],
+                            link: '#'
+                        },
+                        'monkeypox-project': {
+                            title: 'Monkey Pox Detection using Deep Learning',
+                            image: './assets/deeplearning.jpeg',
+                            description: 'Developed a robust deep learning model for automated Monkeypox detection from medical images. Achieved high accuracy through an optimized Convolutional Neural Network (CNN) architecture, advanced image preprocessing techniques, and data augmentation strategies. This project provided invaluable experience in medical imaging analysis, model tuning, and deploying deep learning solutions for critical health applications.',
+                            tags: ['Deep Learning', 'CNN', 'Medical Imaging', 'AI/ML', 'Image Processing'],
+                            link: '#'
+                        }
+                    };
+
+                    const data = projectData[projectId];
+                    if (data) {
+                        modalProjectTitle.textContent = data.title;
+                        modalProjectImage.src = data.image;
+                        modalProjectDescription.textContent = data.description;
+                        modalProjectLink.href = data.link;
+
+                        modalProjectTags.innerHTML = '';
+                        data.tags.forEach(tag => {
+                            const span = document.createElement('span');
+                            span.className = 'skill-tag';
+                            span.textContent = tag;
+                            modalProjectTags.appendChild(span);
+                        });
+
+                        projectModal.style.display = 'flex';
+                        gsap.to(projectModal.querySelector('.project-modal-content'), {
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            duration: 0.5,
+                            ease: "back.out(1.7)"
+                        });
+                        document.body.style.overflow = 'hidden'; // Prevent scrolling background
+                    }
+                });
+            });
+
+            closeProjectModalBtn.addEventListener('click', () => {
+                gsap.to(projectModal.querySelector('.project-modal-content'), {
+                    opacity: 0,
+                    y: 50,
+                    scale: 0.9,
+                    duration: 0.4,
+                    ease: "power2.in",
+                    onComplete: () => {
+                        projectModal.style.display = 'none';
+                        document.body.style.overflow = ''; // Restore scrolling
+                    }
+                });
+            });
+
+            // Close modal when clicking outside content
+            projectModal.addEventListener('click', (e) => {
+                if (e.target === projectModal) {
+                    closeProjectModalBtn.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
