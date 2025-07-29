@@ -119,28 +119,21 @@
             box-shadow: inset 1px 1px 3px rgba(0,0,0,0.2), inset -1px -1px 3px rgba(255,255,255,0.08);
         }
 
-        /* Header Styling */
+        /* Header Styling (NO sticky position) */
         header {
             background-color: rgba(26, 26, 46, 0.8); /* Semi-transparent dark background */
             backdrop-filter: blur(10px); /* Glassmorphism for header */
             -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-            position: sticky;
-            top: 0;
-            z-index: 50;
+            /* Removed position: sticky; top: 0; z-index: 50; */
+            padding-top: 0.75rem; /* Reduced initial padding */
+            padding-bottom: 0.75rem; /* Reduced initial padding */
             transition: padding 0.3s ease, background-color 0.3s ease; /* Smooth transition for shrinking */
         }
-        header.header-scrolled {
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-            background-color: rgba(26, 26, 46, 0.95); /* More opaque when scrolled */
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-        }
+        /* Removed header-scrolled specific styles as it's no longer sticky */
         header .logo-text {
+            font-size: 2.25rem; /* Reduced initial font size (text-4xl was 2.5rem) */
             transition: font-size 0.3s ease;
-        }
-        header.header-scrolled .logo-text {
-            font-size: 2.5rem; /* Smaller font size when scrolled */
         }
         header .nav-link {
             transition: color 0.3s ease, transform 0.2s ease, text-shadow 0.3s ease;
@@ -329,9 +322,7 @@
             #hero p {
                 font-size: 1.5rem;
             }
-            header.header-scrolled .logo-text {
-                font-size: 2rem; /* Smaller font size when scrolled on mobile */
-            }
+            /* Removed header.header-scrolled .logo-text for mobile as header is no longer sticky */
         }
     </style>
 </head>
@@ -348,17 +339,18 @@
     </svg>
 
     <!-- Header Section -->
-    <header class="py-8" id="mainHeader">
+    <header class="py-3" id="mainHeader"> <!-- Reduced py-4 to py-3 -->
         <div class="container flex flex-col md:flex-row items-center justify-between">
             <div class="text-center md:text-left mb-4 md:mb-0">
-                <h1 class="text-5xl font-extrabold mb-2 logo-text text-white">AKSHAY VEMULA</h1>
-                <p class="text-xl font-light text-gray-300">Motivated Computer Science Engineering Student specializing in AI & ML</p>
+                <h1 class="text-2xl font-extrabold mb-1 logo-text text-white">AKSHAY VEMULA</h1> <!-- Reduced text-3xl to text-2xl, mb-2 to mb-1 -->
+                <p class="text-sm font-light text-gray-300">Motivated Computer Science Engineering Student specializing in AI & ML</p> <!-- Reduced font size -->
             </div>
             <nav class="flex items-center space-x-6">
                 <ul class="flex space-x-8 text-lg hidden md:flex"> <!-- Hide on small screens -->
                     <li><a href="#about" class="nav-link">About</a></li>
                     <li><a href="#skills" class="nav-link">Skills</a></li>
                     <li><a href="#projects" class="nav-link">Projects</a></li>
+                    <li><a href="#education" class="nav-link">Education</a></li>
                     <li><a href="#certifications" class="nav-link">Certifications</a></li>
                     <li><a href="#contact" class="nav-link">Contact</a></li>
                 </ul>
@@ -382,6 +374,7 @@
             <li><a href="#about" class="mobile-nav-link">About</a></li>
             <li><a href="#skills" class="mobile-nav-link">Skills</a></li>
             <li><a href="#projects" class="mobile-nav-link">Projects</a></li>
+            <li><a href="#education" class="mobile-nav-link">Education</a></li>
             <li><a href="#certifications" class="mobile-nav-link">Certifications</a></li>
             <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
             <li>
@@ -535,36 +528,63 @@
         </div>
     </section>
 
+    <!-- Education Section -->
+    <section id="education" class="py-20">
+        <div class="container">
+            <h2 class="section-title">Education</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-100">JYOTHISHMATHI INSTITUTE OF TECHNOLOGY & SCIENCE</h3>
+                    <p class="text-gray-300">B.TECH, CSE(AIML) | Karimnagar</p>
+                    <p class="text-gray-400 text-sm mt-1">Cumulative GPA: 6.70</p>
+                    <p class="text-gray-400 text-sm">2021-2025</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-100">ALPHORES JUNIOR COLLEGE</h3>
+                    <p class="text-gray-300">Intermediate | Karimnagar</p>
+                    <p class="text-gray-400 text-sm mt-1">Cumulative GPA: 7.42</p>
+                    <p class="text-gray-400 text-sm">2019-2021</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-100">KERALA ENGLISH MEDIUM HIGH SCHOOL</h3>
+                    <p class="text-gray-300">High School | Dharmapuri</p>
+                    <p class="text-gray-400 text-sm mt-1">Cumulative GPA: 9.2</p>
+                    <p class="text-gray-400 text-sm">2018-2019</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Certifications & Training Section -->
     <section id="certifications" class="py-20">
         <div class="container">
             <h2 class="section-title">Certifications & Training</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-                <!-- Certification cards -->
-                <div class="card">
+                <!-- Certification cards - now clickable -->
+                <a href="https://ibb.co/93NCcsy0" target="_blank" rel="noopener noreferrer" class="card block">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">C++ Programming</h3>
                     <p class="text-gray-300">By UDEMY</p>
-                </div>
-                <div class="card">
+                </a>
+                <a href="https://www.udemy.com/certificate/UC-a5bc7f9a-aaa8-4e1f-a5b2-e1b52558577e/" target="_blank" rel="noopener noreferrer" class="card block">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">Web Development</h3>
                     <p class="text-gray-300">By UDEMY</p>
-                </div>
-                <div class="card">
+                </a>
+                <a href="#" target="_blank" rel="noopener noreferrer" class="card block">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">Python Programming</h3>
                     <p class="text-gray-300">By UDEMY</p>
-                </div>
-                <div class="card">
+                </a>
+                <a href="https://ibb.co/RkbVzPyx" target="_blank" rel="noopener noreferrer" class="card block">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">Cyber Security</h3>
                     <p class="text-gray-300">By CISCO</p>
-                </div>
-                <div class="card">
+                </a>
+                <a href="https://ibb.co/BVTW3mrV" target="_blank" rel="noopener noreferrer" class="card block">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">Data Analytics</h3>
                     <p class="text-gray-300">By CISCO</p>
-                </div>
-                <div class="card">
+                </a>
+                <a href="https://ibb.co/LDpdVhnY" target="_blank" rel="noopener noreferrer" class="card block">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">GenAI Powered Data Analytics</h3>
                     <p class="text-gray-300">By TATA Forage</p>
-                </div>
+                </a>
             </div>
         </div>
     </section>
@@ -641,28 +661,18 @@
                             toggleMobileMenu();
                         }
                         // Use GSAP's ScrollToPlugin for smooth scrolling
-                        gsap.to(window, { duration: 1, scrollTo: {y: targetElement.offsetTop, offsetY: 70}, ease: "power2.inOut" }); // Added offsetY for sticky header
+                        // Removed offsetY as header is no longer sticky
+                        gsap.to(window, { duration: 1, scrollTo: {y: targetElement.offsetTop}, ease: "power2.inOut" });
                     }
                 });
             });
 
-            // --- Scroll-Triggered Header Shrink/Expand ---
-            ScrollTrigger.create({
-                trigger: "body",
-                start: "top top", // When the top of the body hits the top of the viewport
-                end: 99999, // A large number to ensure it stays active
-                onUpdate: (self) => {
-                    if (self.direction === 1 && self.progress > 0.05) { // Scrolling down
-                        mainHeader.classList.add('header-scrolled');
-                    } else if (self.direction === -1 && self.progress < 0.05) { // Scrolling up
-                        mainHeader.classList.remove('header-scrolled');
-                    }
-                }
-            });
+            // --- Removed Scroll-Triggered Header Shrink/Expand ---
+            // The header will now scroll naturally with the page.
 
 
             // --- Scroll Reveal Animation (using IntersectionObserver for robustness) ---
-            const revealElements = document.querySelectorAll('.section-title, #about .md\\:w-1\\/3, #about .md\\:w-2\\/3, #contact .text-center, .card');
+            const revealElements = document.querySelectorAll('.section-title, #about .md\\:w-1\\/3, #about .md\\:w-2\\/3, #contact .text-center, .card, #education .card'); // Added #education .card
 
             const observerOptions = {
                 root: null, // viewport
@@ -691,8 +701,8 @@
                             });
                             observer.unobserve(el); // Stop observing once revealed
                             return; // Skip default reveal for section titles as they have custom animation
-                        } else if (el.id === 'about' || el.id === 'contact') {
-                             // Specific delays for about/contact sections
+                        } else if (el.id === 'about' || el.id === 'contact' || el.id === 'education') {
+                             // Specific delays for about/contact/education sections
                              if (el.querySelector('.md\\:w-1\\/3')) { // About image
                                 gsap.to(el.querySelector('.md\\:w-1\\/3'), { opacity: 1, y: 0, duration: 1, ease: "power2.out", delay: 0.1 });
                              }
@@ -821,8 +831,6 @@
                         modalProjectTitle.textContent = data.title;
                         modalProjectImage.src = data.image;
                         modalProjectDescription.textContent = data.description;
-                        modalProjectLink.href = data.link;
-
                         modalProjectTags.innerHTML = '';
                         data.tags.forEach(tag => {
                             const span = document.createElement('span');
@@ -830,6 +838,7 @@
                             span.textContent = tag;
                             modalProjectTags.appendChild(span);
                         });
+                        modalProjectLink.href = data.link;
 
                         projectModal.style.display = 'flex';
                         gsap.to(projectModal.querySelector('.project-modal-content'), {
