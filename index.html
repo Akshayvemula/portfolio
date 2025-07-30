@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Akshay Vemula - Futuristic Portfolio</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%238e2de2' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15H9V7h2v10zm4 0h-2V7h2v10z'/%3E%3C/svg%3E">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts - Inter & Poppins (for more expressive typography) -->
@@ -125,12 +127,10 @@
             backdrop-filter: blur(10px); /* Glassmorphism for header */
             -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-            /* Removed position: sticky; top: 0; z-index: 50; */
             padding-top: 0.75rem; /* Reduced initial padding */
             padding-bottom: 0.75rem; /* Reduced initial padding */
             transition: padding 0.3s ease, background-color 0.3s ease; /* Smooth transition for shrinking */
         }
-        /* Removed header-scrolled specific styles as it's no longer sticky */
         header .logo-text {
             font-size: 2.25rem; /* Reduced initial font size (text-4xl was 2.5rem) */
             transition: font-size 0.3s ease;
@@ -322,7 +322,6 @@
             #hero p {
                 font-size: 1.5rem;
             }
-            /* Removed header.header-scrolled .logo-text for mobile as header is no longer sticky */
         }
     </style>
 </head>
@@ -339,14 +338,14 @@
     </svg>
 
     <!-- Header Section -->
-    <header class="py-3" id="mainHeader"> <!-- Reduced py-4 to py-3 -->
+    <header class="py-3" id="mainHeader">
         <div class="container flex flex-col md:flex-row items-center justify-between">
             <div class="text-center md:text-left mb-4 md:mb-0">
-                <h1 class="text-2xl font-extrabold mb-1 logo-text text-white">AKSHAY VEMULA</h1> <!-- Reduced text-3xl to text-2xl, mb-2 to mb-1 -->
-                <p class="text-sm font-light text-gray-300">Motivated Computer Science Engineering Student specializing in AI & ML</p> <!-- Reduced font size -->
+                <h1 class="text-2xl font-extrabold mb-1 logo-text text-white">AKSHAY VEMULA</h1>
+                <p class="text-sm font-light text-gray-300">Motivated Computer Science Engineering Student specializing in AI & ML</p>
             </div>
             <nav class="flex items-center space-x-6">
-                <ul class="flex space-x-8 text-lg hidden md:flex"> <!-- Hide on small screens -->
+                <ul class="flex space-x-8 text-lg hidden md:flex">
                     <li><a href="#about" class="nav-link">About</a></li>
                     <li><a href="#skills" class="nav-link">Skills</a></li>
                     <li><a href="#projects" class="nav-link">Projects</a></li>
@@ -359,11 +358,12 @@
                     Download Resume
                 </a>
                 <!-- Hamburger Menu for Mobile -->
-                <div class="hamburger-menu md:hidden" id="hamburgerMenu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
+                <button class="hamburger-menu md:hidden flex flex-col justify-around w-8 h-6 bg-transparent border-none cursor-pointer p-0 z-50 focus:outline-none"
+                        id="hamburgerMenu" aria-label="Toggle navigation" aria-controls="mobileNavOverlay" aria-expanded="false">
+                    <span class="block w-full h-0.5 bg-white rounded transition-all duration-300"></span>
+                    <span class="block w-full h-0.5 bg-white rounded transition-all duration-300"></span>
+                    <span class="block w-full h-0.5 bg-white rounded transition-all duration-300"></span>
+                </button>
             </nav>
         </div>
     </header>
@@ -378,7 +378,7 @@
             <li><a href="#certifications" class="mobile-nav-link">Certifications</a></li>
             <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
             <li>
-                <a href="./akshayresume.pdf" download="Akshay_Vemula_Resume.pdf" class="btn-primary mt-8 mobile-nav-link">
+                <a href="./assets/akshayresume.pdf" download="AkshayVemulaResume.pdf" class="btn-primary mt-8 mobile-nav-link">
                     Download Resume
                 </a>
             </li>
@@ -433,7 +433,11 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
                 <!-- Programming Languages -->
                 <div class="card flex items-center space-x-4">
-                    <svg class="icon" viewBox="0 0 24 24"><path d="M16 18l-6-6 6-6"/></svg>
+                    <!-- Updated SVG for Programming Languages (Code Icon) -->
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="16 18 22 12 16 6"></polyline>
+                        <polyline points="8 6 2 12 8 18"></polyline>
+                    </svg>
                     <div class="flex-grow">
                         <h3 class="text-xl font-semibold mb-1 text-gray-100">Programming Languages</h3>
                         <p class="text-gray-300 text-sm">C/C++, Python, HTML, CSS, JavaScript, Java (Basics)</p>
@@ -444,7 +448,12 @@
                 </div>
                 <!-- Database -->
                 <div class="card flex items-center space-x-4">
-                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15H9V7h2v10zm4 0h-2V7h2v10z"/></svg>
+                    <!-- Updated SVG for Databases (Database Icon) -->
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                        <path d="M2 12A9 3 0 0 0 12 15A9 3 0 0 0 22 12"></path>
+                        <path d="M2 19A9 3 0 0 0 12 22A9 3 0 0 0 22 19"></path>
+                    </svg>
                     <div class="flex-grow">
                         <h3 class="text-xl font-semibold mb-1 text-gray-100">Databases</h3>
                         <p class="text-gray-300 text-sm">SQL, MongoDB</p>
@@ -455,7 +464,12 @@
                 </div>
                 <!-- Frameworks -->
                 <div class="card flex items-center space-x-4">
-                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15H9V7h2v10zm4 0h-2V7h2v10z"/></svg>
+                    <!-- Updated SVG for Frameworks (Layers Icon) -->
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                        <polyline points="2 17 12 22 22 17"></polyline>
+                        <polyline points="2 12 12 17 22 12"></polyline>
+                    </svg>
                     <div class="flex-grow">
                         <h3 class="text-xl font-semibold mb-1 text-gray-100">Frameworks</h3>
                         <p class="text-gray-300 text-sm">React.js, Bootstrap</p>
@@ -466,7 +480,13 @@
                 </div>
                 <!-- Personal Skills -->
                 <div class="card flex items-center space-x-4">
-                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15H9V7h2v10zm4 0h-2V7h2v10z"/></svg>
+                    <!-- Updated SVG for Personal Skills (Users/Team Icon) -->
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
                     <div class="flex-grow">
                         <h3 class="text-xl font-semibold mb-1 text-gray-100">Personal Skills</h3>
                         <p class="text-gray-300 text-sm">Effective Communication, Problem-Solving, Adaptability & Leadership</p>
@@ -500,7 +520,7 @@
                         <span class="skill-tag">Security</span>
                     </div>
                     <div class="flex justify-between items-center">
-                        <a href="https://github.com/Akshayvemula" class="btn-primary inline-block">View Project</a>
+                        <a href="https://github.com/Akshayvemula" class="btn-primary inline-block" target="_blank" rel="noopener noreferrer" aria-label="View Blockchain Project on GitHub">View Project</a>
                         <button class="text-purple-400 hover:underline text-sm font-medium ml-4 view-details-btn">View Details</button>
                     </div>
                 </div>
@@ -520,7 +540,7 @@
                         <span class="skill-tag">Data Augmentation</span>
                     </div>
                     <div class="flex justify-between items-center">
-                        <a href="https://github.com/Akshayvemula" class="btn-primary inline-block">View Project</a>
+                        <a href="https://github.com/Akshayvemula" class="btn-primary inline-block" target="_blank" rel="noopener noreferrer" aria-label="View Monkey Pox Project on GitHub">View Project</a>
                         <button class="text-purple-400 hover:underline text-sm font-medium ml-4 view-details-btn">View Details</button>
                     </div>
                 </div>
@@ -561,27 +581,27 @@
             <h2 class="section-title">Certifications & Training</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
                 <!-- Certification cards - now clickable -->
-                <a href="https://ibb.co/93NCcsy0" target="_blank" rel="noopener noreferrer" class="card block">
+                <a href="https://ibb.co/93NCcsy0" target="_blank" rel="noopener noreferrer" class="card block" aria-label="View C++ Programming Certificate">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">C++ Programming</h3>
                     <p class="text-gray-300">By UDEMY</p>
                 </a>
-                <a href="https://www.udemy.com/certificate/UC-a5bc7f9a-aaa8-4e1f-a5b2-e1b52558577e/" target="_blank" rel="noopener noreferrer" class="card block">
+                <a href="https://www.udemy.com/certificate/UC-a5bc7f9a-aaa8-4e1f-a5b2-e1b52558577e/" target="_blank" rel="noopener noreferrer" class="card block" aria-label="View Web Development Certificate">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">Web Development</h3>
                     <p class="text-gray-300">By UDEMY</p>
                 </a>
-                <a href="#" target="_blank" rel="noopener noreferrer" class="card block">
+                <a href="https://www.udemy.com/certificate/UC-example-python-certificate/" target="_blank" rel="noopener noreferrer" class="card block" aria-label="View Python Programming Certificate">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">Python Programming</h3>
                     <p class="text-gray-300">By UDEMY</p>
                 </a>
-                <a href="https://ibb.co/RkbVzPyx" target="_blank" rel="noopener noreferrer" class="card block">
+                <a href="https://ibb.co/RkbVzPyx" target="_blank" rel="noopener noreferrer" class="card block" aria-label="View Cyber Security Certificate">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">Cyber Security</h3>
                     <p class="text-gray-300">By CISCO</p>
                 </a>
-                <a href="https://ibb.co/BVTW3mrV" target="_blank" rel="noopener noreferrer" class="card block">
+                <a href="https://ibb.co/BVTW3mrV" target="_blank" rel="noopener noreferrer" class="card block" aria-label="View Data Analytics Certificate">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">Data Analytics</h3>
                     <p class="text-gray-300">By CISCO</p>
                 </a>
-                <a href="https://ibb.co/LDpdVhnY" target="_blank" rel="noopener noreferrer" class="card block">
+                <a href="https://ibb.co/LDpdVhnY" target="_blank" rel="noopener noreferrer" class="card block" aria-label="View GenAI Powered Data Analytics Certificate">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">GenAI Powered Data Analytics</h3>
                     <p class="text-gray-300">By TATA Forage</p>
                 </a>
@@ -596,13 +616,17 @@
             <div class="mt-8 text-center">
                 <p class="text-lg text-gray-300 mb-8">
                     I'm always open to new opportunities, collaborations, and interesting projects.
-                    Feel free to reach out!
+                    Feel free to reach out using the form below or connect on social media!
                 </p>
+
+                <!-- Contact Form -->
+                
+
                 <div class="flex justify-center space-x-6 mt-10">
-                    <a href="https://www.linkedin.com/in/akshay-vemula-111910250" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 transition-colors duration-300 transform hover:scale-125">
+                    <a href="https://www.linkedin.com/in/akshay-vemula-111910250" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 transition-colors duration-300 transform hover:scale-125" aria-label="LinkedIn Profile">
                         <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                     </a>
-                    <a href="https://github.com/Akshayvemula" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 transition-colors duration-300 transform hover:scale-125">
+                    <a href="https://github.com/Akshayvemula" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 transition-colors duration-300 transform hover:scale-125" aria-label="GitHub Profile">
                         <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.08-.731.084-.716.084-.716 1.192.085 1.816 1.229 1.816 1.229 1.062 1.815 2.781 1.299 3.45.993.108-.775.418-1.299.762-1.594-2.646-.295-5.43-1.321-5.43-5.921 0-1.31.465-2.381 1.236-3.221-.124-.295-.536-1.523.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.003.404 2.293-1.552 3.301-1.23 3.301-1.23.653 1.653.241 2.881.117 3.176.77.84 1.235 1.911 1.235 3.221 0 4.61-2.783 5.624-5.445 5.91-.42.365-.793.947-.793 1.903v2.809c0 .319.192.694.8.576 4.766-1.587 8.205-6.085 8.205-11.385 0-6.627-5.373-12-12-12z"/></svg>
                     </a>
                 </div>
@@ -619,9 +643,9 @@
     </footer>
 
     <!-- Project Detail Modal -->
-    <div id="projectModal" class="project-modal">
+    <div id="projectModal" class="project-modal" role="dialog" aria-modal="true" aria-labelledby="modalProjectTitle">
         <div class="project-modal-content">
-            <span class="close-button" id="closeProjectModal">&times;</span>
+            <span class="close-button" id="closeProjectModal" aria-label="Close Project Details">&times;</span>
             <h3 class="text-3xl font-bold text-gray-100 mb-4" id="modalProjectTitle"></h3>
             <img src="" alt="Project Image" id="modalProjectImage" class="rounded-lg mb-4 w-full h-64 object-cover">
             <p class="text-gray-300 mb-4" id="modalProjectDescription"></p>
@@ -631,11 +655,11 @@
     </div>
 
     <script>
-        // Register GSAP plugins
+        // Register GSAP plugins for animations
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
         document.addEventListener('DOMContentLoaded', () => {
-            console.log("DOM Content Loaded. Initializing animations.");
+            console.log("DOM Content Loaded. Initializing animations and functionality.");
 
             const mainHeader = document.getElementById('mainHeader');
             const logoText = mainHeader.querySelector('.logo-text');
@@ -643,81 +667,81 @@
             const downloadResumeBtn = mainHeader.querySelector('.btn-primary.ml-6');
 
             // --- Header Animations (Initial Load) ---
+            // Animate logo, navigation links, and download resume button on page load.
             gsap.from(logoText, { duration: 1, y: -50, opacity: 0, ease: "power3.out" });
             gsap.from(navLinks, { duration: 0.8, y: -30, opacity: 0, stagger: 0.1, ease: "power2.out", delay: 0.2 });
             gsap.from(downloadResumeBtn, { duration: 0.8, y: -30, opacity: 0, ease: "power2.out", delay: 0.5 });
 
 
             // --- Smooth Scrolling for Navigation ---
+            // Add click listeners to all navigation links for smooth scrolling to sections.
             document.querySelectorAll('nav a.nav-link, .mobile-nav-overlay a.mobile-nav-link').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
+                    e.preventDefault(); // Prevent default jump behavior
+                    const targetId = this.getAttribute('href'); // Get the target section ID
+                    const targetElement = document.querySelector(targetId); // Find the target element
 
                     if (targetElement) {
-                        // Close mobile menu if open
+                        // Close mobile menu if it's active
                         if (mobileNavOverlay.classList.contains('active')) {
                             toggleMobileMenu();
                         }
-                        // Use GSAP's ScrollToPlugin for smooth scrolling
-                        // Removed offsetY as header is no longer sticky
+                        // Use GSAP's ScrollToPlugin for smooth scrolling animation
                         gsap.to(window, { duration: 1, scrollTo: {y: targetElement.offsetTop}, ease: "power2.inOut" });
                     }
                 });
             });
 
-            // --- Removed Scroll-Triggered Header Shrink/Expand ---
-            // The header will now scroll naturally with the page.
-
-
             // --- Scroll Reveal Animation (using IntersectionObserver for robustness) ---
-            const revealElements = document.querySelectorAll('.section-title, #about .md\\:w-1\\/3, #about .md\\:w-2\\/3, #contact .text-center, .card, #education .card'); // Added #education .card
+            // Select elements that should reveal with a scroll animation.
+            const revealElements = document.querySelectorAll('.section-title, #about .md\\:w-1\\/3, #about .md\\:w-2\\/3, #contact .text-center, .card, #education .card');
 
+            // Options for the Intersection Observer
             const observerOptions = {
-                root: null, // viewport
+                root: null, // Use the viewport as the root
                 rootMargin: '0px',
-                threshold: 0.1 // 10% of the element must be visible
+                threshold: 0.1 // Trigger when 10% of the element is visible
             };
 
+            // Create an Intersection Observer instance
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         const el = entry.target;
                         let delay = 0;
 
-                        // Apply staggered delay for cards and other specific elements
+                        // Apply staggered delay for cards for a nice cascade effect
                         if (el.classList.contains('card')) {
                             const cardIndex = Array.from(el.parentNode.children).indexOf(el);
                             delay = cardIndex * 0.1; // Stagger by 0.1s for each card
                         } else if (el.classList.contains('section-title')) {
-                            // Section titles animate with their own underline animation
+                            // Custom animation for section titles (text and underline)
                             gsap.to(el, { opacity: 1, y: 0, duration: 1, ease: "power2.out" });
                             gsap.to(el.querySelector('::after'), {
                                 scaleX: 1,
                                 duration: 0.8,
                                 ease: "power2.out",
-                                delay: 0.5 // Delay underline after title appears
+                                delay: 0.5 // Delay underline animation after title appears
                             });
                             observer.unobserve(el); // Stop observing once revealed
-                            return; // Skip default reveal for section titles as they have custom animation
+                            return; // Skip default reveal for section titles
                         } else if (el.id === 'about' || el.id === 'contact' || el.id === 'education') {
-                             // Specific delays for about/contact/education sections
-                             if (el.querySelector('.md\\:w-1\\/3')) { // About image
+                            // Specific reveal animations for elements within About, Contact, and Education sections
+                            if (el.querySelector('.md\\:w-1\\/3')) { // About image
                                 gsap.to(el.querySelector('.md\\:w-1\\/3'), { opacity: 1, y: 0, duration: 1, ease: "power2.out", delay: 0.1 });
-                             }
-                             if (el.querySelector('.md\\:w-2\\/3')) { // About text
+                            }
+                            if (el.querySelector('.md\\:w-2\\/3')) { // About text
                                 gsap.to(el.querySelector('.md\\:w-2\\/3'), { opacity: 1, y: 0, duration: 1, ease: "power2.out", delay: 0.2 });
-                             }
-                             // Social icons for contact section
-                             if (el.querySelector('.flex.justify-center.space-x-6')) {
+                            }
+                            // Social icons for contact section
+                            if (el.querySelector('.flex.justify-center.space-x-6')) {
                                 gsap.from(el.querySelectorAll('.flex.justify-center.space-x-6 a'), { opacity: 0, scale: 0.5, duration: 0.8, stagger: 0.1, ease: "back.out(1.7)", delay: 0.4 });
-                             }
-                             observer.unobserve(el); // Stop observing once revealed
-                             return; // Skip default reveal
+                            }
+                            observer.unobserve(el); // Stop observing once revealed
+                            return; // Skip default reveal for these sections
                         }
 
-
+                        // Default reveal animation for other elements
                         gsap.to(el, {
                             opacity: 1,
                             y: 0,
@@ -730,6 +754,7 @@
                 });
             }, observerOptions);
 
+            // Observe all elements marked for reveal
             revealElements.forEach(el => {
                 observer.observe(el);
             });
@@ -737,21 +762,22 @@
 
             // --- Hero Section Animations (GSAP Timelines for sequence) ---
             const heroTimeline = gsap.timeline({ defaults: { ease: "power3.out" } });
+            // Animate hero title, subtitle, and buttons
             heroTimeline.from(".hero-title", { duration: 1.2, y: 50, opacity: 0 })
-                        .from(".hero-subtitle", { duration: 1.2, y: 50, opacity: 0 }, "-=0.8")
-                        .from(".hero-buttons a", { duration: 1, y: 30, opacity: 0, stagger: 0.2 }, "-=0.7");
+                        .from(".hero-subtitle", { duration: 1.2, y: 50, opacity: 0 }, "-=0.8") // Start 0.8s before previous animation ends
+                        .from(".hero-buttons a", { duration: 1, y: 30, opacity: 0, stagger: 0.2 }, "-=0.7"); // Stagger buttons
 
-            // Animate background shapes
+            // Animate background shapes in the hero section
             gsap.to(".hero-background-shapes .shape", {
-                opacity: 0.1, // Make them visible
+                opacity: 0.1, // Make shapes subtly visible
                 scale: 1.2,
                 duration: 15,
-                repeat: -1,
-                yoyo: true,
+                repeat: -1, // Loop indefinitely
+                yoyo: true, // Reverse animation on alternate loops
                 ease: "power1.inOut",
                 stagger: {
-                    each: 0.5,
-                    from: "random"
+                    each: 0.5, // Stagger start times for each shape
+                    from: "random" // Randomize starting shape
                 }
             });
 
@@ -761,18 +787,25 @@
             const mobileNavOverlay = document.getElementById('mobileNavOverlay');
             const mobileNavLinks = document.querySelectorAll('.mobile-nav-overlay .mobile-nav-link');
 
+            // GSAP timeline for mobile menu open/close animation
             const mobileMenuTimeline = gsap.timeline({ paused: true, reversed: true });
             mobileMenuTimeline.to(mobileNavOverlay, { opacity: 1, visibility: 'visible', duration: 0.4, ease: "power2.inOut" })
-                              .from(mobileNavLinks, { opacity: 0, y: 20, stagger: 0.1, duration: 0.3 }, "-=0.2");
+                              .from(mobileNavLinks, { opacity: 0, y: 20, stagger: 0.1, duration: 0.3 }, "-=0.2"); // Stagger mobile links
 
+            // Function to toggle mobile menu
             const toggleMobileMenu = () => {
                 hamburgerMenu.classList.toggle('active');
+                // Toggle ARIA expanded attribute
+                const isExpanded = hamburgerMenu.getAttribute('aria-expanded') === 'true';
+                hamburgerMenu.setAttribute('aria-expanded', !isExpanded);
+
                 mobileMenuTimeline.reversed() ? mobileMenuTimeline.play() : mobileMenuTimeline.reverse();
+                // Prevent body scrolling when mobile menu is open
                 document.body.style.overflow = mobileNavOverlay.classList.contains('active') ? 'hidden' : '';
             };
             hamburgerMenu.addEventListener('click', toggleMobileMenu);
 
-            // Close mobile menu when a link is clicked
+            // Close mobile menu when a link inside it is clicked
             mobileNavLinks.forEach(link => {
                 link.addEventListener('click', () => {
                     if (mobileNavOverlay.classList.contains('active')) {
@@ -785,12 +818,12 @@
             const skillBars = document.querySelectorAll('.skill-bar-fill');
             skillBars.forEach(bar => {
                 gsap.to(bar, {
-                    width: bar.dataset.skillLevel, // Animate to the data-skill-level
+                    width: bar.dataset.skillLevel, // Animate to the width specified in data-skill-level
                     duration: 1.8,
                     ease: "power2.out",
                     scrollTrigger: {
-                        trigger: bar.closest('.card'), // Trigger when the parent card is in view
-                        start: "top 80%",
+                        trigger: bar.closest('.card'), // Trigger when the parent skill card is in view
+                        start: "top 80%", // Start animation when top of card is 80% from viewport top
                         toggleActions: "play none none none", // Play animation once
                     }
                 });
@@ -805,33 +838,35 @@
             const modalProjectTags = document.getElementById('modalProjectTags');
             const modalProjectLink = document.getElementById('modalProjectLink');
 
+            // Event listener for "View Details" buttons on project cards
             document.querySelectorAll('.view-details-btn').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const projectId = e.target.closest('.project-card').dataset.projectId;
-                    // Hardcoded project data - replace with dynamic fetching in real app
+                    // Hardcoded project data - in a real application, this would be fetched dynamically
                     const projectData = {
                         'blockchain-project': {
                             title: 'Web Based Crowdfunding using Blockchain',
                             image: './assets/blockchain.jpeg',
                             description: 'This decentralized platform revolutionized fundraising by ensuring transparency and tamper-proof transactions. Leveraging smart contracts, it automated funding distribution and enhanced security through encrypted authentication. Key learnings included deep dives into blockchain integration, real-time data tracking, and designing secure, scalable web architectures.',
                             tags: ['Blockchain', 'Smart Contracts', 'Web3', 'Security', 'Decentralized'],
-                            link: '#'
+                            link: 'https://github.com/Akshayvemula' // Placeholder link
                         },
                         'monkeypox-project': {
                             title: 'Monkey Pox Detection using Deep Learning',
                             image: './assets/deeplearning.jpeg',
                             description: 'Developed a robust deep learning model for automated Monkeypox detection from medical images. Achieved high accuracy through an optimized Convolutional Neural Network (CNN) architecture, advanced image preprocessing techniques, and data augmentation strategies. This project provided invaluable experience in medical imaging analysis, model tuning, and deploying deep learning solutions for critical health applications.',
                             tags: ['Deep Learning', 'CNN', 'Medical Imaging', 'AI/ML', 'Image Processing'],
-                            link: '#'
+                            link: 'https://github.com/Akshayvemula' // Placeholder link
                         }
                     };
 
                     const data = projectData[projectId];
                     if (data) {
+                        // Populate modal with project data
                         modalProjectTitle.textContent = data.title;
                         modalProjectImage.src = data.image;
                         modalProjectDescription.textContent = data.description;
-                        modalProjectTags.innerHTML = '';
+                        modalProjectTags.innerHTML = ''; // Clear previous tags
                         data.tags.forEach(tag => {
                             const span = document.createElement('span');
                             span.className = 'skill-tag';
@@ -840,19 +875,21 @@
                         });
                         modalProjectLink.href = data.link;
 
-                        projectModal.style.display = 'flex';
+                        // Show modal with GSAP animation
+                        projectModal.style.display = 'flex'; // Make modal visible
                         gsap.to(projectModal.querySelector('.project-modal-content'), {
                             opacity: 1,
                             y: 0,
                             scale: 1,
                             duration: 0.5,
-                            ease: "back.out(1.7)"
+                            ease: "back.out(1.7)" // Bounce effect
                         });
-                        document.body.style.overflow = 'hidden'; // Prevent scrolling background
+                        document.body.style.overflow = 'hidden'; // Prevent background scrolling
                     }
                 });
             });
 
+            // Event listener for closing the project modal
             closeProjectModalBtn.addEventListener('click', () => {
                 gsap.to(projectModal.querySelector('.project-modal-content'), {
                     opacity: 0,
@@ -861,16 +898,16 @@
                     duration: 0.4,
                     ease: "power2.in",
                     onComplete: () => {
-                        projectModal.style.display = 'none';
-                        document.body.style.overflow = ''; // Restore scrolling
+                        projectModal.style.display = 'none'; // Hide modal after animation
+                        document.body.style.overflow = ''; // Restore body scrolling
                     }
                 });
             });
 
-            // Close modal when clicking outside content
+            // Close modal when clicking outside the content area
             projectModal.addEventListener('click', (e) => {
                 if (e.target === projectModal) {
-                    closeProjectModalBtn.click();
+                    closeProjectModalBtn.click(); // Trigger close button click
                 }
             });
         });
