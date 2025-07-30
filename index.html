@@ -3,28 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Akshay Vemula - Futuristic Portfolio</title>
+    <title>Akshay Vemula </title>
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%238e2de2' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15H9V7h2v10zm4 0h-2V7h2v10z'/%3E%3C/svg%3E">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts - Inter & Poppins (for more expressive typography) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts - Inter, Poppins, Fira Code -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
     <!-- GSAP CDN for advanced animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollToPlugin.min.js"></script>
     <style>
         /* Custom CSS for enhanced styling and animations */
+        :root {
+            --dark-bg: #1a1a2e;
+            --dark-bg-alt: #20203a;
+            --primary-grad-start: #6a0572;
+            --primary-grad-end: #8e2de2;
+            --text-light: #e0e0e0;
+            --text-dark: #90caf9;
+            --accent-gold: #ffcc00;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #1a1a2e; /* Dark background for modern feel */
-            color: #e0e0e0; /* Light text */
+            background-color: var(--dark-bg);
+            color: var(--text-light);
             line-height: 1.6;
             overflow-x: hidden;
         }
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Poppins', sans-serif;
+        }
+        .font-code {
+            font-family: 'Fira Code', monospace;
         }
 
         .container {
@@ -38,107 +51,128 @@
             position: relative;
             display: inline-block;
             margin-bottom: 3rem;
-            font-size: 3.2rem; /* Larger, bolder titles */
+            font-size: 3.2rem;
             font-weight: 800;
-            color: #e0e0e0;
+            color: var(--text-light);
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Subtle text shadow */
-            opacity: 0; /* Initial state for reveal */
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0;
             transform: translateY(30px);
         }
         .section-title::after {
             content: '';
             position: absolute;
             left: 0;
-            bottom: -15px; /* More space for underline */
-            width: 80%; /* Wider underline */
-            height: 6px; /* Thicker underline */
-            background: linear-gradient(to right, #6a0572, #8e2de2); /* Vibrant gradient underline */
+            bottom: -15px;
+            width: 80%;
+            height: 6px;
+            background: linear-gradient(to right, var(--primary-grad-start), var(--primary-grad-end));
             border-radius: 3px;
-            transform: scaleX(0); /* Initial state for animation */
+            transform: scaleX(0);
             transform-origin: left;
         }
 
-        /* Card Styling - Glassmorphism/Neumorphism inspired */
+        /* Card Styling - Glassmorphism */
         .card {
-            background-color: rgba(255, 255, 255, 0.08); /* Frosted glass effect */
-            border-radius: 1.5rem; /* More rounded */
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1); /* Deeper shadow with inner border */
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 1.5rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
             padding: 2.5rem;
-            backdrop-filter: blur(10px); /* Frosted glass blur */
+            backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.4s ease;
-            opacity: 0; /* Initial state for reveal */
+            opacity: 0;
             transform: translateY(30px);
+            position: relative;
+            overflow: hidden;
         }
         .card:hover {
-            transform: translateY(-12px) scale(1.02); /* More pronounced lift and scale */
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.15); /* Even deeper shadow */
-            background-color: rgba(255, 255, 255, 0.15); /* Slightly brighter on hover */
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(142, 45, 226, 0.3) 0%, rgba(106, 5, 114, 0.3) 25%, transparent 50%, transparent 100%);
+            transform: rotate(0deg);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, transform 0.8s ease-in-out;
+            z-index: -1;
+        }
+        .card:hover::before {
+            transform: rotate(180deg);
+            opacity: 1;
         }
 
-        /* Primary Button Styling - Gradient & Hover */
+        /* Primary Button Styling */
         .btn-primary {
-            background-image: linear-gradient(to right, #6a0572, #8e2de2); /* Vibrant gradient */
+            background-image: linear-gradient(to right, var(--primary-grad-start), var(--primary-grad-end));
             color: white;
-            padding: 1rem 2.5rem; /* Larger padding */
+            padding: 1rem 2.5rem;
             border-radius: 0.75rem;
             font-weight: 600;
             letter-spacing: 0.05em;
             transition: all 0.3s ease;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-            border: none; /* Remove default border */
+            border: none;
         }
         .btn-primary:hover {
-            background-position: right center; /* Shift gradient on hover */
-            transform: translateY(-3px) scale(1.03); /* More lift and scale */
+            transform: translateY(-3px) scale(1.03);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+        .btn-primary:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
 
         /* Icon Styling */
         .icon {
             width: 3rem;
             height: 3rem;
-            fill: url(#gradientIcon); /* Use SVG gradient fill */
+            fill: url(#gradientIcon);
             flex-shrink: 0;
         }
 
-        /* Skill Tag Styling - Bubble/Neumorphism */
+        /* Skill Tag Styling */
         .skill-tag {
-            background-color: #2a2a4a; /* Darker background */
-            color: #90caf9; /* Lighter blue text */
+            background-color: #2a2a4a;
+            color: var(--text-dark);
             padding: 0.6rem 1.2rem;
-            border-radius: 1.5rem; /* Pill shape */
+            border-radius: 1.5rem;
             font-size: 0.95rem;
             font-weight: 500;
             transition: all 0.3s ease;
-            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3), inset -2px -2px 5px rgba(255,255,255,0.05); /* Neumorphic inset shadow */
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3), inset -2px -2px 5px rgba(255,255,255,0.05);
         }
         .skill-tag:hover {
             transform: scale(1.05);
-            background-color: #3a3a5a; /* Slightly lighter on hover */
-            box-shadow: inset 1px 1px 3px rgba(0,0,0,0.2), inset -1px -1px 3px rgba(255,255,255,0.08);
+            background-color: #3a3a5a;
         }
 
-        /* Header Styling (NO sticky position) */
+        /* Header Styling */
         header {
-            background-color: rgba(26, 26, 46, 0.8); /* Semi-transparent dark background */
-            backdrop-filter: blur(10px); /* Glassmorphism for header */
+            background-color: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-            padding-top: 0.75rem; /* Reduced initial padding */
-            padding-bottom: 0.75rem; /* Reduced initial padding */
-            transition: padding 0.3s ease, background-color 0.3s ease; /* Smooth transition for shrinking */
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+            transition: padding 0.3s ease, background-color 0.3s ease;
         }
         header .logo-text {
-            font-size: 2.25rem; /* Reduced initial font size (text-4xl was 2.5rem) */
+            font-size: 2.25rem;
             transition: font-size 0.3s ease;
         }
         header .nav-link {
             transition: color 0.3s ease, transform 0.2s ease, text-shadow 0.3s ease;
             font-weight: 600;
-            color: #e0e0e0;
+            color: var(--text-light);
         }
         header .nav-link:hover {
             color: #a0d9ff;
@@ -146,23 +180,19 @@
             text-shadow: 0 0 10px #a0d9ff;
         }
 
-        /* Section backgrounds - subtle patterns/gradients */
-        section:nth-of-type(odd) {
-            background-color: #1a1a2e;
-        }
-        section:nth-of-type(even) {
-            background-color: #20203a; /* Slightly different dark shade */
-        }
+        /* Section backgrounds */
+        section:nth-of-type(odd) { background-color: var(--dark-bg); }
+        section:nth-of-type(even) { background-color: var(--dark-bg-alt); }
 
-        /* Initial state for elements that will be revealed by IntersectionObserver */
+        /* Initial state for reveal elements */
         .hidden-by-default {
             opacity: 0;
             transform: translateY(50px);
         }
 
-        /* Hero Section Specifics */
+        /* Hero Section */
         #hero {
-            background: linear-gradient(135deg, #1a1a2e 0%, #3a005a 100%); /* Deep, rich gradient */
+            background: linear-gradient(135deg, #1a1a2e 0%, #3a005a 100%);
             min-height: 80vh;
             display: flex;
             align-items: center;
@@ -170,206 +200,128 @@
             position: relative;
             overflow: hidden;
         }
-        .hero-background-shapes {
+        #hero-canvas {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 0;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; opacity: 0.2;
         }
-        .shape {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.05); /* Light, transparent shapes */
-            border-radius: 50%;
-            animation: float 15s infinite ease-in-out alternate;
-            filter: blur(20px); /* Soft blur */
-            opacity: 0; /* Controlled by GSAP */
-        }
-        .shape:nth-child(1) { width: 150px; height: 150px; top: 10%; left: 15%; animation-delay: 0s; }
-        .shape:nth-child(2) { width: 200px; height: 200px; bottom: 20%; right: 10%; animation-delay: 2s; }
-        .shape:nth-child(3) { width: 100px; height: 100px; top: 30%; right: 30%; animation-delay: 4s; }
-        .shape:nth-child(4) { width: 180px; height: 180px; bottom: 5%; left: 40%; animation-delay: 6s; }
-
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(10deg); }
-            100% { transform: translateY(0) rotate(0deg); }
-        }
+        .hero-content { z-index: 10; }
 
         /* Mobile Navigation Overlay */
         .mobile-nav-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom right, #6a0572, #8e2de2);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom right, var(--primary-grad-start), var(--primary-grad-end));
             z-index: 55;
-            display: flex; /* Always flex to maintain layout */
-            flex-direction: column;
-            align-items: center; /* Center horizontally */
-            justify-content: center; /* Center vertically */
-            opacity: 0;
-            visibility: hidden; /* Hidden by default */
-            pointer-events: none; /* Prevent clicks when hidden */
-            transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out; /* Animate both */
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; pointer-events: none;
+            transition: opacity 0.25s ease-in-out, visibility 0.25s ease-in-out;
         }
         .mobile-nav-overlay.active {
-            opacity: 1;
-            visibility: visible; /* Visible when active */
-            pointer-events: auto; /* Allow clicks when active */
+            opacity: 1; visibility: visible; pointer-events: auto;
         }
-        .mobile-nav-overlay ul {
-            list-style: none;
-            padding: 0;
-            text-align: center;
-            width: 100%; /* Ensure ul takes full width for centering */
-        }
-        .mobile-nav-overlay ul li {
-            margin: 1.5rem 0; /* Good spacing */
-            /* GSAP will handle opacity and transform for these elements */
-        }
+        .mobile-nav-overlay ul { list-style: none; padding: 0; text-align: center; width: 100%; }
+        .mobile-nav-overlay ul li { margin: 1.5rem 0; }
         .mobile-nav-overlay ul li a {
-            color: white;
-            font-size: 2rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: color 0.3s ease;
-            display: block; /* Make links block-level for text-align: center to work */
-            padding: 0.5rem 0; /* Add some padding to clickable area */
+            color: white; font-size: 2rem; font-weight: 600; text-decoration: none;
+            transition: color 0.3s ease; display: block; padding: 0.5rem 0;
         }
-        .mobile-nav-overlay ul li a:hover {
-            color: #ffcc00; /* Gold hover for mobile nav */
-        }
-        /* Style for the Download Resume button inside the mobile menu */
-        .mobile-nav-overlay .btn-primary {
-            display: inline-block; /* Keep it inline-block for its own padding/sizing */
-            margin-top: 2rem; /* Add some space above the button */
-            padding: 1rem 2.5rem; /* Ensure consistent button padding */
-            text-align: center; /* Center text within the button */
-        }
+        .mobile-nav-overlay ul li a:hover { color: var(--accent-gold); }
+        .mobile-nav-overlay .btn-primary { margin-top: 2rem; padding: 1rem 2.5rem; }
 
-
-        /* Hamburger Menu Icon Styling */
+        /* Hamburger Menu Icon */
         .hamburger-menu {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            width: 2rem; /* 32px */
-            height: 1.5rem; /* 24px, adjusted for 3 lines with spacing */
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem; /* Increased padding for easier tapping */
-            z-index: 50; /* Ensure it's above other content */
-            position: relative; /* Needed for z-index to work in some contexts */
+            display: flex; flex-direction: column; justify-content: space-around;
+            width: 2rem; height: 1.5rem; background: transparent; border: none;
+            cursor: pointer; padding: 0.5rem; z-index: 60; position: relative;
         }
-
         .hamburger-menu span {
-            display: block;
-            width: 100%;
-            height: 2px; /* Thinner lines for better visual */
-            background: white;
-            border-radius: 9999px; /* Fully rounded ends */
-            transition: all 0.3s ease-in-out;
-            transform-origin: center;
+            display: block; width: 100%; height: 2px; background: white;
+            border-radius: 9999px; transition: all 0.3s ease-in-out; transform-origin: center;
         }
-
-        .hamburger-menu.active span:nth-child(1) {
-            transform: translateY(8px) rotate(45deg); /* Adjust translateY based on new height/spacing */
-        }
-        .hamburger-menu.active span:nth-child(2) {
-            opacity: 0;
-            transform: translateX(-20px);
-        }
-        .hamburger-menu.active span:nth-child(3) {
-            transform: translateY(-8px) rotate(-45deg); /* Adjust translateY */
-        }
-
+        .hamburger-menu.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .hamburger-menu.active span:nth-child(2) { opacity: 0; transform: translateX(-20px); }
+        .hamburger-menu.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
         /* Skill Bar Animation */
         .skill-bar-fill {
             height: 100%;
-            background: linear-gradient(to right, #6a0572, #8e2de2); /* Gradient fill */
-            border-radius: inherit;
-            width: 0; /* Initial state */
+            background: linear-gradient(to right, var(--primary-grad-start), var(--primary-grad-end));
+            border-radius: inherit; width: 0;
         }
 
         /* Project Modal Styles */
         .project-modal {
-            display: none;
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.8);
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(15px); /* Stronger blur for modal */
-            -webkit-backdrop-filter: blur(15px);
+            display: none; position: fixed; z-index: 100; left: 0; top: 0;
+            width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8);
+            align-items: center; justify-content: center; backdrop-filter: blur(15px);
         }
         .project-modal-content {
-            background-color: rgba(30, 30, 50, 0.95); /* Darker, semi-transparent modal background */
-            color: #e0e0e0;
-            padding: 3rem;
-            border-radius: 2rem; /* More rounded */
+            background-color: rgba(30, 30, 50, 0.95); color: var(--text-light);
+            padding: 3rem; border-radius: 2rem;
             box-shadow: 0 25px 50px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.1);
-            width: 90%;
-            max-width: 900px; /* Larger modal */
-            position: relative;
-            transform: translateY(50px) scale(0.8);
-            opacity: 0;
+            width: 90%; max-width: 900px; position: relative;
+            transform: translateY(50px) scale(0.8); opacity: 0;
             transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        .project-modal.active .project-modal-content {
-            transform: translateY(0) scale(1);
-            opacity: 1;
-        }
+        .project-modal.active .project-modal-content { transform: translateY(0) scale(1); opacity: 1; }
         .project-modal .close-button {
-            color: #e0e0e0;
-            position: absolute;
-            top: 1.5rem;
-            right: 2rem;
-            font-size: 3rem; /* Larger close button */
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.2s;
+            color: var(--text-light); position: absolute; top: 1.5rem; right: 2rem;
+            font-size: 3rem; font-weight: bold; cursor: pointer; transition: color 0.2s;
         }
-        .project-modal .close-button:hover,
-        .project-modal .close-button:focus {
-            color: #ffcc00; /* Gold hover */
+        .project-modal .close-button:hover, .project-modal .close-button:focus { color: var(--accent-gold); }
+        .project-modal img { border-radius: 1rem; }
+
+        /* Contact Form Styling */
+        .contact-form {
+            max-width: 800px;
+            margin: 3rem auto 0 auto;
         }
-        .project-modal img {
-            border-radius: 1rem; /* Rounded image in modal */
+        .form-input, .form-textarea {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary-grad-end);
+        }
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        /* Form Status Messages */
+        #form-success-message, #form-error-message {
+            display: none;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        #form-success-message {
+            background-color: rgba(4, 120, 87, 0.8); /* green-700 with opacity */
+            border: 1px solid #065f46; /* green-800 */
+        }
+        #form-error-message {
+            background-color: rgba(185, 28, 28, 0.8); /* red-700 with opacity */
+            border: 1px solid #991b1b; /* red-800 */
         }
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
-            .section-title {
-                font-size: 2.2rem;
-            }
-            .card {
-                padding: 1.5rem;
-            }
-            .btn-primary {
-                padding: 0.8rem 1.8rem;
-                font-size: 0.9rem;
-            }
-            header nav ul {
-                display: none; /* Hide desktop nav links */
-            }
-            .hamburger-menu {
-                display: flex; /* Show hamburger on mobile */
-            }
-            #hero h1 {
-                font-size: 4rem;
-            }
-            #hero p {
-                font-size: 1.5rem;
-            }
+            .section-title { font-size: 2.2rem; }
+            .card { padding: 1.5rem; }
+            .btn-primary { padding: 0.8rem 1.8rem; font-size: 0.9rem; }
+            header nav ul { display: none; }
+            .hamburger-menu { display: flex; }
+            #hero h1 { font-size: 3rem; }
+            #hero p { font-size: 1.25rem; }
         }
     </style>
 </head>
@@ -379,32 +331,28 @@
     <svg width="0" height="0" style="position:absolute;z-index:-1;">
         <defs>
             <linearGradient id="gradientIcon" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#6a0572;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#8e2de2;stop-opacity:1" />
+                <stop offset="0%" style="stop-color:var(--primary-grad-start);stop-opacity:1" />
+                <stop offset="100%" style="stop-color:var(--primary-grad-end);stop-opacity:1" />
             </linearGradient>
         </defs>
     </svg>
 
     <!-- Header Section -->
     <header class="py-3" id="mainHeader">
-        <div class="container flex flex-col md:flex-row items-center justify-between">
-            <div class="text-center md:text-left mb-4 md:mb-0">
+        <div class="container flex items-center justify-between">
+            <div class="text-left">
                 <h1 class="text-2xl font-extrabold mb-1 logo-text text-white">AKSHAY VEMULA</h1>
                 <p class="text-sm font-light text-gray-300">Motivated Computer Science Engineering Student specializing in AI & ML</p>
             </div>
             <nav class="flex items-center space-x-6">
-                <ul class="flex space-x-8 text-lg hidden md:flex">
+                <ul class="flex items-center space-x-8 text-lg hidden md:flex">
                     <li><a href="#about" class="nav-link">About</a></li>
                     <li><a href="#skills" class="nav-link">Skills</a></li>
                     <li><a href="#projects" class="nav-link">Projects</a></li>
                     <li><a href="#education" class="nav-link">Education</a></li>
-                    <li><a href="#certifications" class="nav-link">Certifications</a></li>
                     <li><a href="#contact" class="nav-link">Contact</a></li>
                 </ul>
-                <!-- Download Resume Button -->
-                <a href="./assets/akshayresume.pdf" download="Akshay_Vemula_Resume.pdf" class="btn-primary ml-6 hidden md:inline-block">
-                    Download Resume
-                </a>
+                <a href="./assets/akshayresume.pdf" download class="btn-primary ml-6 hidden md:inline-block" aria-label="Download my resume">Download Resume</a>
                 <!-- Hamburger Menu for Mobile -->
                 <button class="hamburger-menu md:hidden"
                         id="hamburgerMenu" aria-label="Toggle navigation" aria-controls="mobileNavOverlay" aria-expanded="false">
@@ -425,40 +373,31 @@
             <li><a href="#education" class="mobile-nav-link">Education</a></li>
             <li><a href="#certifications" class="mobile-nav-link">Certifications</a></li>
             <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
-            <li>
-                <a href="./assets/akshayresume.pdf" download="AkshayResume.pdf" class="btn-primary mt-8 mobile-nav-link">
-                    Download Resume
-                </a>
-            </li>
+            <li><a href="./assets/akshayresume.pdf" download class="btn-primary" aria-label="Download my resume">Download Resume</a></li>
         </ul>
     </div>
 
     <!-- Hero Section -->
     <section id="hero">
-        <div class="hero-background-shapes">
-            <div class="shape"></div>
-            <div class="shape"></div>
-            <div class="shape"></div>
-            <div class="shape"></div>
-        </div>
-        <div class="container relative z-10 text-white text-center">
-            <h1 class="text-6xl md:text-7xl font-extrabold mb-4 hero-title">Innovate. Create. Impact.</h1>
-            <p class="text-2xl md:text-3xl font-light mb-8 hero-subtitle">Building the future with AI & Software Development</p>
+        <canvas id="hero-canvas"></canvas>
+        <div class="container relative z-10 text-white text-center hero-content">
+            <h1 class="text-6xl md:text-7xl font-extrabold mb-4 hero-title"><span class="font-code text-blue-400">&lt;</span>Innovate. Create. Impact.<span class="font-code text-blue-400">/&gt;</span></h1>
+            <p class="text-2xl md:text-3xl font-light mb-8 hero-subtitle">Building the future with <span class="text-green-400 font-code">AI</span> & <span class="text-yellow-400 font-code">Software Development</span></p>
             <div class="space-x-4 hero-buttons">
-                <a href="#projects" class="btn-primary bg-white text-blue-600 hover:bg-gray-100">View My Work</a>
-                <a href="#contact" class="btn-primary border border-white hover:bg-white hover:text-blue-600">Get in Touch</a>
+                <a href="#projects" class="btn-primary">View My Work</a>
+                <a href="#contact" class="btn-primary">Get in Touch</a>
             </div>
         </div>
     </section>
 
     <!-- About Me Section -->
-    <section id="about" class="py-20 hidden-by-default">
+    <section id="about" class="py-20">
         <div class="container">
             <h2 class="section-title">About Me</h2>
-            <div class="flex flex-col md:flex-row items-center md:space-x-8 mt-8">
-                <div class="md:w-1/3 mb-6 md:mb-0">
-                    <!-- Your photo. Ensure this path is correct relative to your HTML file. -->
-                    <img src="./assets/akshay.jpeg" alt="Akshay Vemula" class="rounded-full w-48 h-48 object-cover mx-auto md:mx-0 border-4 border-purple-500 shadow-lg-xl">
+            <div class="flex flex-col md:flex-row items-center md:space-x-12 mt-8">
+                <div class="md:w-1/3 mb-8 md:mb-0 flex-shrink-0">
+                    <!-- Ensure the image path is correct -->
+                    <img src="./assets/akshay.jpeg" alt="Akshay Vemula" class="rounded-full w-64 h-64 object-cover mx-auto border-4 border-purple-500 shadow-lg-xl">
                 </div>
                 <div class="md:w-2/3 text-lg leading-relaxed text-gray-300">
                     <p class="mb-4">
@@ -475,72 +414,44 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="py-20 hidden-by-default">
+    <section id="skills" class="py-20">
         <div class="container">
             <h2 class="section-title">Technical Skills</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
                 <!-- Programming Languages -->
-                <div class="card flex items-center space-x-4 hidden-by-default">
-                    <!-- Updated SVG for Programming Languages (Code Icon) -->
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="16 18 22 12 16 6"></polyline>
-                        <polyline points="8 6 2 12 8 18"></polyline>
-                    </svg>
+                <div class="card flex items-center space-x-4">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
                     <div class="flex-grow">
-                        <h3 class="text-xl font-semibold mb-1 text-gray-100">Programming Languages</h3>
+                        <h3 class="text-xl font-semibold mb-1 text-gray-100">Languages</h3>
                         <p class="text-gray-300 text-sm">C/C++, Python, HTML, CSS, JavaScript, Java (Basics)</p>
-                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden">
-                            <div class="skill-bar-fill h-2.5 rounded-full" data-skill-level="85%"></div>
-                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden"><div class="skill-bar-fill" data-skill-level="85%"></div></div>
                     </div>
                 </div>
                 <!-- Database -->
-                <div class="card flex items-center space-x-4 hidden-by-default">
-                    <!-- Updated SVG for Databases (Database Icon) -->
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-                        <path d="M2 12A9 3 0 0 0 12 15A9 3 0 0 0 22 12"></path>
-                        <path d="M2 19A9 3 0 0 0 12 22A9 3 0 0 0 22 19"></path>
-                    </svg>
+                <div class="card flex items-center space-x-4">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M2 12A9 3 0 0 0 12 15A9 3 0 0 0 22 12"></path><path d="M2 19A9 3 0 0 0 12 22A9 3 0 0 0 22 19"></path></svg>
                     <div class="flex-grow">
                         <h3 class="text-xl font-semibold mb-1 text-gray-100">Databases</h3>
                         <p class="text-gray-300 text-sm">SQL, MongoDB</p>
-                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden">
-                            <div class="skill-bar-fill h-2.5 rounded-full" data-skill-level="75%"></div>
-                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden"><div class="skill-bar-fill" data-skill-level="75%"></div></div>
                     </div>
                 </div>
                 <!-- Frameworks -->
-                <div class="card flex items-center space-x-4 hidden-by-default">
-                    <!-- Updated SVG for Frameworks (Layers Icon) -->
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                        <polyline points="2 17 12 22 22 17"></polyline>
-                        <polyline points="2 12 12 17 22 12"></polyline>
-                    </svg>
+                <div class="card flex items-center space-x-4">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                     <div class="flex-grow">
                         <h3 class="text-xl font-semibold mb-1 text-gray-100">Frameworks</h3>
                         <p class="text-gray-300 text-sm">React.js, Bootstrap</p>
-                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden">
-                            <div class="skill-bar-fill h-2.5 rounded-full" data-skill-level="80%"></div>
-                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden"><div class="skill-bar-fill" data-skill-level="80%"></div></div>
                     </div>
                 </div>
                 <!-- Personal Skills -->
-                <div class="card flex items-center space-x-4 hidden-by-default">
-                    <!-- Updated SVG for Personal Skills (Users/Team Icon) -->
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="9" cy="7" r="4"></circle>
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                    </svg>
+                <div class="card flex items-center space-x-4">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                     <div class="flex-grow">
                         <h3 class="text-xl font-semibold mb-1 text-gray-100">Personal Skills</h3>
-                        <p class="text-gray-300 text-sm">Effective Communication, Problem-Solving, Adaptability & Leadership</p>
-                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden">
-                            <div class="skill-bar-fill h-2.5 rounded-full" data-skill-level="90%"></div>
-                        </div>
+                        <p class="text-gray-300 text-sm">Communication, Problem-Solving, Adaptability & Leadership</p>
+                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden"><div class="skill-bar-fill" data-skill-level="90%"></div></div>
                     </div>
                 </div>
             </div>
@@ -548,45 +459,33 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-20 hidden-by-default">
+    <section id="projects" class="py-20">
         <div class="container">
             <h2 class="section-title">Projects</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-                <!-- Project Card 1: WEB BASED CROWDFUNDING USING BLOCKCHAIN -->
-                <div class="card project-card hidden-by-default" data-project-id="blockchain-project">
+                <!-- Project Card 1 -->
+                <div class="card project-card" data-project-id="blockchain-project">
                     <img src="./assets/blockchain.jpeg" alt="Web Based Crowdfunding using Blockchain" class="rounded-lg mb-4 w-full h-48 object-cover">
                     <h3 class="text-2xl font-semibold mb-2 text-gray-100">Web Based Crowdfunding using Blockchain</h3>
-                    <p class="text-gray-300 mb-4 line-clamp-3">
-                        Developed a decentralized platform for transparent and tamper-proof fundraising. Improved funding security
-                        with encrypted authentication and smart contract automation. Gained experience in Blockchain integration,
-                        real-time tracking, and secure web architecture.
-                    </p>
+                    <p class="text-gray-300 mb-4 line-clamp-3">Developed a decentralized platform for transparent and tamper-proof fundraising. Improved funding security with encrypted authentication and smart contract automation.</p>
                     <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="skill-tag">Blockchain</span>
-                        <span class="skill-tag">Smart Contracts</span>
-                        <span class="skill-tag">Web Architecture</span>
-                        <span class="skill-tag">Security</span>
+                        <span class="skill-tag">Blockchain</span><span class="skill-tag">Smart Contracts</span><span class="skill-tag">Web Security</span>
                     </div>
-                    <div class="flex justify-between items-center">
-                        <a href="https://github.com/Akshayvemula" class="btn-primary inline-block" target="_blank" rel="noopener noreferrer" aria-label="View Blockchain Project on GitHub">View Project</a>
+                    <div class="flex justify-between items-center mt-auto pt-4">
+                        <a href="https://github.com/Akshayvemula" class="btn-primary" target="_blank" rel="noopener noreferrer">View Project</a>
                         <button class="text-purple-400 hover:underline text-sm font-medium ml-4 view-details-btn">View Details</button>
                     </div>
                 </div>
-                <!-- Project Card 2: MONKEY POX DETECTION USING DEEP LEARNING -->
-                <div class="card project-card hidden-by-default" data-project-id="monkeypox-project">
+                <!-- Project Card 2 -->
+                <div class="card project-card" data-project-id="monkeypox-project">
                     <img src="./assets/deeplearning.jpeg" alt="Monkey Pox Detection using Deep Learning" class="rounded-lg mb-4 w-full h-48 object-cover">
                     <h3 class="text-2xl font-semibold mb-2 text-gray-100">Monkey Pox Detection using Deep Learning</h3>
-                    <p class="text-gray-300 mb-4 line-clamp-3">
-                        Built a deep learning model for automatic Monkeypox detection using medical images. Achieved high accuracy through an optimized Convolutional Neural Network (CNN) architecture, advanced image preprocessing techniques, and data augmentation strategies. This project provided invaluable experience in medical imaging analysis, model tuning, and deploying deep learning solutions for critical health applications.
-                    </p>
+                    <p class="text-gray-300 mb-4 line-clamp-3">Built a deep learning model for automatic Monkeypox detection using medical images. Achieved high accuracy through an optimized Convolutional Neural Network (CNN).</p>
                     <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="skill-tag">Deep Learning</span>
-                        <span class="skill-tag">CNN</span>
-                        <span class="skill-tag">Medical Imaging</span>
-                        <span class="skill-tag">Data Augmentation</span>
+                        <span class="skill-tag">Deep Learning</span><span class="skill-tag">CNN</span><span class="skill-tag">Medical Imaging</span>
                     </div>
-                    <div class="flex justify-between items-center">
-                        <a href="https://github.com/Akshayvemula" class="btn-primary inline-block" target="_blank" rel="noopener noreferrer" aria-label="View Monkey Pox Project on GitHub">View Project</a>
+                    <div class="flex justify-between items-center mt-auto pt-4">
+                        <a href="https://github.com/Akshayvemula" class="btn-primary" target="_blank" rel="noopener noreferrer">View Project</a>
                         <button class="text-purple-400 hover:underline text-sm font-medium ml-4 view-details-btn">View Details</button>
                     </div>
                 </div>
@@ -595,83 +494,65 @@
     </section>
 
     <!-- Education Section -->
-    <section id="education" class="py-20 hidden-by-default">
+    <section id="education" class="py-20">
         <div class="container">
             <h2 class="section-title">Education</h2>
-            <div class="flex flex-col gap-8 mt-8"> <!-- Changed grid to flex flex-col and added gap -->
-                <div class="card hidden-by-default">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-100">JYOTHISHMATHI INSTITUTE OF TECHNOLOGY & SCIENCE</h3>
-                    <p class="text-gray-300">B.TECH, CSE(AIML) | Karimnagar</p>
-                    <p class="text-gray-400 text-sm mt-1">Cumulative GPA: 6.70</p>
-                    <p class="text-gray-400 text-sm">2021-2025</p>
-                </div>
-                <div class="card hidden-by-default">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-100">ALPHORES JUNIOR COLLEGE</h3>
-                    <p class="text-gray-300">Intermediate | Karimnagar</p>
-                    <p class="text-gray-400 text-sm mt-1">Cumulative GPA: 7.42</p>
-                    <p class="text-gray-400 text-sm">2019-2021</p>
-                </div>
-                <div class="card hidden-by-default">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-100">KERALA ENGLISH MEDIUM HIGH SCHOOL</h3>
-                    <p class="text-gray-300">High School | Dharmapuri</p>
-                    <p class="text-gray-400 text-sm mt-1">Cumulative GPA: 9.2</p>
-                    <p class="text-gray-400 text-sm">2018-2019</p>
-                </div>
+            <div class="flex flex-col gap-8 mt-8">
+                <div class="card"><h3 class="text-xl font-semibold mb-2 text-gray-100">JYOTHISHMATHI INSTITUTE OF TECHNOLOGY & SCIENCE</h3><p class="text-gray-300">B.TECH, CSE(AIML) | Karimnagar</p><p class="text-gray-400 text-sm mt-1">Cumulative GPA: 6.70 | 2021-2025</p></div>
+                <div class="card"><h3 class="text-xl font-semibold mb-2 text-gray-100">ALPHORES JUNIOR COLLEGE</h3><p class="text-gray-300">Intermediate | Karimnagar</p><p class="text-gray-400 text-sm mt-1">Cumulative GPA: 7.42 | 2019-2021</p></div>
+                <div class="card"><h3 class="text-xl font-semibold mb-2 text-gray-100">KERALA ENGLISH MEDIUM HIGH SCHOOL</h3><p class="text-gray-300">High School | Dharmapuri</p><p class="text-gray-400 text-sm mt-1">Cumulative GPA: 9.2 | 2018-2019</p></div>
             </div>
         </div>
     </section>
 
-    <!-- Certifications & Training Section -->
-    <section id="certifications" class="py-20 hidden-by-default">
+    <!-- Certifications Section -->
+    <section id="certifications" class="py-20">
         <div class="container">
-            <h2 class="section-title">Certifications & Training</h2>
+            <h2 class="section-title">Certifications</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-                <!-- Certification cards - now trigger modal -->
-                <div class="card certification-card block cursor-pointer hidden-by-default" data-certification-id="cpp-programming" aria-label="View C++ Programming Certificate">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-100">C++ Programming</h3>
-                    <p class="text-gray-300">By UDEMY</p>
-                </div>
-                <div class="card certification-card block cursor-pointer hidden-by-default" data-certification-id="web-development" aria-label="View Web Development Certificate">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-100">Web Development</h3>
-                    <p class="text-gray-300">By UDEMY</p>
-                </div>
-                <div class="card certification-card block cursor-pointer hidden-by-default" data-certification-id="python-programming" aria-label="View Python Programming Certificate">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-100">Python Programming</h3>
-                    <p class="text-gray-300">By UDEMY</p>
-                </div>
-                <div class="card certification-card block cursor-pointer hidden-by-default" data-certification-id="cyber-security" aria-label="View Cyber Security Certificate">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-100">Cyber Security</h3>
-                    <p class="text-gray-300">By CISCO</p>
-                </div>
-                <div class="card certification-card block cursor-pointer hidden-by-default" data-certification-id="data-analytics" aria-label="View Data Analytics Certificate">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-100">Data Analytics</h3>
-                    <p class="text-gray-300">By CISCO</p>
-                </div>
-                <div class="card certification-card block cursor-pointer hidden-by-default" data-certification-id="genai-data-analytics" aria-label="View GenAI Powered Data Analytics Certificate">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-100">GenAI Powered Data Analytics</h3>
-                    <p class="text-gray-300">By TATA Forage</p>
-                </div>
+                <div class="card certification-card block cursor-pointer" data-certification-id="cpp-programming"><h3 class="text-xl font-semibold mb-2 text-gray-100">C++ Programming</h3><p class="text-gray-300">By UDEMY</p></div>
+                <div class="card certification-card block cursor-pointer" data-certification-id="web-development"><h3 class="text-xl font-semibold mb-2 text-gray-100">Web Development</h3><p class="text-gray-300">By UDEMY</p></div>
+                <div class="card certification-card block cursor-pointer" data-certification-id="python-programming"><h3 class="text-xl font-semibold mb-2 text-gray-100">Python Programming</h3><p class="text-gray-300">By UDEMY</p></div>
+                <div class="card certification-card block cursor-pointer" data-certification-id="cyber-security"><h3 class="text-xl font-semibold mb-2 text-gray-100">Cyber Security</h3><p class="text-gray-300">By CISCO</p></div>
+                <div class="card certification-card block cursor-pointer" data-certification-id="data-analytics"><h3 class="text-xl font-semibold mb-2 text-gray-100">Data Analytics</h3><p class="text-gray-300">By CISCO</p></div>
+                <div class="card certification-card block cursor-pointer" data-certification-id="genai-data-analytics"><h3 class="text-xl font-semibold mb-2 text-gray-100">GenAI Powered Data Analytics</h3><p class="text-gray-300">By TATA Forage</p></div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 hidden-by-default">
+    <section id="contact" class="py-20">
         <div class="container">
             <h2 class="section-title">Contact Me</h2>
             <div class="mt-8 text-center">
-                <p class="text-lg text-gray-300 mb-8">
-                    I'm always open to new opportunities, collaborations, and interesting projects.
-                    Feel free to reach out or connect on social media!
-                </p>
-
-                <div class="flex justify-center space-x-6 mt-10">
-                    <a href="https://www.linkedin.com/in/akshay-vemula-111910250" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 transition-colors duration-300 transform hover:scale-125" aria-label="LinkedIn Profile">
-                        <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                    </a>
-                    <a href="https://github.com/Akshayvemula" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 transition-colors duration-300 transform hover:scale-125" aria-label="GitHub Profile">
-                        <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.08-.731.084-.716.084-.716 1.192.085 1.816 1.229 1.816 1.229 1.062 1.815 2.781 1.299 3.45.993.108-.775.418-1.299.762-1.594-2.646-.295-5.43-1.321-5.43-5.921 0-1.31.465-2.381 1.236-3.221-.124-.295-.536-1.523.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.003.404 2.293-1.552 3.301-1.23 3.301-1.23.653 1.653.241 2.881.117 3.176.77.84 1.235 1.911 1.235 3.221 0 4.61-2.783 5.624-5.445 5.91-.42.365-.793.947-.793 1.903v2.809c0 .319.192.694.8.576 4.766-1.587 8.205-6.085 8.205-11.385 0-6.627-5.373-12-12-12z"/></svg>
-                    </a>
+                <p class="text-lg text-gray-300 mb-8 max-w-3xl mx-auto">I'm always open to new opportunities, collaborations, and interesting projects. Feel free to reach out or connect on social media!</p>
+                
+                <!-- Contact Form -->
+                <form id="contactForm" action="https://formspree.io/f/xanbbqwo" method="POST" class="contact-form text-left">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label for="name" class="sr-only">Your Name</label>
+                            <input type="text" id="name" name="name" placeholder="Your Name" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="email" class="sr-only">Your Email</label>
+                            <input type="email" id="email" name="email" placeholder="Your Email" class="form-input" required>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label for="message" class="sr-only">Your Message</label>
+                        <textarea id="message" name="message" placeholder="Your Message" class="form-textarea" required></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn-primary w-full md:w-auto">Send Message</button>
+                    </div>
+                </form>
+                <!-- Form Status Messages -->
+                <div id="form-success-message">
+                    <p>Thank you for your message! I will get back to you shortly.</p>
+                </div>
+                <div id="form-error-message">
+                    <p>Oops! There was a problem submitting your form. Please try again later.</p>
                 </div>
             </div>
         </div>
@@ -680,7 +561,18 @@
     <!-- Footer Section -->
     <footer class="bg-gray-900 text-gray-400 py-8 text-center">
         <div class="container">
-            <p>&copy; 2025 Akshay Vemula. All rights reserved.</p>
+             <div class="flex justify-center space-x-6 mb-6">
+                <a href="https://www.linkedin.com/in/akshay-vemula-111910250" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition-colors duration-300 transform hover:scale-125" aria-label="LinkedIn Profile">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </a>
+                <a href="https://github.com/Akshayvemula" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition-colors duration-300 transform hover:scale-125" aria-label="GitHub Profile">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.08-.731.084-.716.084-.716 1.192.085 1.816 1.229 1.816 1.229 1.062 1.815 2.781 1.299 3.45.993.108-.775.418-1.299.762-1.594-2.646-.295-5.43-1.321-5.43-5.921 0-1.31.465-2.381 1.236-3.221-.124-.295-.536-1.523.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.003.404 2.293-1.552 3.301-1.23 3.301-1.23.653 1.653.241 2.881.117 3.176.77.84 1.235 1.911 1.235 3.221 0 4.61-2.783 5.624-5.445 5.91-.42.365-.793.947-.793 1.903v2.809c0 .319.192.694.8.576 4.766-1.587 8.205-6.085 8.205-11.385 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+                <a href="mailto:akshayvemula112@gmail.com" class="text-gray-400 hover:text-purple-400 transition-colors duration-300 transform hover:scale-125" aria-label="Email Akshay Vemula">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.728v15.454h24v-15.454l-12 9.728z"/></svg>
+                </a>
+            </div>
+            <p>&copy; <span id="year"></span> Akshay Vemula. All rights reserved.</p>
             <p class="text-sm mt-2">Designed and Developed with Passion</p>
         </div>
     </footer>
@@ -690,7 +582,6 @@
         <div class="project-modal-content">
             <span class="close-button" id="closeProjectModal" aria-label="Close Project Details">&times;</span>
             <h3 class="text-3xl font-bold text-gray-100 mb-4" id="modalTitle"></h3>
-            <!-- Updated image styling for full display -->
             <img src="" alt="Media" id="modalMedia" class="rounded-lg mb-4 w-full h-auto max-h-[70vh] object-contain">
             <p class="text-gray-300 mb-4" id="modalDescription"></p>
             <div class="flex flex-wrap gap-2 mb-4" id="modalTags"></div>
@@ -699,376 +590,275 @@
     </div>
 
     <script>
-        // Register GSAP plugins for animations
+        // Particle animation for hero section
+        function initHeroCanvas() {
+            const canvas = document.getElementById('hero-canvas');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            const particleCount = 50;
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = canvas.parentElement.offsetHeight;
+            }
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.radius = Math.random() * 2 + 0.5;
+                    this.color = `rgba(142, 45, 226, ${Math.random() * 0.5 + 0.1})`;
+                    this.vx = (Math.random() - 0.5) * 0.5;
+                    this.vy = (Math.random() - 0.5) * 0.5;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                }
+            }
+
+            function createParticles() {
+                particles = [];
+                for (let i = 0; i < particleCount; i++) particles.push(new Particle());
+            }
+
+            function animateParticles() {
+                requestAnimationFrame(animateParticles);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => { p.update(); p.draw(); });
+            }
+
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            createParticles();
+            animateParticles();
+        }
+
+        // Register GSAP plugins
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
         document.addEventListener('DOMContentLoaded', () => {
-            console.log("DOM Content Loaded. Initializing animations and functionality.");
+            initHeroCanvas();
+            
+            // Set dynamic year in footer
+            document.getElementById('year').textContent = new Date().getFullYear();
 
-            const mainHeader = document.getElementById('mainHeader');
-            const logoText = mainHeader.querySelector('.logo-text');
-            const navLinks = mainHeader.querySelectorAll('.nav-link');
-            const downloadResumeBtn = mainHeader.querySelector('.btn-primary.ml-6');
-
-            // --- Header Animations (Initial Load) ---
-            // Animate logo, navigation links, and download resume button on page load.
-            gsap.from(logoText, { duration: 1, y: -50, opacity: 0, ease: "power3.out" });
-            gsap.from(navLinks, { duration: 0.8, y: -30, opacity: 0, stagger: 0.1, ease: "power2.out", delay: 0.2 });
-            gsap.from(downloadResumeBtn, { duration: 0.8, y: -30, opacity: 0, ease: "power2.out", delay: 0.5 });
-
-
-            // --- Smooth Scrolling for Navigation ---
-            // Add click listeners to all navigation links for smooth scrolling to sections.
-            document.querySelectorAll('nav a.nav-link, .mobile-nav-overlay a.mobile-nav-link').forEach(anchor => {
+            // --- Smooth Scrolling ---
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
-                    e.preventDefault(); // Prevent default jump behavior
-                    const targetId = this.getAttribute('href'); // Get the target section ID
-                    const targetElement = document.querySelector(targetId); // Find the target element
-
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        // Use GSAP's ScrollToPlugin for smooth scrolling animation
                         gsap.to(window, {
-                            duration: 0.8, // Slightly faster scroll for mobile menu clicks
-                            scrollTo: {y: targetElement.offsetTop},
-                            ease: "power2.inOut",
-                            onComplete: () => {
-                                // Ensure the target element is fully visible after scroll
-                                // This is usually handled by the scroll, no explicit animation needed here
-                                // targetElement.classList.remove('hidden-by-default'); // Remove class if present
-                                // Close mobile menu if it's open after scrolling is complete
-                                if (mobileNavOverlay.classList.contains('active')) {
-                                    toggleMobileMenu(); // This will also re-enable body scrolling
-                                }
-                            }
-                        });
-                    }
-                });
-            });
-
-            // --- Scroll Reveal Animation (using IntersectionObserver for robustness) ---
-            // Select elements that should reveal with a scroll animation.
-            // Added main sections to the reveal elements list.
-            const revealElements = document.querySelectorAll('.section-title, #about, #skills, #projects, #education, #certifications, #contact, .card');
-
-            // Options for the Intersection Observer
-            const observerOptions = {
-                root: null, // Use the viewport as the root
-                rootMargin: '0px',
-                threshold: 0.1 // Trigger when 10% of the element is visible
-            };
-
-            // Create an Intersection Observer instance
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const el = entry.target;
-                        let delay = 0;
-
-                        // Apply staggered delay for cards for a nice cascade effect
-                        if (el.classList.contains('card')) {
-                            const cardIndex = Array.from(el.parentNode.children).indexOf(el);
-                            delay = cardIndex * 0.1; // Stagger by 0.1s for each card
-                        } else if (el.classList.contains('section-title')) {
-                            // Custom animation for section titles (text and underline)
-                            gsap.to(el, { opacity: 1, y: 0, duration: 1, ease: "power2.out" });
-                            gsap.to(el.querySelector('::after'), {
-                                scaleX: 1,
-                                duration: 0.8,
-                                ease: "power2.out",
-                                delay: 0.5 // Delay underline animation after title appears
-                            });
-                            observer.unobserve(el); // Stop observing once revealed
-                            return; // Skip default reveal for section titles
-                        } else if (el.id === 'about' || el.id === 'contact' || el.id === 'education') {
-                            // Specific delays for about/contact/education sections (for their direct content)
-                            // Now that sections themselves are observed, this might need adjustment if children are also observed.
-                            // For now, these specific animations are kept for their children.
-                            if (el.querySelector('.md\\:w-1\\/3')) { // About image
-                                gsap.to(el.querySelector('.md\\:w-1\\/3'), { opacity: 1, y: 0, duration: 1, ease: "power2.out", delay: 0.1 });
-                            }
-                            if (el.querySelector('.md\\:w-2\\/3')) { // About text
-                                gsap.to(el.querySelector('.md\\:w-2\\/3'), { opacity: 1, y: 0, duration: 1, ease: "power2.out", delay: 0.2 });
-                            }
-                            // Social icons for contact section
-                            if (el.querySelector('.flex.justify-center.space-x-6')) {
-                                gsap.from(el.querySelectorAll('.flex.justify-center.space-x-6 a'), { opacity: 0, scale: 0.5, duration: 0.8, stagger: 0.1, ease: "back.out(1.7)", delay: 0.4 });
-                            }
-                            // Don't unobserve the section itself if its children are also observed separately.
-                            // The 'hidden-by-default' class handles the section's overall reveal.
-                        }
-
-
-                        gsap.to(el, {
-                            opacity: 1,
-                            y: 0,
                             duration: 1,
-                            ease: "power2.out",
-                            delay: delay,
+                            scrollTo: { y: targetElement, offsetY: 70 },
+                            ease: "power2.inOut"
                         });
-                        observer.unobserve(el); // Stop observing once revealed
+                        // Close mobile menu if open
+                        const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+                        if (mobileNavOverlay.classList.contains('active')) {
+                            toggleMobileMenu();
+                        }
                     }
                 });
-            }, observerOptions);
-
-            // Observe all elements marked for reveal
-            revealElements.forEach(el => {
-                el.classList.add('hidden-by-default'); // Add the hiding class initially
-                observer.observe(el);
             });
 
-
-            // --- Hero Section Animations (GSAP Timelines for sequence) ---
-            const heroTimeline = gsap.timeline({ defaults: { ease: "power3.out" } });
-            // Animate hero title, subtitle, and buttons
-            heroTimeline.from(".hero-title", { duration: 1.2, y: 50, opacity: 0 })
-                        .from(".hero-subtitle", { duration: 1.2, y: 50, opacity: 0 }, "-=0.8") // Start 0.8s before previous animation ends
-                        .from(".hero-buttons a", { duration: 1, y: 30, opacity: 0, stagger: 0.2 }, "-=0.7"); // Stagger buttons
-
-            // Animate background shapes in the hero section
-            gsap.to(".hero-background-shapes .shape", {
-                opacity: 0.1, // Make shapes subtly visible
-                scale: 1.2,
-                duration: 15,
-                repeat: -1, // Loop indefinitely
-                yoyo: true, // Reverse animation on alternate loops
-                ease: "power1.inOut",
-                stagger: {
-                    each: 0.5, // Stagger start times for each shape
-                    from: "random" // Randomize starting shape
+            // --- Scroll Reveal Animations ---
+            const revealElements = document.querySelectorAll('.section-title, .card');
+            revealElements.forEach(el => {
+                el.classList.add('hidden-by-default');
+                gsap.to(el, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 85%",
+                        toggleActions: "play none none none",
+                    }
+                });
+            });
+            gsap.to('.section-title::after', {
+                scaleX: 1,
+                duration: 0.8,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: '.section-title',
+                    start: "top 85%",
+                    toggleActions: "play none none none",
                 }
             });
 
 
-            // --- Hamburger Menu Functionality (GSAP for transitions) ---
+            // --- Hero Section Animations ---
+            const heroTimeline = gsap.timeline({ defaults: { ease: "power3.out" } });
+            heroTimeline.from(".hero-title", { duration: 1.2, y: 50, opacity: 0 })
+                        .from(".hero-subtitle", { duration: 1.2, y: 50, opacity: 0 }, "-=0.8")
+                        .from(".hero-buttons a", { duration: 1, y: 30, opacity: 0, stagger: 0.2 }, "-=0.7");
+
+            // --- Hamburger Menu ---
             const hamburgerMenu = document.getElementById('hamburgerMenu');
             const mobileNavOverlay = document.getElementById('mobileNavOverlay');
-            const mobileNavLinks = document.querySelectorAll('.mobile-nav-overlay .mobile-nav-link');
-
-            // Initialize mobileNavLinks to be hidden before timeline runs
-            gsap.set(mobileNavLinks, { opacity: 0, y: 20 });
-
-            // GSAP timeline for mobile menu open/close animation
-            const mobileMenuTimeline = gsap.timeline({
-                paused: true,
-                reversed: true,
-                onStart: () => { // When timeline starts playing forward (menu opens)
-                    mobileNavOverlay.style.visibility = 'visible';
-                    mobileNavOverlay.style.pointerEvents = 'auto';
-                },
-                onReverseComplete: () => { // When timeline finishes reversing (menu closes)
-                    mobileNavOverlay.style.visibility = 'hidden';
-                    mobileNavOverlay.style.pointerEvents = 'none';
-                }
-            });
-
-            // Animate the links' opacity and position
-            mobileMenuTimeline.to(mobileNavLinks, { opacity: 1, y: 0, stagger: 0.1, duration: 0.15, ease: "power2.out" }); // Faster link animation
-
-            // Function to toggle mobile menu
             const toggleMobileMenu = () => {
-                hamburgerMenu.classList.toggle('active');
-                mobileNavOverlay.classList.toggle('active'); // This toggles CSS visibility/opacity/pointer-events
-
-                // Toggle ARIA expanded attribute
-                const isExpanded = hamburgerMenu.getAttribute('aria-expanded') === 'true';
-                hamburgerMenu.setAttribute('aria-expanded', !isExpanded);
-
-                // Play or reverse the GSAP timeline
-                if (mobileMenuTimeline.reversed()) {
-                    mobileMenuTimeline.play();
-                    document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
-                } else {
-                    mobileMenuTimeline.reverse();
-                    // Restore body scrolling after the menu closing animation is complete
-                    setTimeout(() => {
-                        document.body.style.overflow = '';
-                    }, 250); // Match overlay transition duration (0.25s)
-                }
+                const isActive = hamburgerMenu.classList.toggle('active');
+                mobileNavOverlay.classList.toggle('active', isActive);
+                hamburgerMenu.setAttribute('aria-expanded', isActive);
+                document.body.style.overflow = isActive ? 'hidden' : '';
             };
             hamburgerMenu.addEventListener('click', toggleMobileMenu);
 
-            // Close mobile menu when a link inside it is clicked
-            mobileNavLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    // The smooth scroll onComplete will now handle closing the menu.
-                    // This ensures the menu stays open until the scroll animation finishes.
-                });
-            });
-
-            // --- Skill Bar Animation (GSAP with ScrollTrigger) ---
-            const skillBars = document.querySelectorAll('.skill-bar-fill');
-            skillBars.forEach(bar => {
+            // --- Skill Bar Animation ---
+            document.querySelectorAll('.skill-bar-fill').forEach(bar => {
                 gsap.to(bar, {
-                    width: bar.dataset.skillLevel, // Animate to the width specified in data-skill-level
+                    width: bar.dataset.skillLevel,
                     duration: 1.8,
                     ease: "power2.out",
                     scrollTrigger: {
-                        trigger: bar.closest('.card'), // Trigger when the parent skill card is in view
-                        start: "top 80%", // Start animation when top of card is 80% from viewport top
-                        toggleActions: "play none none none", // Play animation once
+                        trigger: bar.closest('.card'),
+                        start: "top 80%",
+                        toggleActions: "play none none none",
                     }
                 });
             });
 
-            // --- Project/Certification Modal Functionality (GSAP for smooth transitions) ---
+            // --- Project/Certification Modal ---
             const projectModal = document.getElementById('projectModal');
             const closeProjectModalBtn = document.getElementById('closeProjectModal');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalMedia = document.getElementById('modalMedia');
-            const modalDescription = document.getElementById('modalDescription');
-            const modalTags = document.getElementById('modalTags');
-            const modalActionLink = document.getElementById('modalActionLink');
-
-            // Data for projects
-            const projectData = {
-                'blockchain-project': {
-                    title: 'Web Based Crowdfunding using Blockchain',
-                    image: './assets/blockchain.jpeg',
-                    description: 'This decentralized platform revolutionized fundraising by ensuring transparency and tamper-proof transactions. Leveraging smart contracts, it automated funding distribution and enhanced security through encrypted authentication. Key learnings included deep dives into blockchain integration, real-time data tracking, and designing secure, scalable web architectures.',
-                    tags: ['Blockchain', 'Smart Contracts', 'Web3', 'Security', 'Decentralized'],
-                    link: 'https://github.com/Akshayvemula', // Placeholder link
-                    type: 'project'
+            const modalData = {
+                projects: {
+                    'blockchain-project': { title: 'Web Based Crowdfunding using Blockchain', image: './assets/blockchain.jpeg', description: 'This decentralized platform revolutionized fundraising by ensuring transparency and tamper-proof transactions. Leveraging smart contracts, it automated funding distribution and enhanced security through encrypted authentication. Key learnings included deep dives into blockchain integration, real-time data tracking, and designing secure, scalable web architectures.', tags: ['Blockchain', 'Smart Contracts', 'Web3', 'Security', 'Decentralized'], link: 'https://github.com/Akshayvemula' },
+                    'monkeypox-project': { title: 'Monkey Pox Detection using Deep Learning', image: './assets/deeplearning.jpeg', description: 'Built a deep learning model for automatic Monkeypox detection from medical images. Achieved high accuracy through an optimized Convolutional Neural Network (CNN) architecture, advanced image preprocessing techniques, and data augmentation strategies. This project provided invaluable experience in medical imaging analysis, model tuning, and deploying deep learning solutions for critical health applications.', tags: ['Deep Learning', 'CNN', 'Medical Imaging', 'AI/ML', 'Image Processing'], link: 'https://github.com/Akshayvemula' }
                 },
-                'monkeypox-project': {
-                    title: 'Monkey Pox Detection using Deep Learning',
-                    image: './assets/deeplearning.jpeg',
-                    description: 'Built a deep learning model for automatic Monkeypox detection from medical images. Achieved high accuracy through an optimized Convolutional Neural Network (CNN) architecture, advanced image preprocessing techniques, and data augmentation strategies. This project provided invaluable experience in medical imaging analysis, model tuning, and deploying deep learning solutions for critical health applications.',
-                    tags: ['Deep Learning', 'CNN', 'Medical Imaging', 'AI/ML', 'Image Processing'],
-                    link: 'https://github.com/Akshayvemula', // Placeholder link
-                    type: 'project'
+                certifications: {
+                    'cpp-programming': { title: 'C++ Programming Certificate', image: './assets/cpp.jpg' },
+                    'web-development': { title: 'Web Development Certificate', image: './assets/webdev.jpg' },
+                    'python-programming': { title: 'Python Programming Certificate', image: './assets/python.jpg' },
+                    'cyber-security': { title: 'Cyber Security Certificate', image: './assets/cyber_security.jpg' },
+                    'data-analytics': { title: 'Data Analytics Certificate', image: './assets/data.jpg' },
+                    'genai-data-analytics': { title: 'GenAI Powered Data Analytics Certificate', image: './assets/tata.jpg' }
                 }
             };
 
-            // Data for certifications
-            const certificationData = {
-                'cpp-programming': {
-                    title: 'C++ Programming Certificate',
-                    image: './assets/cpp.jpg',
-                    link: 'https://ibb.co/93NCcsy0',
-                    type: 'certification'
-                },
-                'web-development': {
-                    title: 'Web Development Certificate',
-                    image: './assets/webdev.jpg',
-                    link: 'https://www.udemy.com/certificate/UC-a5bc7f9a-aaa8-4e1f-a5b2-e1b52558577e/',
-                    type: 'certification'
-                },
-                'python-programming': {
-                    title: 'Python Programming Certificate',
-                    image: './assets/python.jpg',
-                    link: 'https://www.udemy.com/certificate/UC-example-python-certificate/',
-                    type: 'certification'
-                },
-                'cyber-security': {
-                    title: 'Cyber Security Certificate',
-                    image: './assets/cyber_security.jpg',
-                    link: 'https://ibb.co/RkbVzPyx',
-                    type: 'certification'
-                },
-                'data-analytics': {
-                    title: 'Data Analytics Certificate',
-                    image: './assets/data.jpg',
-                    link: 'https://ibb.co/BVTW3mrV',
-                    type: 'certification'
-                },
-                'genai-data-analytics': {
-                    title: 'GenAI Powered Data Analytics Certificate',
-                    image: './assets/tata.jpg',
-                    link: 'https://ibb.co/LDpdVhnY',
-                    type: 'certification'
+            const openModal = (data) => {
+                document.getElementById('modalTitle').textContent = data.title;
+                document.getElementById('modalMedia').src = data.image;
+                const descriptionEl = document.getElementById('modalDescription');
+                const tagsEl = document.getElementById('modalTags');
+                const linkEl = document.getElementById('modalActionLink');
+
+                descriptionEl.textContent = data.description || '';
+                descriptionEl.style.display = data.description ? 'block' : 'none';
+                
+                tagsEl.innerHTML = '';
+                if (data.tags) {
+                    data.tags.forEach(tag => {
+                        const span = document.createElement('span');
+                        span.className = 'skill-tag';
+                        span.textContent = tag;
+                        tagsEl.appendChild(span);
+                    });
+                    tagsEl.style.display = 'flex';
+                } else {
+                    tagsEl.style.display = 'none';
                 }
+
+                if (data.link) {
+                    linkEl.href = data.link;
+                    linkEl.textContent = 'View Project';
+                    linkEl.style.display = 'inline-block';
+                } else {
+                    linkEl.style.display = 'none';
+                }
+
+                projectModal.style.display = 'flex';
+                gsap.to(projectModal.querySelector('.project-modal-content'), { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.7)" });
+                document.body.style.overflow = 'hidden';
             };
 
+            const closeModal = () => {
+                gsap.to(projectModal.querySelector('.project-modal-content'), {
+                    opacity: 0, y: 50, scale: 0.9, duration: 0.4, ease: "power2.in",
+                    onComplete: () => {
+                        projectModal.style.display = 'none';
+                        document.body.style.overflow = '';
+                    }
+                });
+            };
 
-            // Event listener for "View Details" buttons on project cards
             document.querySelectorAll('.project-card .view-details-btn').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const projectId = e.target.closest('.project-card').dataset.projectId;
-                    const data = projectData[projectId];
-                    if (data) {
-                        // Populate modal with project data
-                        modalTitle.textContent = data.title;
-                        modalMedia.src = data.image;
-                        modalDescription.textContent = data.description;
-                        modalTags.innerHTML = ''; // Clear previous tags
-                        data.tags.forEach(tag => {
-                            const span = document.createElement('span');
-                            span.className = 'skill-tag';
-                            span.textContent = tag;
-                            modalTags.appendChild(span);
-                        });
-                        modalTags.style.display = 'flex'; // Show tags for projects
-                        modalActionLink.href = data.link;
-                        modalActionLink.textContent = 'View Project'; // Set button text
-                        modalActionLink.style.display = 'inline-block'; // Show button for projects
-                        modalDescription.style.display = 'block'; // Show description for projects
-
-                        // Show modal with GSAP animation
-                        projectModal.style.display = 'flex'; // Make modal visible
-                        gsap.to(projectModal.querySelector('.project-modal-content'), {
-                            opacity: 1,
-                            y: 0,
-                            scale: 1,
-                            duration: 0.5,
-                            ease: "back.out(1.7)" // Bounce effect
-                        });
-                        document.body.style.overflow = 'hidden'; // Prevent background scrolling
-                    }
+                    openModal(modalData.projects[projectId]);
                 });
             });
 
-            // Event listener for clicking on certification cards
             document.querySelectorAll('.certification-card').forEach(card => {
                 card.addEventListener('click', (e) => {
-                    const certificationId = e.target.closest('.certification-card').dataset.certificationId;
-                    const data = certificationData[certificationId];
-                    if (data) {
-                        // Populate modal with certification data
-                        modalTitle.textContent = data.title;
-                        modalMedia.src = data.image;
-                        // For certifications, hide description, tags, and action link
-                        modalDescription.textContent = '';
-                        modalDescription.style.display = 'none';
-                        modalTags.innerHTML = '';
-                        modalTags.style.display = 'none';
-                        modalActionLink.style.display = 'none';
-
-
-                        // Show modal with GSAP animation
-                        projectModal.style.display = 'flex'; // Make modal visible
-                        gsap.to(projectModal.querySelector('.project-modal-content'), {
-                            opacity: 1,
-                            y: 0,
-                            scale: 1,
-                            duration: 0.5,
-                            ease: "back.out(1.7)" // Bounce effect
-                        });
-                        document.body.style.overflow = 'hidden'; // Prevent background scrolling
-                    }
+                    const certId = e.target.closest('.certification-card').dataset.certificationId;
+                    openModal(modalData.certifications[certId]);
                 });
             });
 
+            closeProjectModalBtn.addEventListener('click', closeModal);
+            projectModal.addEventListener('click', (e) => { if (e.target === projectModal) closeModal(); });
+            
+            // --- Contact Form Handling ---
+            const contactForm = document.getElementById('contactForm');
+            const successMessage = document.getElementById('form-success-message');
+            const errorMessage = document.getElementById('form-error-message');
+            const submitButton = contactForm.querySelector('button[type="submit"]');
 
-            // Event listener for closing the project modal
-            closeProjectModalBtn.addEventListener('click', () => {
-                gsap.to(projectModal.querySelector('.project-modal-content'), {
-                    opacity: 0,
-                    y: 50,
-                    scale: 0.9,
-                    duration: 0.4,
-                    ease: "power2.in",
-                    onComplete: () => {
-                        projectModal.style.display = 'none'; // Hide modal after animation
-                        document.body.style.overflow = ''; // Restore body scrolling
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const originalButtonText = submitButton.textContent;
+                submitButton.disabled = true;
+                submitButton.textContent = 'Sending...';
+
+                // Hide messages before sending
+                successMessage.style.display = 'none';
+                errorMessage.style.display = 'none';
+
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
                     }
+                }).then(response => {
+                    if (response.ok) {
+                        successMessage.style.display = 'block';
+                        gsap.from(successMessage, { opacity: 0, y: 20, duration: 0.5 });
+                        contactForm.reset();
+                        setTimeout(() => {
+                            gsap.to(successMessage, { opacity: 0, duration: 0.5, onComplete: () => successMessage.style.display = 'none' });
+                        }, 5000); // Hide message after 5 seconds
+                    } else {
+                        throw new Error('Network response was not ok.');
+                    }
+                }).catch(error => {
+                    errorMessage.style.display = 'block';
+                    gsap.from(errorMessage, { opacity: 0, y: 20, duration: 0.5 });
+                    setTimeout(() => {
+                        gsap.to(errorMessage, { opacity: 0, duration: 0.5, onComplete: () => errorMessage.style.display = 'none' });
+                    }, 5000); // Hide message after 5 seconds
+                }).finally(() => {
+                    submitButton.disabled = false;
+                    submitButton.textContent = originalButtonText;
                 });
-            });
-
-            // Close modal when clicking outside the content area
-            projectModal.addEventListener('click', (e) => {
-                if (e.target === projectModal) {
-                    closeProjectModalBtn.click(); // Trigger close button click
-                }
             });
         });
     </script>
