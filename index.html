@@ -104,7 +104,7 @@
             flex-shrink: 0;
         }
 
-        /* Skill Tag Styling - Bubble/Neumorphic */
+        /* Skill Tag Styling - Bubble/Neumorphism */
         .skill-tag {
             background-color: #2a2a4a; /* Darker background */
             color: #90caf9; /* Lighter blue text */
@@ -154,11 +154,10 @@
             background-color: #20203a; /* Slightly different dark shade */
         }
 
-        /* Scroll Reveal Animations - Initial state */
-        .reveal {
+        /* Initial state for elements that will be revealed by IntersectionObserver */
+        .hidden-by-default {
             opacity: 0;
             transform: translateY(50px);
-            /* Transition handled by GSAP, not CSS transition property here for initial state */
         }
 
         /* Hero Section Specifics */
@@ -206,27 +205,29 @@
             height: 100%;
             background: linear-gradient(to bottom right, #6a0572, #8e2de2);
             z-index: 55;
-            display: flex;
+            display: flex; /* Always flex to maintain layout */
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            align-items: center; /* Center horizontally */
+            justify-content: center; /* Center vertically */
             opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+            visibility: hidden; /* Hidden by default */
+            pointer-events: none; /* Prevent clicks when hidden */
+            transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out; /* Animate both */
         }
         .mobile-nav-overlay.active {
             opacity: 1;
-            visibility: visible;
+            visibility: visible; /* Visible when active */
+            pointer-events: auto; /* Allow clicks when active */
         }
         .mobile-nav-overlay ul {
             list-style: none;
             padding: 0;
             text-align: center;
+            width: 100%; /* Ensure ul takes full width for centering */
         }
         .mobile-nav-overlay ul li {
-            margin: 1.5rem 0;
-            opacity: 0; /* For staggered animation */
-            transform: translateY(20px); /* For staggered animation */
+            margin: 1.5rem 0; /* Good spacing */
+            /* GSAP will handle opacity and transform for these elements */
         }
         .mobile-nav-overlay ul li a {
             color: white;
@@ -234,25 +235,55 @@
             font-weight: 600;
             text-decoration: none;
             transition: color 0.3s ease;
+            display: block; /* Make links block-level for text-align: center to work */
+            padding: 0.5rem 0; /* Add some padding to clickable area */
         }
         .mobile-nav-overlay ul li a:hover {
             color: #ffcc00; /* Gold hover for mobile nav */
         }
+        /* Style for the Download Resume button inside the mobile menu */
+        .mobile-nav-overlay .btn-primary {
+            display: inline-block; /* Keep it inline-block for its own padding/sizing */
+            margin-top: 2rem; /* Add some space above the button */
+            padding: 1rem 2.5rem; /* Ensure consistent button padding */
+            text-align: center; /* Center text within the button */
+        }
 
-        /* Hamburger Menu Icon Animation */
+
+        /* Hamburger Menu Icon Styling */
+        .hamburger-menu {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 2rem; /* 32px */
+            height: 1.5rem; /* 24px, adjusted for 3 lines with spacing */
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem; /* Increased padding for easier tapping */
+            z-index: 50; /* Ensure it's above other content */
+            position: relative; /* Needed for z-index to work in some contexts */
+        }
+
         .hamburger-menu span {
+            display: block;
+            width: 100%;
+            height: 2px; /* Thinner lines for better visual */
+            background: white;
+            border-radius: 9999px; /* Fully rounded ends */
+            transition: all 0.3s ease-in-out;
             transform-origin: center;
         }
 
         .hamburger-menu.active span:nth-child(1) {
-            transform: translateY(7px) rotate(45deg);
+            transform: translateY(8px) rotate(45deg); /* Adjust translateY based on new height/spacing */
         }
         .hamburger-menu.active span:nth-child(2) {
             opacity: 0;
-            transform: translateX(-20px); /* Move out of view */
+            transform: translateX(-20px);
         }
         .hamburger-menu.active span:nth-child(3) {
-            transform: translateY(-7px) rotate(-45deg);
+            transform: translateY(-8px) rotate(-45deg); /* Adjust translateY */
         }
 
 
@@ -375,11 +406,11 @@
                     Download Resume
                 </a>
                 <!-- Hamburger Menu for Mobile -->
-                <button class="hamburger-menu md:hidden flex flex-col justify-around w-8 h-6 bg-transparent border-none cursor-pointer z-50 focus:outline-none p-2"
+                <button class="hamburger-menu md:hidden"
                         id="hamburgerMenu" aria-label="Toggle navigation" aria-controls="mobileNavOverlay" aria-expanded="false">
-                    <span class="block w-full h-0.5 bg-white rounded transition-all duration-300"></span>
-                    <span class="block w-full h-0.5 bg-white rounded transition-all duration-300"></span>
-                    <span class="block w-full h-0.5 bg-white rounded transition-all duration-300"></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </button>
             </nav>
         </div>
@@ -421,7 +452,7 @@
     </section>
 
     <!-- About Me Section -->
-    <section id="about" class="py-20">
+    <section id="about" class="py-20 hidden-by-default">
         <div class="container">
             <h2 class="section-title">About Me</h2>
             <div class="flex flex-col md:flex-row items-center md:space-x-8 mt-8">
@@ -444,12 +475,12 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="py-20">
+    <section id="skills" class="py-20 hidden-by-default">
         <div class="container">
             <h2 class="section-title">Technical Skills</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
                 <!-- Programming Languages -->
-                <div class="card flex items-center space-x-4">
+                <div class="card flex items-center space-x-4 hidden-by-default">
                     <!-- Updated SVG for Programming Languages (Code Icon) -->
                     <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="16 18 22 12 16 6"></polyline>
@@ -464,7 +495,7 @@
                     </div>
                 </div>
                 <!-- Database -->
-                <div class="card flex items-center space-x-4">
+                <div class="card flex items-center space-x-4 hidden-by-default">
                     <!-- Updated SVG for Databases (Database Icon) -->
                     <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
@@ -480,7 +511,7 @@
                     </div>
                 </div>
                 <!-- Frameworks -->
-                <div class="card flex items-center space-x-4">
+                <div class="card flex items-center space-x-4 hidden-by-default">
                     <!-- Updated SVG for Frameworks (Layers Icon) -->
                     <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
@@ -496,7 +527,7 @@
                     </div>
                 </div>
                 <!-- Personal Skills -->
-                <div class="card flex items-center space-x-4">
+                <div class="card flex items-center space-x-4 hidden-by-default">
                     <!-- Updated SVG for Personal Skills (Users/Team Icon) -->
                     <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -517,12 +548,12 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-20">
+    <section id="projects" class="py-20 hidden-by-default">
         <div class="container">
             <h2 class="section-title">Projects</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
                 <!-- Project Card 1: WEB BASED CROWDFUNDING USING BLOCKCHAIN -->
-                <div class="card project-card" data-project-id="blockchain-project">
+                <div class="card project-card hidden-by-default" data-project-id="blockchain-project">
                     <img src="./assets/blockchain.jpeg" alt="Web Based Crowdfunding using Blockchain" class="rounded-lg mb-4 w-full h-48 object-cover">
                     <h3 class="text-2xl font-semibold mb-2 text-gray-100">Web Based Crowdfunding using Blockchain</h3>
                     <p class="text-gray-300 mb-4 line-clamp-3">
@@ -542,13 +573,11 @@
                     </div>
                 </div>
                 <!-- Project Card 2: MONKEY POX DETECTION USING DEEP LEARNING -->
-                <div class="card project-card" data-project-id="monkeypox-project">
+                <div class="card project-card hidden-by-default" data-project-id="monkeypox-project">
                     <img src="./assets/deeplearning.jpeg" alt="Monkey Pox Detection using Deep Learning" class="rounded-lg mb-4 w-full h-48 object-cover">
                     <h3 class="text-2xl font-semibold mb-2 text-gray-100">Monkey Pox Detection using Deep Learning</h3>
                     <p class="text-gray-300 mb-4 line-clamp-3">
-                        Built a deep learning model for automatic Monkeypox detection using medical images. Achieved accurate
-                        classification through optimized CNN architecture and preprocessing. Gained experience in medical imaging,
-                        model tuning, and data augmentation.
+                        Built a deep learning model for automatic Monkeypox detection using medical images. Achieved high accuracy through an optimized Convolutional Neural Network (CNN) architecture, advanced image preprocessing techniques, and data augmentation strategies. This project provided invaluable experience in medical imaging analysis, model tuning, and deploying deep learning solutions for critical health applications.
                     </p>
                     <div class="flex flex-wrap gap-2 mb-4">
                         <span class="skill-tag">Deep Learning</span>
@@ -566,23 +595,23 @@
     </section>
 
     <!-- Education Section -->
-    <section id="education" class="py-20">
+    <section id="education" class="py-20 hidden-by-default">
         <div class="container">
             <h2 class="section-title">Education</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-                <div class="card">
+            <div class="flex flex-col gap-8 mt-8"> <!-- Changed grid to flex flex-col and added gap -->
+                <div class="card hidden-by-default">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">JYOTHISHMATHI INSTITUTE OF TECHNOLOGY & SCIENCE</h3>
                     <p class="text-gray-300">B.TECH, CSE(AIML) | Karimnagar</p>
                     <p class="text-gray-400 text-sm mt-1">Cumulative GPA: 6.70</p>
                     <p class="text-gray-400 text-sm">2021-2025</p>
                 </div>
-                <div class="card">
+                <div class="card hidden-by-default">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">ALPHORES JUNIOR COLLEGE</h3>
                     <p class="text-gray-300">Intermediate | Karimnagar</p>
                     <p class="text-gray-400 text-sm mt-1">Cumulative GPA: 7.42</p>
                     <p class="text-gray-400 text-sm">2019-2021</p>
                 </div>
-                <div class="card">
+                <div class="card hidden-by-default">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">KERALA ENGLISH MEDIUM HIGH SCHOOL</h3>
                     <p class="text-gray-300">High School | Dharmapuri</p>
                     <p class="text-gray-400 text-sm mt-1">Cumulative GPA: 9.2</p>
@@ -593,32 +622,32 @@
     </section>
 
     <!-- Certifications & Training Section -->
-    <section id="certifications" class="py-20">
+    <section id="certifications" class="py-20 hidden-by-default">
         <div class="container">
             <h2 class="section-title">Certifications & Training</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
                 <!-- Certification cards - now trigger modal -->
-                <div class="card certification-card block cursor-pointer" data-certification-id="cpp-programming" aria-label="View C++ Programming Certificate">
+                <div class="card certification-card block cursor-pointer hidden-by-default" data-certification-id="cpp-programming" aria-label="View C++ Programming Certificate">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">C++ Programming</h3>
                     <p class="text-gray-300">By UDEMY</p>
                 </div>
-                <div class="card certification-card block cursor-pointer" data-certification-id="web-development" aria-label="View Web Development Certificate">
+                <div class="card certification-card block cursor-pointer hidden-by-default" data-certification-id="web-development" aria-label="View Web Development Certificate">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">Web Development</h3>
                     <p class="text-gray-300">By UDEMY</p>
                 </div>
-                <div class="card certification-card block cursor-pointer" data-certification-id="python-programming" aria-label="View Python Programming Certificate">
+                <div class="card certification-card block cursor-pointer hidden-by-default" data-certification-id="python-programming" aria-label="View Python Programming Certificate">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">Python Programming</h3>
                     <p class="text-gray-300">By UDEMY</p>
                 </div>
-                <div class="card certification-card block cursor-pointer" data-certification-id="cyber-security" aria-label="View Cyber Security Certificate">
+                <div class="card certification-card block cursor-pointer hidden-by-default" data-certification-id="cyber-security" aria-label="View Cyber Security Certificate">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">Cyber Security</h3>
                     <p class="text-gray-300">By CISCO</p>
                 </div>
-                <div class="card certification-card block cursor-pointer" data-certification-id="data-analytics" aria-label="View Data Analytics Certificate">
+                <div class="card certification-card block cursor-pointer hidden-by-default" data-certification-id="data-analytics" aria-label="View Data Analytics Certificate">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">Data Analytics</h3>
                     <p class="text-gray-300">By CISCO</p>
                 </div>
-                <div class="card certification-card block cursor-pointer" data-certification-id="genai-data-analytics" aria-label="View GenAI Powered Data Analytics Certificate">
+                <div class="card certification-card block cursor-pointer hidden-by-default" data-certification-id="genai-data-analytics" aria-label="View GenAI Powered Data Analytics Certificate">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">GenAI Powered Data Analytics</h3>
                     <p class="text-gray-300">By TATA Forage</p>
                 </div>
@@ -627,7 +656,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20">
+    <section id="contact" class="py-20 hidden-by-default">
         <div class="container">
             <h2 class="section-title">Contact Me</h2>
             <div class="mt-8 text-center">
@@ -697,19 +726,29 @@
                     const targetElement = document.querySelector(targetId); // Find the target element
 
                     if (targetElement) {
-                        // Close mobile menu if it's active
-                        if (mobileNavOverlay.classList.contains('active')) {
-                            toggleMobileMenu();
-                        }
                         // Use GSAP's ScrollToPlugin for smooth scrolling animation
-                        gsap.to(window, { duration: 1, scrollTo: {y: targetElement.offsetTop}, ease: "power2.inOut" });
+                        gsap.to(window, {
+                            duration: 0.8, // Slightly faster scroll for mobile menu clicks
+                            scrollTo: {y: targetElement.offsetTop},
+                            ease: "power2.inOut",
+                            onComplete: () => {
+                                // Ensure the target element is fully visible after scroll
+                                // This is usually handled by the scroll, no explicit animation needed here
+                                // targetElement.classList.remove('hidden-by-default'); // Remove class if present
+                                // Close mobile menu if it's open after scrolling is complete
+                                if (mobileNavOverlay.classList.contains('active')) {
+                                    toggleMobileMenu(); // This will also re-enable body scrolling
+                                }
+                            }
+                        });
                     }
                 });
             });
 
             // --- Scroll Reveal Animation (using IntersectionObserver for robustness) ---
             // Select elements that should reveal with a scroll animation.
-            const revealElements = document.querySelectorAll('.section-title, #about .md\\:w-1\\/3, #about .md\\:w-2\\/3, #contact .text-center, .card, #education .card');
+            // Added main sections to the reveal elements list.
+            const revealElements = document.querySelectorAll('.section-title, #about, #skills, #projects, #education, #certifications, #contact, .card');
 
             // Options for the Intersection Observer
             const observerOptions = {
@@ -741,7 +780,9 @@
                             observer.unobserve(el); // Stop observing once revealed
                             return; // Skip default reveal for section titles
                         } else if (el.id === 'about' || el.id === 'contact' || el.id === 'education') {
-                            // Specific reveal animations for elements within About, Contact, and Education sections
+                            // Specific delays for about/contact/education sections (for their direct content)
+                            // Now that sections themselves are observed, this might need adjustment if children are also observed.
+                            // For now, these specific animations are kept for their children.
                             if (el.querySelector('.md\\:w-1\\/3')) { // About image
                                 gsap.to(el.querySelector('.md\\:w-1\\/3'), { opacity: 1, y: 0, duration: 1, ease: "power2.out", delay: 0.1 });
                             }
@@ -752,11 +793,11 @@
                             if (el.querySelector('.flex.justify-center.space-x-6')) {
                                 gsap.from(el.querySelectorAll('.flex.justify-center.space-x-6 a'), { opacity: 0, scale: 0.5, duration: 0.8, stagger: 0.1, ease: "back.out(1.7)", delay: 0.4 });
                             }
-                            observer.unobserve(el); // Stop observing once revealed
-                            return; // Skip default reveal for these sections
+                            // Don't unobserve the section itself if its children are also observed separately.
+                            // The 'hidden-by-default' class handles the section's overall reveal.
                         }
 
-                        // Default reveal animation for other elements
+
                         gsap.to(el, {
                             opacity: 1,
                             y: 0,
@@ -771,6 +812,7 @@
 
             // Observe all elements marked for reveal
             revealElements.forEach(el => {
+                el.classList.add('hidden-by-default'); // Add the hiding class initially
                 observer.observe(el);
             });
 
@@ -802,30 +844,54 @@
             const mobileNavOverlay = document.getElementById('mobileNavOverlay');
             const mobileNavLinks = document.querySelectorAll('.mobile-nav-overlay .mobile-nav-link');
 
+            // Initialize mobileNavLinks to be hidden before timeline runs
+            gsap.set(mobileNavLinks, { opacity: 0, y: 20 });
+
             // GSAP timeline for mobile menu open/close animation
-            const mobileMenuTimeline = gsap.timeline({ paused: true, reversed: true });
-            mobileMenuTimeline.to(mobileNavOverlay, { opacity: 1, visibility: 'visible', duration: 0.4, ease: "power2.inOut" })
-                              .from(mobileNavLinks, { opacity: 0, y: 20, stagger: 0.1, duration: 0.3 }, "-=0.2"); // Stagger mobile links
+            const mobileMenuTimeline = gsap.timeline({
+                paused: true,
+                reversed: true,
+                onStart: () => { // When timeline starts playing forward (menu opens)
+                    mobileNavOverlay.style.visibility = 'visible';
+                    mobileNavOverlay.style.pointerEvents = 'auto';
+                },
+                onReverseComplete: () => { // When timeline finishes reversing (menu closes)
+                    mobileNavOverlay.style.visibility = 'hidden';
+                    mobileNavOverlay.style.pointerEvents = 'none';
+                }
+            });
+
+            // Animate the links' opacity and position
+            mobileMenuTimeline.to(mobileNavLinks, { opacity: 1, y: 0, stagger: 0.1, duration: 0.15, ease: "power2.out" }); // Faster link animation
 
             // Function to toggle mobile menu
             const toggleMobileMenu = () => {
                 hamburgerMenu.classList.toggle('active');
+                mobileNavOverlay.classList.toggle('active'); // This toggles CSS visibility/opacity/pointer-events
+
                 // Toggle ARIA expanded attribute
                 const isExpanded = hamburgerMenu.getAttribute('aria-expanded') === 'true';
                 hamburgerMenu.setAttribute('aria-expanded', !isExpanded);
 
-                mobileMenuTimeline.reversed() ? mobileMenuTimeline.play() : mobileMenuTimeline.reverse();
-                // Prevent body scrolling when mobile menu is open
-                document.body.style.overflow = mobileNavOverlay.classList.contains('active') ? 'hidden' : '';
+                // Play or reverse the GSAP timeline
+                if (mobileMenuTimeline.reversed()) {
+                    mobileMenuTimeline.play();
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+                } else {
+                    mobileMenuTimeline.reverse();
+                    // Restore body scrolling after the menu closing animation is complete
+                    setTimeout(() => {
+                        document.body.style.overflow = '';
+                    }, 250); // Match overlay transition duration (0.25s)
+                }
             };
             hamburgerMenu.addEventListener('click', toggleMobileMenu);
 
             // Close mobile menu when a link inside it is clicked
             mobileNavLinks.forEach(link => {
                 link.addEventListener('click', () => {
-                    if (mobileNavOverlay.classList.contains('active')) {
-                        toggleMobileMenu();
-                    }
+                    // The smooth scroll onComplete will now handle closing the menu.
+                    // This ensures the menu stays open until the scroll animation finishes.
                 });
             });
 
@@ -847,11 +913,11 @@
             // --- Project/Certification Modal Functionality (GSAP for smooth transitions) ---
             const projectModal = document.getElementById('projectModal');
             const closeProjectModalBtn = document.getElementById('closeProjectModal');
-            const modalTitle = document.getElementById('modalTitle'); // Changed from modalProjectTitle
-            const modalMedia = document.getElementById('modalMedia'); // Changed from modalProjectImage
-            const modalDescription = document.getElementById('modalDescription'); // Changed from modalProjectDescription
-            const modalTags = document.getElementById('modalTags'); // Changed from modalProjectTags
-            const modalActionLink = document.getElementById('modalActionLink'); // Changed from modalProjectLink
+            const modalTitle = document.getElementById('modalTitle');
+            const modalMedia = document.getElementById('modalMedia');
+            const modalDescription = document.getElementById('modalDescription');
+            const modalTags = document.getElementById('modalTags');
+            const modalActionLink = document.getElementById('modalActionLink');
 
             // Data for projects
             const projectData = {
@@ -877,37 +943,37 @@
             const certificationData = {
                 'cpp-programming': {
                     title: 'C++ Programming Certificate',
-                    image: './assets/cpp.jpg', // **UPDATE THIS PATH**
+                    image: './assets/cpp.jpg',
                     link: 'https://ibb.co/93NCcsy0',
                     type: 'certification'
                 },
                 'web-development': {
                     title: 'Web Development Certificate',
-                    image: './assets/webdev.jpg', // **UPDATE THIS PATH**
+                    image: './assets/webdev.jpg',
                     link: 'https://www.udemy.com/certificate/UC-a5bc7f9a-aaa8-4e1f-a5b2-e1b52558577e/',
                     type: 'certification'
                 },
                 'python-programming': {
                     title: 'Python Programming Certificate',
-                    image: './assets/python.jpg', // **UPDATE THIS PATH**
+                    image: './assets/python.jpg',
                     link: 'https://www.udemy.com/certificate/UC-example-python-certificate/',
                     type: 'certification'
                 },
                 'cyber-security': {
                     title: 'Cyber Security Certificate',
-                    image: './assets/certificates/cyber_security_certificate.jpg', // **UPDATE THIS PATH**
+                    image: './assets/cyber_security.jpg',
                     link: 'https://ibb.co/RkbVzPyx',
                     type: 'certification'
                 },
                 'data-analytics': {
                     title: 'Data Analytics Certificate',
-                    image: './assets/data.jpg', // **UPDATE THIS PATH**
+                    image: './assets/data.jpg',
                     link: 'https://ibb.co/BVTW3mrV',
                     type: 'certification'
                 },
                 'genai-data-analytics': {
                     title: 'GenAI Powered Data Analytics Certificate',
-                    image: './assets/tata.jpg', // **UPDATE THIS PATH**
+                    image: './assets/tata.jpg',
                     link: 'https://ibb.co/LDpdVhnY',
                     type: 'certification'
                 }
