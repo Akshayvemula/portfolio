@@ -239,6 +239,23 @@
             color: #ffcc00; /* Gold hover for mobile nav */
         }
 
+        /* Hamburger Menu Icon Animation */
+        .hamburger-menu span {
+            transform-origin: center;
+        }
+
+        .hamburger-menu.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        .hamburger-menu.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-20px); /* Move out of view */
+        }
+        .hamburger-menu.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+
         /* Skill Bar Animation */
         .skill-bar-fill {
             height: 100%;
@@ -358,7 +375,7 @@
                     Download Resume
                 </a>
                 <!-- Hamburger Menu for Mobile -->
-                <button class="hamburger-menu md:hidden flex flex-col justify-around w-8 h-6 bg-transparent border-none cursor-pointer p-0 z-50 focus:outline-none"
+                <button class="hamburger-menu md:hidden flex flex-col justify-around w-8 h-6 bg-transparent border-none cursor-pointer z-50 focus:outline-none p-2"
                         id="hamburgerMenu" aria-label="Toggle navigation" aria-controls="mobileNavOverlay" aria-expanded="false">
                     <span class="block w-full h-0.5 bg-white rounded transition-all duration-300"></span>
                     <span class="block w-full h-0.5 bg-white rounded transition-all duration-300"></span>
@@ -580,31 +597,31 @@
         <div class="container">
             <h2 class="section-title">Certifications & Training</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-                <!-- Certification cards - now clickable -->
-                <a href="https://ibb.co/93NCcsy0" target="_blank" rel="noopener noreferrer" class="card block" aria-label="View C++ Programming Certificate">
+                <!-- Certification cards - now trigger modal -->
+                <div class="card certification-card block cursor-pointer" data-certification-id="cpp-programming" aria-label="View C++ Programming Certificate">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">C++ Programming</h3>
                     <p class="text-gray-300">By UDEMY</p>
-                </a>
-                <a href="https://www.udemy.com/certificate/UC-a5bc7f9a-aaa8-4e1f-a5b2-e1b52558577e/" target="_blank" rel="noopener noreferrer" class="card block" aria-label="View Web Development Certificate">
+                </div>
+                <div class="card certification-card block cursor-pointer" data-certification-id="web-development" aria-label="View Web Development Certificate">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">Web Development</h3>
                     <p class="text-gray-300">By UDEMY</p>
-                </a>
-                <a href="https://www.canva.com/design/DAGuon6qEts/4c8-KlWpOcryFo577JWoIg/edit?utm_content=DAGuon6qEts&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" target="_blank" rel="noopener noreferrer" class="card block" aria-label="View Python Programming Certificate">
+                </div>
+                <div class="card certification-card block cursor-pointer" data-certification-id="python-programming" aria-label="View Python Programming Certificate">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">Python Programming</h3>
                     <p class="text-gray-300">By UDEMY</p>
-                </a>
-                <a href="https://ibb.co/RkbVzPyx" target="_blank" rel="noopener noreferrer" class="card block" aria-label="View Cyber Security Certificate">
+                </div>
+                <div class="card certification-card block cursor-pointer" data-certification-id="cyber-security" aria-label="View Cyber Security Certificate">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">Cyber Security</h3>
                     <p class="text-gray-300">By CISCO</p>
-                </a>
-                <a href="https://ibb.co/BVTW3mrV" target="_blank" rel="noopener noreferrer" class="card block" aria-label="View Data Analytics Certificate">
+                </div>
+                <div class="card certification-card block cursor-pointer" data-certification-id="data-analytics" aria-label="View Data Analytics Certificate">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">Data Analytics</h3>
                     <p class="text-gray-300">By CISCO</p>
-                </a>
-                <a href="https://ibb.co/LDpdVhnY" target="_blank" rel="noopener noreferrer" class="card block" aria-label="View GenAI Powered Data Analytics Certificate">
+                </div>
+                <div class="card certification-card block cursor-pointer" data-certification-id="genai-data-analytics" aria-label="View GenAI Powered Data Analytics Certificate">
                     <h3 class="text-xl font-semibold mb-2 text-gray-100">GenAI Powered Data Analytics</h3>
                     <p class="text-gray-300">By TATA Forage</p>
-                </a>
+                </div>
             </div>
         </div>
     </section>
@@ -616,11 +633,8 @@
             <div class="mt-8 text-center">
                 <p class="text-lg text-gray-300 mb-8">
                     I'm always open to new opportunities, collaborations, and interesting projects.
-                    Feel free to reach out and connect on social media!
+                    Feel free to reach out or connect on social media!
                 </p>
-
-                <!-- Contact Form -->
-                
 
                 <div class="flex justify-center space-x-6 mt-10">
                     <a href="https://www.linkedin.com/in/akshay-vemula-111910250" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 transition-colors duration-300 transform hover:scale-125" aria-label="LinkedIn Profile">
@@ -646,11 +660,12 @@
     <div id="projectModal" class="project-modal" role="dialog" aria-modal="true" aria-labelledby="modalProjectTitle">
         <div class="project-modal-content">
             <span class="close-button" id="closeProjectModal" aria-label="Close Project Details">&times;</span>
-            <h3 class="text-3xl font-bold text-gray-100 mb-4" id="modalProjectTitle"></h3>
-            <img src="" alt="Project Image" id="modalProjectImage" class="rounded-lg mb-4 w-full h-64 object-cover">
-            <p class="text-gray-300 mb-4" id="modalProjectDescription"></p>
-            <div class="flex flex-wrap gap-2 mb-4" id="modalProjectTags"></div>
-            <a href="#" class="btn-primary" id="modalProjectLink" target="_blank" rel="noopener noreferrer">Visit Project</a>
+            <h3 class="text-3xl font-bold text-gray-100 mb-4" id="modalTitle"></h3>
+            <!-- Updated image styling for full display -->
+            <img src="" alt="Media" id="modalMedia" class="rounded-lg mb-4 w-full h-auto max-h-[70vh] object-contain">
+            <p class="text-gray-300 mb-4" id="modalDescription"></p>
+            <div class="flex flex-wrap gap-2 mb-4" id="modalTags"></div>
+            <a href="#" class="btn-primary" id="modalActionLink" target="_blank" rel="noopener noreferrer"></a>
         </div>
     </div>
 
@@ -829,51 +844,98 @@
                 });
             });
 
-            // --- Project Modal Functionality (GSAP for smooth transitions) ---
+            // --- Project/Certification Modal Functionality (GSAP for smooth transitions) ---
             const projectModal = document.getElementById('projectModal');
             const closeProjectModalBtn = document.getElementById('closeProjectModal');
-            const modalProjectTitle = document.getElementById('modalProjectTitle');
-            const modalProjectImage = document.getElementById('modalProjectImage');
-            const modalProjectDescription = document.getElementById('modalProjectDescription');
-            const modalProjectTags = document.getElementById('modalProjectTags');
-            const modalProjectLink = document.getElementById('modalProjectLink');
+            const modalTitle = document.getElementById('modalTitle'); // Changed from modalProjectTitle
+            const modalMedia = document.getElementById('modalMedia'); // Changed from modalProjectImage
+            const modalDescription = document.getElementById('modalDescription'); // Changed from modalProjectDescription
+            const modalTags = document.getElementById('modalTags'); // Changed from modalProjectTags
+            const modalActionLink = document.getElementById('modalActionLink'); // Changed from modalProjectLink
+
+            // Data for projects
+            const projectData = {
+                'blockchain-project': {
+                    title: 'Web Based Crowdfunding using Blockchain',
+                    image: './assets/blockchain.jpeg',
+                    description: 'This decentralized platform revolutionized fundraising by ensuring transparency and tamper-proof transactions. Leveraging smart contracts, it automated funding distribution and enhanced security through encrypted authentication. Key learnings included deep dives into blockchain integration, real-time data tracking, and designing secure, scalable web architectures.',
+                    tags: ['Blockchain', 'Smart Contracts', 'Web3', 'Security', 'Decentralized'],
+                    link: 'https://github.com/Akshayvemula', // Placeholder link
+                    type: 'project'
+                },
+                'monkeypox-project': {
+                    title: 'Monkey Pox Detection using Deep Learning',
+                    image: './assets/deeplearning.jpeg',
+                    description: 'Built a deep learning model for automatic Monkeypox detection from medical images. Achieved high accuracy through an optimized Convolutional Neural Network (CNN) architecture, advanced image preprocessing techniques, and data augmentation strategies. This project provided invaluable experience in medical imaging analysis, model tuning, and deploying deep learning solutions for critical health applications.',
+                    tags: ['Deep Learning', 'CNN', 'Medical Imaging', 'AI/ML', 'Image Processing'],
+                    link: 'https://github.com/Akshayvemula', // Placeholder link
+                    type: 'project'
+                }
+            };
+
+            // Data for certifications
+            const certificationData = {
+                'cpp-programming': {
+                    title: 'C++ Programming Certificate',
+                    image: './assets/cpp.jpg', // **UPDATE THIS PATH**
+                    link: 'https://ibb.co/93NCcsy0',
+                    type: 'certification'
+                },
+                'web-development': {
+                    title: 'Web Development Certificate',
+                    image: './assets/webdev.jpg', // **UPDATE THIS PATH**
+                    link: 'https://www.udemy.com/certificate/UC-a5bc7f9a-aaa8-4e1f-a5b2-e1b52558577e/',
+                    type: 'certification'
+                },
+                'python-programming': {
+                    title: 'Python Programming Certificate',
+                    image: './assets/python.jpg', // **UPDATE THIS PATH**
+                    link: 'https://www.udemy.com/certificate/UC-example-python-certificate/',
+                    type: 'certification'
+                },
+                'cyber-security': {
+                    title: 'Cyber Security Certificate',
+                    image: './assets/certificates/cyber_security_certificate.jpg', // **UPDATE THIS PATH**
+                    link: 'https://ibb.co/RkbVzPyx',
+                    type: 'certification'
+                },
+                'data-analytics': {
+                    title: 'Data Analytics Certificate',
+                    image: './assets/data.jpg', // **UPDATE THIS PATH**
+                    link: 'https://ibb.co/BVTW3mrV',
+                    type: 'certification'
+                },
+                'genai-data-analytics': {
+                    title: 'GenAI Powered Data Analytics Certificate',
+                    image: './assets/tata.jpg', // **UPDATE THIS PATH**
+                    link: 'https://ibb.co/LDpdVhnY',
+                    type: 'certification'
+                }
+            };
+
 
             // Event listener for "View Details" buttons on project cards
-            document.querySelectorAll('.view-details-btn').forEach(button => {
+            document.querySelectorAll('.project-card .view-details-btn').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const projectId = e.target.closest('.project-card').dataset.projectId;
-                    // Hardcoded project data - in a real application, this would be fetched dynamically
-                    const projectData = {
-                        'blockchain-project': {
-                            title: 'Web Based Crowdfunding using Blockchain',
-                            image: './assets/blockchain.jpeg',
-                            description: 'This decentralized platform revolutionized fundraising by ensuring transparency and tamper-proof transactions. Leveraging smart contracts, it automated funding distribution and enhanced security through encrypted authentication. Key learnings included deep dives into blockchain integration, real-time data tracking, and designing secure, scalable web architectures.',
-                            tags: ['Blockchain', 'Smart Contracts', 'Web3', 'Security', 'Decentralized'],
-                            link: 'https://github.com/Akshayvemula' // Placeholder link
-                        },
-                        'monkeypox-project': {
-                            title: 'Monkey Pox Detection using Deep Learning',
-                            image: './assets/deeplearning.jpeg',
-                            description: 'Developed a robust deep learning model for automated Monkeypox detection from medical images. Achieved high accuracy through an optimized Convolutional Neural Network (CNN) architecture, advanced image preprocessing techniques, and data augmentation strategies. This project provided invaluable experience in medical imaging analysis, model tuning, and deploying deep learning solutions for critical health applications.',
-                            tags: ['Deep Learning', 'CNN', 'Medical Imaging', 'AI/ML', 'Image Processing'],
-                            link: 'https://github.com/Akshayvemula' // Placeholder link
-                        }
-                    };
-
                     const data = projectData[projectId];
                     if (data) {
                         // Populate modal with project data
-                        modalProjectTitle.textContent = data.title;
-                        modalProjectImage.src = data.image;
-                        modalProjectDescription.textContent = data.description;
-                        modalProjectTags.innerHTML = ''; // Clear previous tags
+                        modalTitle.textContent = data.title;
+                        modalMedia.src = data.image;
+                        modalDescription.textContent = data.description;
+                        modalTags.innerHTML = ''; // Clear previous tags
                         data.tags.forEach(tag => {
                             const span = document.createElement('span');
                             span.className = 'skill-tag';
                             span.textContent = tag;
-                            modalProjectTags.appendChild(span);
+                            modalTags.appendChild(span);
                         });
-                        modalProjectLink.href = data.link;
+                        modalTags.style.display = 'flex'; // Show tags for projects
+                        modalActionLink.href = data.link;
+                        modalActionLink.textContent = 'View Project'; // Set button text
+                        modalActionLink.style.display = 'inline-block'; // Show button for projects
+                        modalDescription.style.display = 'block'; // Show description for projects
 
                         // Show modal with GSAP animation
                         projectModal.style.display = 'flex'; // Make modal visible
@@ -888,6 +950,38 @@
                     }
                 });
             });
+
+            // Event listener for clicking on certification cards
+            document.querySelectorAll('.certification-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    const certificationId = e.target.closest('.certification-card').dataset.certificationId;
+                    const data = certificationData[certificationId];
+                    if (data) {
+                        // Populate modal with certification data
+                        modalTitle.textContent = data.title;
+                        modalMedia.src = data.image;
+                        // For certifications, hide description, tags, and action link
+                        modalDescription.textContent = '';
+                        modalDescription.style.display = 'none';
+                        modalTags.innerHTML = '';
+                        modalTags.style.display = 'none';
+                        modalActionLink.style.display = 'none';
+
+
+                        // Show modal with GSAP animation
+                        projectModal.style.display = 'flex'; // Make modal visible
+                        gsap.to(projectModal.querySelector('.project-modal-content'), {
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            duration: 0.5,
+                            ease: "back.out(1.7)" // Bounce effect
+                        });
+                        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+                    }
+                });
+            });
+
 
             // Event listener for closing the project modal
             closeProjectModalBtn.addEventListener('click', () => {
