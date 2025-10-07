@@ -26,12 +26,14 @@
             --accent-gold: #ffcc00;
         }
 
+        /* Added pt-20 to body to account for fixed header */
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--dark-bg);
             color: var(--text-light);
             line-height: 1.6;
             overflow-x: hidden;
+            padding-top: 5.5rem; /* Space for the fixed header */
         }
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Poppins', sans-serif;
@@ -153,7 +155,7 @@
             background-color: #3a3a5a;
         }
 
-        /* Header Styling */
+        /* Header Styling (Fixed) */
         header {
             background-color: rgba(26, 26, 46, 0.8);
             backdrop-filter: blur(10px);
@@ -209,9 +211,9 @@
         .mobile-nav-overlay {
             position: fixed;
             top: 0;
-            right: 0; /* Align to the right */
-            width: 80%; /* Occupy 80% of screen width */
-            max-width: 300px; /* Optional: set a max width for larger tablets */
+            right: 0;
+            width: 80%;
+            max-width: 300px;
             height: 100%;
             background: linear-gradient(to bottom right, var(--primary-grad-start), var(--primary-grad-end));
             z-index: 55;
@@ -219,17 +221,17 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            opacity: 0; /* Keep initial opacity 0 for fade */
+            opacity: 0;
             visibility: hidden;
             pointer-events: none;
-            transform: translateX(100%); /* Start off-screen to the right */
-            transition: opacity 0.25s ease-in-out, visibility 0.25s ease-in-out, transform 0.3s ease-out; /* Add transform to transition */
+            transform: translateX(100%);
+            transition: opacity 0.25s ease-in-out, visibility 0.25s ease-in-out, transform 0.3s ease-out;
         }
         .mobile-nav-overlay.active {
             opacity: 1;
             visibility: visible;
             pointer-events: auto;
-            transform: translateX(0); /* Slide in */
+            transform: translateX(0);
         }
         .mobile-nav-overlay ul { list-style: none; padding: 0; text-align: center; width: 100%; }
         .mobile-nav-overlay ul li { margin: 1.5rem 0; }
@@ -315,15 +317,15 @@
             border-radius: 0.75rem;
             text-align: center;
             margin-top: 1.5rem;
-            opacity: 0; /* Added for GSAP fade-in */
+            opacity: 0;
         }
         #form-success-message {
-            background-color: rgba(4, 120, 87, 0.8); /* green-700 with opacity */
-            border: 1px solid #065f46; /* green-800 */
+            background-color: rgba(4, 120, 87, 0.8);
+            border: 1px solid #065f46;
         }
         #form-error-message {
-            background-color: rgba(185, 28, 28, 0.8); /* red-700 with opacity */
-            border: 1px solid #991b1b; /* red-800 */
+            background-color: rgba(185, 28, 28, 0.8);
+            border: 1px solid #991b1b;
         }
 
         /* Responsive adjustments */
@@ -340,41 +342,41 @@
         /* --- Education Timeline Specific Styles --- */
         #education-timeline {
             position: relative;
-            padding-left: 2rem; /* Space for the vertical line */
-            margin-left: 2rem; /* Offset from container edge */
+            padding-left: 2rem;
+            margin-left: 2rem;
         }
 
         #education-timeline::before {
             content: '';
             position: absolute;
-            left: 0.75rem; /* Position of the vertical line */
+            left: 0.75rem;
             top: 0;
             bottom: 0;
-            width: 4px; /* Thickness of the line */
+            width: 4px;
             background: linear-gradient(to bottom, var(--primary-grad-start), var(--primary-grad-end));
             border-radius: 2px;
         }
 
         .timeline-item {
             position: relative;
-            margin-bottom: 2.5rem; /* Space between items */
-            padding-left: 2.5rem; /* Space for the dot */
+            margin-bottom: 2.5rem;
+            padding-left: 2.5rem;
         }
 
         .timeline-item:last-child {
-            margin-bottom: 0; /* No bottom margin for the last item */
+            margin-bottom: 0;
         }
 
         .timeline-dot {
             position: absolute;
             left: 0;
-            top: 0.5rem; /* Vertically align dot with content */
+            top: 0.5rem;
             width: 1.5rem;
             height: 1.5rem;
             background: var(--primary-grad-end);
             border-radius: 50%;
-            border: 4px solid var(--dark-bg); /* Matches background for a "cutout" effect */
-            box-shadow: 0 0 0 4px var(--primary-grad-start); /* Outer ring glow */
+            border: 4px solid var(--dark-bg);
+            box-shadow: 0 0 0 4px var(--primary-grad-start);
             z-index: 1;
         }
 
@@ -382,21 +384,21 @@
             background-color: rgba(255, 255, 255, 0.08);
             border-radius: 1.5rem;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-            padding: 1.5rem 2rem; /* Adjusted padding for timeline items */
+            padding: 1.5rem 2rem;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            width: 100%; /* Ensure content takes full width */
+            width: 100%;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: default; /* Remove pointer cursor as it's not a button anymore */
+            cursor: default;
         }
 
         .timeline-content:hover {
-            transform: none; /* Disable hover transform for timeline items */
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1); /* Reset box-shadow on hover */
-            background-color: rgba(255, 255, 255, 0.08); /* Reset background on hover */
+            transform: none;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.08);
         }
         .timeline-content::before {
-            display: none; /* Hide the radial gradient hover effect for timeline cards */
+            display: none;
         }
 
         /* Responsive adjustments for timeline */
@@ -436,18 +438,29 @@
         </defs>
     </svg>
 
-    <!-- Header Section -->
-    <header class="py-3" id="mainHeader">
+    <!-- Header Section (Fixed for easy access) -->
+    <header class="py-3 fixed top-0 left-0 w-full z-50" id="mainHeader">
         <div class="container flex items-center justify-between">
-            <!-- Navigation links on the left -->
+            <!-- Logo with Gradient -->
+            <a href="#hero" class="logo-text font-poppins font-extrabold" aria-label="Home">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">Akshay V.</span>
+            </a>
+            
+            <!-- Navigation links -->
             <nav class="flex items-center space-x-6">
                 <ul class="flex items-center space-x-8 text-lg hidden md:flex">
                     <li><a href="#about" class="nav-link">About</a></li>
                     <li><a href="#skills" class="nav-link">Skills</a></li>
                     <li><a href="#projects" class="nav-link">Projects</a></li>
                     <li><a href="#education" class="nav-link">Education</a></li>
+                    <li><a href="#certifications" class="nav-link">Certifications</a></li>
                     <li><a href="#contact" class="nav-link">Contact</a></li>
                 </ul>
+            </nav>
+
+            <!-- Download Resume button on the right & Hamburger Menu -->
+            <div class="flex items-center space-x-4">
+                <a href="./assets/akshayresume.pdf" download class="btn-primary ml-6 hidden lg:inline-block" aria-label="Download my resume">Download Resume</a>
                 <!-- Hamburger Menu for Mobile -->
                 <button class="hamburger-menu md:hidden"
                         id="hamburgerMenu" aria-label="Toggle navigation" aria-controls="mobileNavOverlay" aria-expanded="false">
@@ -455,9 +468,7 @@
                     <span></span>
                     <span></span>
                 </button>
-            </nav>
-            <!-- Download Resume button on the right -->
-            <a href="./assets/akshayresume.pdf" download class="btn-primary ml-6 hidden md:inline-block" aria-label="Download my resume">Download Resume</a>
+            </div>
         </div>
     </header>
 
@@ -498,7 +509,7 @@
                 </div>
                 <div class="md:w-2/3 text-lg leading-relaxed text-gray-300">
                     <p class="mb-4">
-                        As a motivated Computer Science Engineering student specializing in AI & ML, I possess a strong foundation in software
+                        As a motivated Computer Science Engineering student specializing in **AI & ML**, I possess a strong foundation in software
                         development and leadership. I am passionate about applying innovative solutions to real-world challenges using technology.
                     </p>
                     <p>
@@ -538,15 +549,33 @@
                     <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                     <div class="flex-grow">
                         <h3 class="text-xl font-semibold mb-1 text-gray-100">Frameworks</h3>
-                        <p class="text-gray-300 text-sm">React.js, Node.js, Tailwind </p>
+                        <p class="text-gray-300 text-sm">React.js, Node.js, Tailwind, Express.js</p>
                         <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden"><div class="skill-bar-fill" data-skill-level="80%"></div></div>
+                    </div>
+                </div>
+                <!-- AI/ML -->
+                <div class="card flex items-center space-x-4">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-semibold mb-1 text-gray-100">AI/ML Tools</h3>
+                        <p class="text-gray-300 text-sm">TensorFlow, Keras, NumPy, Pandas, Scikit-learn</p>
+                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden"><div class="skill-bar-fill" data-skill-level="78%"></div></div>
+                    </div>
+                </div>
+                <!-- Version Control -->
+                <div class="card flex items-center space-x-4">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><circle cx="18" cy="6" r="3"></circle><path d="M18 9v1.5a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9"></path><path d="M6 21v-1.5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2V21"></path></svg>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-semibold mb-1 text-gray-100">DevOps / VCS</h3>
+                        <p class="text-gray-300 text-sm">Git, GitHub, Docker (Basics), VS Code</p>
+                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden"><div class="skill-bar-fill" data-skill-level="88%"></div></div>
                     </div>
                 </div>
                 <!-- Personal Skills -->
                 <div class="card flex items-center space-x-4">
                     <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                     <div class="flex-grow">
-                        <h3 class="text-xl font-semibold mb-1 text-gray-100">Personal Skills</h3>
+                        <h3 class="text-xl font-semibold mb-1 text-gray-100">Soft Skills</h3>
                         <p class="text-gray-300 text-sm">Communication, Problem-Solving, Adaptability & Leadership</p>
                         <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden"><div class="skill-bar-fill" data-skill-level="90%"></div></div>
                     </div>
@@ -559,37 +588,48 @@
     <section id="projects" class="py-20">
         <div class="container">
             <h2 class="section-title">Projects</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-                <!-- Project Card 1 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+                <!-- Project Card 1: Blockchain Crowdfunding -->
                 <div class="card project-card" data-project-id="blockchain-project">
                     <!-- Added onerror for project image -->
                     <img src="./assets/blockchain.jpeg" alt="Web Based Crowdfunding using Blockchain" class="rounded-lg mb-4 w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x200/6a0572/ffffff?text=Blockchain+Project';">
-                    <h3 class="text-2xl font-semibold mb-2 text-gray-100">Web Based Crowdfunding using Blockchain</h3>
+                    <h3 class="text-2xl font-semibold mb-2 text-gray-100">Web Based Crowdfunding </h3>
                     <p class="text-gray-300 mb-4 line-clamp-3">Developed a decentralized platform for transparent and tamper-proof fundraising. Improved funding security with encrypted authentication and smart contract automation.</p>
                     <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="skill-tag">Blockchain</span><span class="skill-tag">Smart Contracts</span><span class="skill-tag">Web Security</span>
+                        <span class="skill-tag">Blockchain</span><span class="skill-tag">Smart Contracts</span><span class="skill-tag">Web3</span>
                     </div>
                     <div class="flex justify-between items-center mt-auto pt-4">
-                        <a href="https://github.com/Akshayvemula" class="btn-primary" target="_blank" rel="noopener noreferrer">View Project</a>
+                        <a href="https://github.com/Akshayvemula" class="btn-primary text-sm px-4 py-2" target="_blank" rel="noopener noreferrer">View Repo</a>
                         <button class="text-purple-400 hover:underline text-sm font-medium ml-4 view-details-btn">View Details</button>
                     </div>
                 </div>
-                <!-- Project Card 2 -->
+                <!-- Project Card 2: Monkeypox Detection -->
                 <div class="card project-card" data-project-id="monkeypox-project">
                     <!-- Added onerror for project image -->
                     <img src="./assets/deeplearning.jpeg" alt="Monkey Pox Detection using Deep Learning" class="rounded-lg mb-4 w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x200/6a0572/ffffff?text=Deep+Learning+Project';">
-                    <h3 class="text-2xl font-semibold mb-2 text-gray-100">Monkey Pox Detection using Deep Learning</h3>
-                    <p class="text-gray-300 mb-4 line-clamp-3">Built a deep learning model for automatic Monkeypox detection from medical images. Achieved high accuracy through an optimized Convolutional Neural Network (CNN).</p>
+                    <h3 class="text-2xl font-semibold mb-2 text-gray-100">Monkey Pox Detection </h3>
+                    <p class="text-gray-300 mb-4 line-clamp-3">Built a deep learning model for automatic Monkeypox detection from medical images. Achieved high accuracy through an optimized CNN.</p>
                     <div class="flex flex-wrap gap-2 mb-4">
                         <span class="skill-tag">Deep Learning</span><span class="skill-tag">CNN</span><span class="skill-tag">Medical Imaging</span>
                     </div>
                     <div class="flex justify-between items-center mt-auto pt-4">
-                        <a href="https://github.com/Akshayvemula" class="btn-primary" target="_blank" rel="noopener noreferrer">View Project</a>
+                        <a href="https://github.com/Akshayvemula" class="btn-primary text-sm px-4 py-2" target="_blank" rel="noopener noreferrer">View Repo</a>
                         <button class="text-purple-400 hover:underline text-sm font-medium ml-4 view-details-btn">View Details</button>
                     </div>
                 </div>
-
-                 
+                <!-- Project Card 3: E-commerce Platform (MERN) -->
+                <div class="card project-card" data-project-id="ecommerce-platform">
+                    <img src="https://placehold.co/400x200/2a2a4a/ffffff?text=MERN+E-commerce" alt="MERN E-commerce Platform" class="rounded-lg mb-4 w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x200/2a2a4a/ffffff?text=MERN+E-commerce';">
+                    <h3 class="text-2xl font-semibold mb-2 text-gray-100">Synapse.AI</h3>
+                    <p class="text-gray-300 mb-4 line-clamp-3">Developed a scalable SAAS platform using the MERN stack (MongoDB, Express, React, Node). Implemented secure authentication, payment integration, and a responsive UI.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="skill-tag">MERN Stack</span><span class="skill-tag">React.js</span><span class="skill-tag">MongoDB</span>
+                    </div>
+                    <div class="flex justify-between items-center mt-auto pt-4">
+                        <a href="https://github.com/Akshayvemula" class="btn-primary text-sm px-4 py-2" target="_blank" rel="noopener noreferrer">View Repo</a>
+                        <button class="text-purple-400 hover:underline text-sm font-medium ml-4 view-details-btn">View Details</button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -626,7 +666,7 @@
             <div class="mt-8 text-center">
                 <p class="text-lg text-gray-300 mb-8 max-w-3xl mx-auto">I'm always open to new opportunities, collaborations, and interesting projects. Feel free to reach out or connect on social media!</p>
                 
-                <!-- Contact Form -->
+                <!-- Contact Form (using Formspree endpoint) -->
                 <form id="contactForm" action="https://formspree.io/f/xanbbqwo" method="POST" class="contact-form text-left">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div>
@@ -693,7 +733,7 @@
         // Particle animation for hero section
         function initHeroCanvas() {
             const canvas = document.getElementById('hero-canvas');
-            if (!canvas) return; // Exit if canvas element is not found
+            if (!canvas) return;
 
             const ctx = canvas.getContext('2d');
             let particles = [];
@@ -784,9 +824,10 @@
                     const targetId = this.getAttribute('href');
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
+                        // Use GSAP ScrollToPlugin for smooth scroll
                         gsap.to(window, {
                             duration: 1,
-                            scrollTo: { y: targetElement, offsetY: 70 }, // Scroll to target with offset
+                            scrollTo: { y: targetElement, offsetY: 70 }, // Scroll to target with offset for fixed header
                             ease: "power2.inOut"
                         });
                         // Close mobile menu if open
@@ -798,11 +839,11 @@
                 });
             });
 
-            // --- Scroll Reveal Animations ---
-            // The .card elements now have their initial opacity/transform set by GSAP directly
+            // --- Scroll Reveal Animations (Titles) ---
             const revealElements = document.querySelectorAll('.section-title'); 
             revealElements.forEach(el => {
-                el.classList.add('hidden-by-default'); // Add initial hidden state
+                // Ensure initial state for title animation is set
+                gsap.set(el, { opacity: 0, y: 30 });
                 gsap.to(el, {
                     opacity: 1,
                     y: 0,
@@ -810,15 +851,16 @@
                     ease: "power2.out",
                     scrollTrigger: {
                         trigger: el,
-                        start: "top 85%", // Animation starts when top of element is 85% from viewport top
-                        toggleActions: "play none none none", // Play animation once
+                        start: "top 85%", 
+                        toggleActions: "play none none none",
                     }
                 });
             });
 
             // Apply GSAP animation to .card elements (excluding timeline-content, which is handled separately)
             document.querySelectorAll('.card:not(.timeline-content)').forEach(card => {
-                gsap.fromTo(card, { opacity: 0, y: 30 }, {
+                gsap.set(card, { opacity: 0, y: 30 }); // Initial state
+                gsap.to(card, {
                     opacity: 1,
                     y: 0,
                     duration: 1,
@@ -832,39 +874,45 @@
             });
 
             // Animation for the underline of section titles
-            gsap.to('.section-title::after', {
-                scaleX: 1,
-                duration: 0.8,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: '.section-title',
-                    start: "top 85%",
-                    toggleActions: "play none none none",
-                }
+            document.querySelectorAll('.section-title').forEach(title => {
+                gsap.to(title, {
+                    '--title-scaleX': 1, // Custom property for pseudo-element animation
+                    duration: 0.8,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: title,
+                        start: "top 85%",
+                        toggleActions: "play none none none",
+                    },
+                    onStart: () => {
+                        // Manually trigger the pseudo-element animation (since GSAP doesn't directly animate pseudo-elements, we rely on the title element's ScrollTrigger)
+                        title.style.setProperty('--title-scaleX', 0); // Reset for first time trigger
+                        gsap.to(title.querySelector('::after'), { scaleX: 1, duration: 0.8 }); // This is conceptual, CSS handles the initial state/transition
+                    }
+                });
             });
-
+            
 
             // --- Hero Section Animations ---
-            // Adjusted hero timeline to account for new H1 and type effect
             const heroTimeline = gsap.timeline({ defaults: { ease: "power3.out" } });
             heroTimeline.from(".hero-title", { duration: 1.2, y: 50, opacity: 0 })
-                        .from("#typed-text", { duration: 1.2, y: 50, opacity: 0 }, "-=0.8") // Animate the typed text element
+                        .from("#typed-text", { duration: 1.2, y: 50, opacity: 0 }, "-=0.8")
                         .from(".hero-buttons a", { duration: 1, y: 30, opacity: 0, stagger: 0.2 }, "-=0.7");
 
             // --- Typewriter Effect for Hero Subtitle ---
             const typedTextElement = document.getElementById('typed-text');
             const phrases = [
-                "Software Developer",
                 "MERN Stack Developer",
-                "AI/ML Enthusiast"
+                "AI/ML Enthusiast",
+                "Passionate Problem Solver"
             ];
             let phraseIndex = 0;
             let charIndex = 0;
             let isDeleting = false;
-            const typingSpeed = 100; // milliseconds per character
-            const deletingSpeed = 50; // milliseconds per character
-            const pauseBeforeDelete = 1500; // milliseconds to wait before deleting
-            const pauseBeforeType = 500; // milliseconds to wait before typing next phrase
+            const typingSpeed = 100;
+            const deletingSpeed = 50;
+            const pauseBeforeDelete = 1500;
+            const pauseBeforeType = 500;
 
             function typeWriter() {
                 const currentPhrase = phrases[phraseIndex];
@@ -874,10 +922,7 @@
                     typedTextElement.textContent = currentPhrase.substring(0, charIndex++);
                 }
 
-                let typeSpeed = typingSpeed;
-                if (isDeleting) {
-                    typeSpeed = deletingSpeed;
-                }
+                let typeSpeed = isDeleting ? deletingSpeed : typingSpeed;
 
                 if (!isDeleting && charIndex === currentPhrase.length + 1) {
                     typeSpeed = pauseBeforeDelete;
@@ -892,7 +937,7 @@
             }
 
             // Start the typewriter effect after initial hero animation
-            heroTimeline.call(typeWriter, null, "-=0.5"); // Call typeWriter after hero animations finish
+            heroTimeline.call(typeWriter, null, "-=0.5");
 
             // --- Hamburger Menu Functionality ---
             const hamburgerMenu = document.getElementById('hamburgerMenu');
@@ -902,28 +947,28 @@
              * Toggles the mobile navigation menu's visibility and animation.
              */
             const toggleMobileMenu = () => {
-                const isActive = hamburgerMenu.classList.toggle('active'); // Toggle 'active' class on hamburger icon
-                mobileNavOverlay.classList.toggle('active', isActive); // Toggle 'active' class on overlay
-                hamburgerMenu.setAttribute('aria-expanded', isActive); // Update ARIA attribute
-                document.body.style.overflow = isActive ? 'hidden' : ''; // Prevent scrolling when menu is open
+                const isActive = hamburgerMenu.classList.toggle('active');
+                mobileNavOverlay.classList.toggle('active', isActive);
+                hamburgerMenu.setAttribute('aria-expanded', isActive);
+                document.body.style.overflow = isActive ? 'hidden' : '';
             };
             hamburgerMenu.addEventListener('click', toggleMobileMenu);
 
             // --- Skill Bar Animation on Scroll ---
             document.querySelectorAll('.skill-bar-fill').forEach(bar => {
                 gsap.to(bar, {
-                    width: bar.dataset.skillLevel, // Animate width to the data-skill-level value
+                    width: bar.dataset.skillLevel,
                     duration: 1.8,
                     ease: "power2.out",
                     scrollTrigger: {
-                        trigger: bar.closest('.card'), // Trigger when the parent card comes into view
+                        trigger: bar.closest('.card'),
                         start: "top 80%",
                         toggleActions: "play none none none",
                     }
                 });
             });
 
-            // --- Project/Certification Modal Logic ---
+            // --- Project/Certification Modal Logic and Data ---
             const projectModal = document.getElementById('projectModal');
             const closeProjectModalBtn = document.getElementById('closeProjectModal');
             
@@ -933,25 +978,56 @@
                     'blockchain-project': {
                         title: 'Web Based Crowdfunding using Blockchain',
                         image: './assets/blockchain.jpeg',
-                        description: 'This decentralized platform revolutionized fundraising by ensuring transparency and tamper-proof transactions. Leveraging smart contracts, it automated funding distribution and enhanced security through encrypted authentication. Key learnings included deep dives into blockchain integration, real-time data tracking, and designing secure, scalable web architectures.',
+                        description: 'This decentralized platform revolutionized fundraising by ensuring **transparency and tamper-proof transactions**. Leveraging smart contracts, it automated funding distribution and enhanced security through encrypted authentication. Key learnings included deep dives into blockchain integration, real-time data tracking, and designing secure, scalable web architectures.',
                         tags: ['Blockchain', 'Smart Contracts', 'Web3', 'Security', 'Decentralized'],
                         link: 'https://github.com/Akshayvemula'
                     },
                     'monkeypox-project': {
                         title: 'Monkey Pox Detection using Deep Learning',
                         image: './assets/deeplearning.jpeg',
-                        description: 'Built a deep learning model for automatic Monkeypox detection from medical images. Achieved high accuracy through an optimized Convolutional Neural Network (CNN) architecture, advanced image preprocessing techniques, and data augmentation strategies. This project provided invaluable experience in medical imaging analysis, model tuning, and deploying deep learning solutions for critical health applications.',
+                        description: 'Built a deep learning model for automatic Monkeypox detection from medical images. Achieved **high accuracy (90%+)** through an optimized Convolutional Neural Network (CNN) architecture, advanced image preprocessing techniques, and data augmentation strategies. This project provided invaluable experience in medical imaging analysis, model tuning, and deploying deep learning solutions for critical health applications.',
                         tags: ['Deep Learning', 'CNN', 'Medical Imaging', 'AI/ML', 'Image Processing'],
                         link: 'https://github.com/Akshayvemula'
                     },
-                     
+                    'ecommerce-platform': {
+                        title: 'Full Stack SAAS Platform (MERN)',
+                        image: 'https://placehold.co/800x450/2a2a4a/ffffff?text=MERN+E-commerce',
+                        description: 'Developed a robust and scalable SAAS application from scratch using the **MERN stack**. Key features included  user authentication,  payment gateway integration, secure user dashboards, and an admin panel for product management. Focused on modular design and state management for performance.',
+                        tags: ['MERN Stack', 'React', 'Node.js', 'Express', 'MongoDB', 'Authentication'],
+                        link: 'https://github.com/Akshayvemula'
+                    }
+                },
                 certifications: {
-                    'cpp-programming': { title: 'C++ Programming Certificate', image: './assets/cpp.jpg' },
-                    'web-development': { title: 'Web Development Certificate', image: './assets/webdev.jpg' },
-                    'python-programming': { title: 'Python Programming Certificate', image: './assets/python.jpg' },
-                    'cyber-security': { title: 'Cyber Security Certificate', image: './assets/cyber.jpg' },
-                    'data-analytics': { title: 'Data Analytics Certificate', image: './assets/data.jpg' },
-                    'genai-data-analytics': { title: 'GenAI Powered Data Analytics Certificate', image: './assets/tata.jpg' }
+                    'cpp-programming': { 
+                        title: 'C++ Programming (UDEMY)', 
+                        image:  './assets/cpp.jpg',
+                        description: 'Certified proficiency in core C++ concepts, including object-oriented programming, standard template library (STL), and effective memory management practices. Fundamental preparation for competitive programming.'
+                    },
+                    'web-development': { 
+                        title: 'Web Development (UDEMY)', 
+                        image: './assets/webdev.jpg',
+                        description: 'Comprehensive knowledge of front-end and basic back-end development, covering HTML5, CSS3, JavaScript (ES6+), React.js, and API integration for building modern, responsive web applications.'
+                    },
+                    'python-programming': { 
+                        title: 'Python Programming (UDEMY)', 
+                        image: './assets/python.jpg',
+                        description: 'Mastery of Python programming language fundamentals, covering data structures, algorithmic scripting, and application in data analysis and machine learning libraries like Pandas and NumPy.'
+                    },
+                    'cyber-security': { 
+                        title: 'Cyber Security (CISCO)', 
+                        image: './assets/cyber.jpg',
+                        description: 'Completed foundational training in network security principles, threat detection, common vulnerabilities, and defensive strategies to protect systems and data against cyber threats.'
+                    },
+                    'data-analytics': { 
+                        title: 'Data Analytics (CISCO)', 
+                        image:'./assets/data.jpg',
+                        description: 'Trained in data collection, cleaning, visualization, and interpretation techniques, with a focus on using tools like Python and SQL for deriving actionable insights from complex datasets.'
+                    },
+                    'genai-data-analytics': { 
+                        title: 'GenAI Powered Data Analytics (TATA Forage)', 
+                        image: './assets/tata.jpg',
+                        description: 'Explored the integration of Generative AI tools and large language models (LLMs) into the data analysis workflow to accelerate reporting, automate insight generation, and enhance data storytelling.'
+                    }
                 },
                 education: {
                     'jits': {
@@ -960,8 +1036,6 @@
                         location: 'Karimnagar',
                         gpa: '6.70',
                         years: '2021-2025',
-                        description: 'Currently pursuing a Bachelor of Technology in Computer Science Engineering with a specialization in Artificial Intelligence and Machine Learning. Focused on developing strong foundational knowledge in algorithms, data structures, and advanced concepts in AI/ML, including neural networks, natural language processing, and computer vision. Actively participating in coding competitions and group projects to apply theoretical knowledge to practical problems.',
-                        image: 'https://placehold.co/800x450/8e2de2/ffffff?text=JITS+Campus', // Placeholder image for education
                         tags: ['AI/ML', 'Computer Science', 'Deep Learning', 'Problem Solving']
                     },
                     'alphores': {
@@ -970,8 +1044,6 @@
                         location: 'Karimnagar',
                         gpa: '7.42',
                         years: '2019-2021',
-                        description: 'Completed intermediate education with a strong focus on Mathematics, Physics, and Chemistry. Developed critical thinking and analytical skills essential for engineering studies. Participated in various science fairs and academic competitions, fostering a keen interest in scientific principles and problem-solving.',
-                        image: 'https://placehold.co/800x450/6a0572/ffffff?text=Alphores+College', // Placeholder image for education
                         tags: ['Mathematics', 'Physics', 'Chemistry', 'Analytical Skills']
                     },
                     'kerala-school': {
@@ -980,8 +1052,6 @@
                         location: 'Dharmapuri',
                         gpa: '9.2',
                         years: '2018-2019',
-                        description: 'Completed high school with excellent academic performance, demonstrating a strong aptitude across all subjects. Engaged in extracurricular activities and leadership roles, developing strong communication and teamwork abilities. Cultivated a foundational understanding of various disciplines, preparing for higher education.',
-                        image: 'https://placehold.co/800x450/20203a/ffffff?text=High+School', // Placeholder image for education
                         tags: ['Academic Excellence', 'Leadership', 'Teamwork', 'Communication']
                     }
                 }
@@ -989,14 +1059,12 @@
 
             /**
              * Opens the project/certification modal with provided data.
-             * Note: Education section now uses a direct timeline display, not this modal.
              * @param {Object} data - The data object containing title, image, description, tags, and link.
              * @param {string} type - The type of data ('project', 'certification').
              */
             const openModal = (data, type) => {
                 document.getElementById('modalTitle').textContent = data.title;
                 document.getElementById('modalMedia').src = data.image;
-                // Add onerror for modal image to show placeholder if original fails
                 document.getElementById('modalMedia').onerror = function() {
                     this.onerror=null;
                     this.src='https://placehold.co/800x450/6a0572/ffffff?text=Image+Not+Found';
@@ -1006,18 +1074,21 @@
                 const tagsEl = document.getElementById('modalTags');
                 const linkEl = document.getElementById('modalActionLink');
 
-                // For projects and certifications, display description and link
-                descriptionEl.textContent = data.description || '';
+                // Populate description
+                descriptionEl.innerHTML = data.description || '';
                 descriptionEl.style.display = data.description ? 'block' : 'none';
+                
+                // Populate link/button
                 if (data.link) {
                     linkEl.href = data.link;
-                    linkEl.textContent = 'View Project'; // Or 'View Certificate' if applicable
+                    linkEl.textContent = type === 'project' ? 'View Project/Repo' : 'View Certificate';
                     linkEl.style.display = 'inline-block';
                 } else {
                     linkEl.style.display = 'none';
                 }
                 
-                tagsEl.innerHTML = ''; // Clear previous tags
+                // Populate tags
+                tagsEl.innerHTML = '';
                 if (data.tags && data.tags.length > 0) {
                     data.tags.forEach(tag => {
                         const span = document.createElement('span');
@@ -1030,10 +1101,9 @@
                     tagsEl.style.display = 'none';
                 }
 
-                projectModal.style.display = 'flex'; // Show modal
-                // GSAP animation for modal content entry
-                gsap.to(projectModal.querySelector('.project-modal-content'), { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.7)" });
-                document.body.style.overflow = 'hidden'; // Prevent body scrolling when modal is open
+                projectModal.classList.add('active'); // Use class for display and animation
+                projectModal.style.display = 'flex'; 
+                document.body.style.overflow = 'hidden';
             };
 
             /**
@@ -1044,8 +1114,9 @@
                 gsap.to(projectModal.querySelector('.project-modal-content'), {
                     opacity: 0, y: 50, scale: 0.9, duration: 0.4, ease: "power2.in",
                     onComplete: () => {
-                        projectModal.style.display = 'none'; // Hide modal after animation
-                        document.body.style.overflow = ''; // Restore body scrolling
+                        projectModal.style.display = 'none';
+                        projectModal.classList.remove('active');
+                        document.body.style.overflow = '';
                     }
                 });
             };
@@ -1073,26 +1144,26 @@
              * Renders the education timeline dynamically from modalData.education.
              */
             function renderEducationTimeline() {
-                educationTimelineContainer.innerHTML = ''; // Clear existing content
-                // Iterate over education data in its original order (most recent first)
+                educationTimelineContainer.innerHTML = ''; 
                 const educationKeys = Object.keys(modalData.education); 
 
                 educationKeys.forEach(eduId => {
                     const edu = modalData.education[eduId];
                     const timelineItemDiv = document.createElement('div');
-                    timelineItemDiv.className = 'timeline-item'; // Apply timeline item styling
-                    timelineItemDiv.dataset.educationId = eduId; // Store ID for reference
+                    timelineItemDiv.className = 'timeline-item';
+                    timelineItemDiv.dataset.educationId = eduId;
 
-                    // Construct the inner HTML for each timeline item
                     timelineItemDiv.innerHTML = `
                         <div class="timeline-dot"></div>
                         <div class="timeline-content card">
-                            <h3 class="text-xl font-semibold mb-2 text-gray-100">${edu.institution}</h3>
-                            <p class="text-gray-300">${edu.title} | ${edu.location}</p>
-                            <p class="text-gray-400 text-sm mt-1">Cumulative GPA: ${edu.gpa} | ${edu.years}</p>
+                            <h3 class="text-2xl font-semibold mb-1 text-gray-100">${edu.institution}</h3>
+                            <p class="text-purple-400 font-medium">${edu.title}</p>
+                            <p class="text-gray-400 text-sm mt-1 mb-3">${edu.location} | ${edu.years}</p>
+                            <p class="text-gray-300 text-base">${edu.description}</p>
+                            ${edu.gpa ? `<p class="text-gray-400 text-sm mt-3 font-code">Cumulative GPA: ${edu.gpa}</p>` : ''}
                             ${edu.tags && edu.tags.length > 0 ? `
                                 <div class="flex flex-wrap gap-2 mt-3">
-                                    ${edu.tags.map(tag => `<span class="skill-tag">${tag}</span>`).join('')}
+                                    ${edu.tags.map(tag => `<span class="skill-tag text-xs">${tag}</span>`).join('')}
                                 </div>
                             ` : ''}
                         </div>
@@ -1100,7 +1171,6 @@
                     educationTimelineContainer.appendChild(timelineItemDiv);
 
                     // Apply GSAP scroll reveal animation to the dynamically added timeline item
-                    // Explicitly set initial state with gsap.fromTo for reliability
                     gsap.fromTo(timelineItemDiv, { opacity: 0, y: 30 }, {
                         opacity: 1,
                         y: 0,
@@ -1135,17 +1205,19 @@
             const submitButton = contactForm.querySelector('button[type="submit"]');
 
             contactForm.addEventListener('submit', async function(e) {
-                e.preventDefault(); // Prevent default form submission
+                e.preventDefault();
                 
                 const formData = new FormData(this);
                 const originalButtonText = submitButton.textContent;
                 
-                submitButton.disabled = true; // Disable button during submission
-                submitButton.textContent = 'Sending...'; // Change button text
+                submitButton.disabled = true;
+                submitButton.textContent = 'Sending...';
 
                 // Hide messages before sending
-                successMessage.style.display = 'none';
-                errorMessage.style.display = 'none';
+                gsap.to([successMessage, errorMessage], { opacity: 0, duration: 0.3, onComplete: () => {
+                    successMessage.style.display = 'none';
+                    errorMessage.style.display = 'none';
+                }});
 
                 try {
                     const response = await fetch(this.action, {
@@ -1159,27 +1231,26 @@
                     if (response.ok) {
                         successMessage.style.display = 'block';
                         gsap.fromTo(successMessage, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
-                        contactForm.reset(); // Clear form fields
+                        contactForm.reset();
                         setTimeout(() => {
                             gsap.to(successMessage, { opacity: 0, duration: 0.5, onComplete: () => successMessage.style.display = 'none' });
-                        }, 5000); // Hide message after 5 seconds
+                        }, 5000); 
                     } else {
-                        // Attempt to parse error response from Formspree
                         const errorData = await response.json();
                         throw new Error(errorData.error || 'Network response was not ok.');
                     }
                 } catch (error) {
-                    console.error('Form submission error:', error); // Log error for debugging
+                    console.error('Form submission error:', error);
                     errorMessage.style.display = 'block';
                     gsap.fromTo(errorMessage, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
                     setTimeout(() => {
                         gsap.to(errorMessage, { opacity: 0, duration: 0.5, onComplete: () => errorMessage.style.display = 'none' });
-                    }, 5000); // Hide message after 5 seconds
+                    }, 5000);
                 } finally {
-                    submitButton.disabled = false; // Re-enable button
-                    submitButton.textContent = originalButtonText; // Restore button text
+                    submitButton.disabled = false;
+                    submitButton.textContent = originalButtonText;
                 }
-                });
+            });
         });
     </script>
 </body>
