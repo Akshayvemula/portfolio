@@ -3,17 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Akshay Vemula</title>
+    <!-- Descriptive Title -->
+    <title>Akshay Vemula - Portfolio</title>
+    <meta name="description" content="Portfolio of Akshay Vemula, a MERN Stack Developer and AI/ML enthusiast specializing in innovative software solutions.">
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%238e2de2' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15H9V7h2v10zm4 0h-2V7h2v10z'/%3E%3Csvg%3E">
+    
+    <!-- Google Fonts - Inter, Poppins, Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts - Inter, Poppins, Fira Code -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- GSAP CDN for advanced animations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollToPlugin.min.js"></script>
+    
+    <!-- GSAP CDN (Upgraded to a newer version) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+    
     <style>
         /* Custom CSS for enhanced styling and animations */
         :root {
@@ -26,7 +35,10 @@
             --accent-gold: #ffcc00;
         }
 
-        /* Added pt-20 to body to account for fixed header */
+        /* Smooth scroll fallback for no-JS */
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--dark-bg);
@@ -73,6 +85,12 @@
             border-radius: 3px;
             transform: scaleX(0);
             transform-origin: left;
+            /* ENHANCEMENT: Added transition for smooth animation */
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        /* ENHANCEMENT: Class added by GSAP to trigger the underline animation */
+        .section-title.is-visible::after {
+            transform: scaleX(1);
         }
 
         /* Card Styling - Glassmorphism */
@@ -112,6 +130,7 @@
 
         /* Primary Button Styling */
         .btn-primary {
+            display: inline-block; /* For proper styling */
             background-image: linear-gradient(to right, var(--primary-grad-start), var(--primary-grad-end));
             color: white;
             padding: 1rem 2.5rem;
@@ -121,6 +140,7 @@
             transition: all 0.3s ease;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
             border: none;
+            cursor: pointer;
         }
         .btn-primary:hover {
             transform: translateY(-3px) scale(1.03);
@@ -129,6 +149,12 @@
         .btn-primary:disabled {
             opacity: 0.7;
             cursor: not-allowed;
+            transform: none;
+        }
+        /* Accessibility: Focus state */
+        .btn-primary:focus-visible {
+            outline: 2px solid var(--accent-gold);
+            outline-offset: 2px;
         }
 
         /* Icon Styling */
@@ -165,30 +191,27 @@
             padding-bottom: 0.75rem;
             transition: padding 0.3s ease, background-color 0.3s ease;
         }
-        header .logo-text {
-            font-size: 2.25rem;
-            transition: font-size 0.3s ease;
-        }
         header .nav-link {
             transition: color 0.3s ease, transform 0.2s ease, text-shadow 0.3s ease;
             font-weight: 600;
             color: var(--text-light);
+            text-decoration: none;
         }
         header .nav-link:hover {
             color: #a0d9ff;
             transform: translateY(-3px);
             text-shadow: 0 0 10px #a0d9ff;
         }
+        /* Accessibility: Focus state */
+        header .nav-link:focus-visible {
+            outline: 2px solid var(--accent-gold);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
 
         /* Section backgrounds */
         section:nth-of-type(odd) { background-color: var(--dark-bg); }
         section:nth-of-type(even) { background-color: var(--dark-bg-alt); }
-
-        /* Initial state for reveal elements (only for elements not handled by specific GSAP calls) */
-        .hidden-by-default {
-            opacity: 0;
-            transform: translateY(50px);
-        }
 
         /* Hero Section */
         #hero {
@@ -199,13 +222,22 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
+            padding: 3rem 0;
         }
         #hero-canvas {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0; opacity: 0.2;
         }
-        .hero-content { z-index: 10; }
+        .hero-content { 
+            z-index: 10; 
+            position: relative;
+        }
+        /* Blinking cursor for typewriter */
+        #typed-text {
+            border-right: 2px solid var(--text-light);
+            transition: border-color 0.1s;
+        }
 
         /* Mobile Navigation Overlay */
         .mobile-nav-overlay {
@@ -239,7 +271,11 @@
             color: white; font-size: 2rem; font-weight: 600; text-decoration: none;
             transition: color 0.3s ease; display: block; padding: 0.5rem 0;
         }
-        .mobile-nav-overlay ul li a:hover { color: var(--accent-gold); }
+        .mobile-nav-overlay ul li a:hover,
+        .mobile-nav-overlay ul li a:focus-visible { 
+            color: var(--accent-gold); 
+            outline: none;
+        }
         .mobile-nav-overlay .btn-primary { margin-top: 2rem; padding: 1rem 2.5rem; }
 
         /* Hamburger Menu Icon */
@@ -255,6 +291,12 @@
         .hamburger-menu.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
         .hamburger-menu.active span:nth-child(2) { opacity: 0; transform: translateX(-20px); }
         .hamburger-menu.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        /* Accessibility: Focus state */
+        .hamburger-menu:focus-visible {
+            outline: 2px solid var(--accent-gold);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
 
         /* Skill Bar Animation */
         .skill-bar-fill {
@@ -281,8 +323,13 @@
         .project-modal .close-button {
             color: var(--text-light); position: absolute; top: 1.5rem; right: 2rem;
             font-size: 3rem; font-weight: bold; cursor: pointer; transition: color 0.2s;
+            line-height: 1; /* Better alignment */
         }
-        .project-modal .close-button:hover, .project-modal .close-button:focus { color: var(--accent-gold); }
+        .project-modal .close-button:hover, 
+        .project-modal .close-button:focus-visible { 
+            color: var(--accent-gold); 
+            outline: none;
+        }
         .project-modal img { border-radius: 1rem; }
 
         /* Contact Form Styling */
@@ -337,6 +384,8 @@
             .hamburger-menu { display: flex; }
             #hero h1 { font-size: 3rem; }
             #hero p { font-size: 1.25rem; }
+            .project-modal-content { padding: 2.5rem 1.5rem; }
+            .project-modal .close-button { top: 1rem; right: 1.25rem; font-size: 2.5rem;}
         }
 
         /* --- Education Timeline Specific Styles --- */
@@ -375,9 +424,14 @@
             height: 1.5rem;
             background: var(--primary-grad-end);
             border-radius: 50%;
-            border: 4px solid var(--dark-bg);
+            /* ENHANCEMENT: Border color now matches section BG */
+            border: 4px solid var(--dark-bg-alt); 
             box-shadow: 0 0 0 4px var(--primary-grad-start);
             z-index: 1;
+        }
+        /* ENHANCEMENT: Match dot border to correct section bg */
+        section:nth-of-type(odd) .timeline-dot { 
+            border-color: var(--dark-bg); 
         }
 
         .timeline-content {
@@ -391,7 +445,7 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: default;
         }
-
+        /* Disable hover effects for timeline cards */
         .timeline-content:hover {
             transform: none;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
@@ -416,9 +470,12 @@
             .timeline-dot {
                 width: 1.2rem;
                 height: 1.2rem;
-                border: 3px solid var(--dark-bg);
+                border: 3px solid var(--dark-bg-alt);
                 box-shadow: 0 0 0 3px var(--primary-grad-start);
                 top: 0.6rem;
+            }
+            section:nth-of-type(odd) .timeline-dot { 
+                border-color: var(--dark-bg); 
             }
             .timeline-content {
                 padding: 1.2rem 1.5rem;
@@ -429,7 +486,7 @@
 <body class="antialiased">
 
     <!-- SVG for Icon Gradient -->
-    <svg width="0" height="0" style="position:absolute;z-index:-1;">
+    <svg width="0" height="0" style="position:absolute;z-index:-1;" aria-hidden="true">
         <defs>
             <linearGradient id="gradientIcon" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" style="stop-color:var(--primary-grad-start);stop-opacity:1" />
@@ -441,13 +498,10 @@
     <!-- Header Section (Fixed for easy access) -->
     <header class="py-3 fixed top-0 left-0 w-full z-50" id="mainHeader">
         <div class="container flex items-center justify-between">
-            <!-- Logo with Gradient -->
-            <!-- <a href="#hero" class="logo-text font-poppins font-extrabold" aria-label="Home">
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">Akshay V.</span>
-            </a>
-             -->
+            <!-- Logo was commented out -->
+            
             <!-- Navigation links -->
-            <nav class="flex items-center space-x-6">
+            <nav class="flex items-center space-x-6" role="navigation" aria-label="Main Navigation">
                 <ul class="flex items-center space-x-8 text-lg hidden md:flex">
                     <li><a href="#about" class="nav-link">About</a></li>
                     <li><a href="#skills" class="nav-link">Skills</a></li>
@@ -460,20 +514,23 @@
 
             <!-- Download Resume button on the right & Hamburger Menu -->
             <div class="flex items-center space-x-4">
-                <a href="./assets/akshayresume.pdf" download class="btn-primary ml-6 hidden lg:inline-block" aria-label="Download my resume">Download Resume</a>
+                <!-- FIX: Standardized resume link and added download attribute -->
+                <a href="./assets/akshay_vemula.pdf" download="Akshay_Vemula_Resume.pdf" class="btn-primary ml-6 hidden lg:inline-block" aria-label="Download my resume">Download Resume</a>
+                
                 <!-- Hamburger Menu for Mobile -->
                 <button class="hamburger-menu md:hidden"
                         id="hamburgerMenu" aria-label="Toggle navigation" aria-controls="mobileNavOverlay" aria-expanded="false">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
                 </button>
             </div>
         </div>
     </header>
 
     <!-- Mobile Navigation Overlay -->
-    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+    <div class="mobile-nav-overlay" id="mobileNavOverlay" role="dialog" aria-modal="true" aria-labelledby="mobileNavTitle" style="visibility: hidden;">
+        <h2 id="mobileNavTitle" class="sr-only">Mobile Navigation Menu</h2>
         <ul>
             <li><a href="#about" class="mobile-nav-link">About</a></li>
             <li><a href="#skills" class="mobile-nav-link">Skills</a></li>
@@ -481,16 +538,20 @@
             <li><a href="#education" class="mobile-nav-link">Education</a></li>
             <li><a href="#certifications" class="mobile-nav-link">Certifications</a></li>
             <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
-            <li><a href="./assets/akshay_vemula.pdf" download class="btn-primary" aria-label="Download my resume">Download Resume</a></li>
+            <li>
+                <!-- FIX: Standardized resume link and added download attribute -->
+                <a href="./assets/akshay_vemula.pdf" download="Akshay_Vemula_Resume.pdf" class="btn-primary" aria-label="Download my resume">Download Resume</a>
+            </li>
         </ul>
     </div>
 
     <!-- Hero Section -->
     <section id="hero">
-        <canvas id="hero-canvas"></canvas>
+        <canvas id="hero-canvas" aria-hidden="true"></canvas>
         <div class="container relative z-10 text-white text-center hero-content">
             <h1 class="text-6xl md:text-7xl font-extrabold mb-4 hero-title">Hi, I'm <span class="text-purple-400">Akshay Vemula</span>.</h1>
-            <p class="text-2xl md:text-3xl font-light mb-8 hero-subtitle" id="typed-text"></p>
+            <!-- Accessibility: Added aria-label -->
+            <p class="text-2xl md:text-3xl font-light mb-8 hero-subtitle" id="typed-text" aria-label="I am a: MERN Stack Developer, AI/ML Enthusiast, and Passionate Problem Solver"></p>
             <div class="space-x-4 hero-buttons">
                 <a href="#projects" class="btn-primary">View My Work</a>
                 <a href="#contact" class="btn-primary">Get in Touch</a>
@@ -504,8 +565,9 @@
             <h2 class="section-title">About Me</h2>
             <div class="flex flex-col md:flex-row items-center md:space-x-12 mt-8">
                 <div class="md:w-1/3 mb-8 md:mb-0 flex-shrink-0">
-                    <!-- Added onerror to load placeholder if image fails -->
-                    <img src="./assets/akshay.jpeg" alt="Akshay Vemula" class="rounded-full w-64 h-64 object-cover mx-auto border-4 border-purple-500 shadow-lg-xl" onerror="this.onerror=null;this.src='https://placehold.co/256x256/6a0572/ffffff?text=Akshay';">
+                    <!-- ENHANCEMENT: Improved placeholder and alt text -->
+                    <img src="./assets/akshay.jpeg" alt="A profile photo of Akshay Vemula" class="rounded-full w-64 h-64 object-cover mx-auto border-4 border-purple-500 shadow-lg-xl" 
+                         onerror="this.onerror=null; this.src='https://placehold.co/256x256/6a0572/ffffff?text=Akshay+V.'; this.style.border='none';">
                 </div>
                 <div class="md:w-2/3 text-lg leading-relaxed text-gray-300">
                     <p class="mb-4">
@@ -528,56 +590,68 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
                 <!-- Programming Languages -->
                 <div class="card flex items-center space-x-4">
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
                     <div class="flex-grow">
                         <h3 class="text-xl font-semibold mb-1 text-gray-100">Languages</h3>
                         <p class="text-gray-300 text-sm">C/C++, Python, HTML, CSS, JavaScript, Java (Basics)</p>
-                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden"><div class="skill-bar-fill" data-skill-level="85%"></div></div>
+                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden" aria-label="Skill level for Languages: 85%">
+                            <div class="skill-bar-fill" data-skill-level="85%"></div>
+                        </div>
                     </div>
                 </div>
                 <!-- Database -->
                 <div class="card flex items-center space-x-4">
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M2 12A9 3 0 0 0 12 15A9 3 0 0 0 22 12"></path><path d="M2 19A9 3 0 0 0 12 22A9 3 0 0 0 22 19"></path></svg>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M2 12A9 3 0 0 0 12 15A9 3 0 0 0 22 12"></path><path d="M2 19A9 3 0 0 0 12 22A9 3 0 0 0 22 19"></path></svg>
                     <div class="flex-grow">
                         <h3 class="text-xl font-semibold mb-1 text-gray-100">Databases</h3>
                         <p class="text-gray-300 text-sm">SQL, MongoDB</p>
-                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden"><div class="skill-bar-fill" data-skill-level="75%"></div></div>
+                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden" aria-label="Skill level for Databases: 75%">
+                            <div class="skill-bar-fill" data-skill-level="75%"></div>
+                        </div>
                     </div>
                 </div>
                 <!-- Frameworks -->
                 <div class="card flex items-center space-x-4">
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                     <div class="flex-grow">
                         <h3 class="text-xl font-semibold mb-1 text-gray-100">Frameworks</h3>
                         <p class="text-gray-300 text-sm">React.js, Node.js, Tailwind, Express.js</p>
-                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden"><div class="skill-bar-fill" data-skill-level="80%"></div></div>
+                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden" aria-label="Skill level for Frameworks: 80%">
+                            <div class="skill-bar-fill" data-skill-level="80%"></div>
+                        </div>
                     </div>
                 </div>
                 <!-- AI/ML -->
                 <div class="card flex items-center space-x-4">
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
                     <div class="flex-grow">
                         <h3 class="text-xl font-semibold mb-1 text-gray-100">AI/ML Tools</h3>
                         <p class="text-gray-300 text-sm">TensorFlow, Keras, NumPy, Pandas, Scikit-learn</p>
-                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden"><div class="skill-bar-fill" data-skill-level="78%"></div></div>
+                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden" aria-label="Skill level for AI/ML Tools: 78%">
+                            <div class="skill-bar-fill" data-skill-level="78%"></div>
+                        </div>
                     </div>
                 </div>
                 <!-- Version Control -->
                 <div class="card flex items-center space-x-4">
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><circle cx="18" cy="6" r="3"></circle><path d="M18 9v1.5a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9"></path><path d="M6 21v-1.5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2V21"></path></svg>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><circle cx="18" cy="6" r="3"></circle><path d="M18 9v1.5a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9"></path><path d="M6 21v-1.5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2V21"></path></svg>
                     <div class="flex-grow">
                         <h3 class="text-xl font-semibold mb-1 text-gray-100">DevOps / VCS</h3>
                         <p class="text-gray-300 text-sm">Git, GitHub, Docker (Basics), VS Code</p>
-                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden"><div class="skill-bar-fill" data-skill-level="88%"></div></div>
+                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden" aria-label="Skill level for DevOps/VCS: 88%">
+                            <div class="skill-bar-fill" data-skill-level="88%"></div>
+                        </div>
                     </div>
                 </div>
                 <!-- Personal Skills -->
                 <div class="card flex items-center space-x-4">
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                     <div class="flex-grow">
                         <h3 class="text-xl font-semibold mb-1 text-gray-100">Soft Skills</h3>
                         <p class="text-gray-300 text-sm">Communication, Problem-Solving, Adaptability & Leadership</p>
-                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden"><div class="skill-bar-fill" data-skill-level="90%"></div></div>
+                        <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2 overflow-hidden" aria-label="Skill level for Soft Skills: 90%">
+                            <div class="skill-bar-fill" data-skill-level="90%"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -589,10 +663,11 @@
         <div class="container">
             <h2 class="section-title">Projects</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+                
                 <!-- Project Card 1: Blockchain Crowdfunding -->
                 <div class="card project-card" data-project-id="blockchain-project">
-                    <!-- Added onerror for project image -->
-                    <img src="./assets/blockchain.jpeg" alt="Web Based Crowdfunding using Blockchain" class="rounded-lg mb-4 w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x200/6a0572/ffffff?text=Blockchain+Project';">
+                    <img src="./assets/blockchain.jpeg" alt="Web Based Crowdfunding using Blockchain" class="rounded-lg mb-4 w-full h-48 object-cover" 
+                         onerror="this.onerror=null; this.src='https://placehold.co/400x200/6a0572/ffffff?text=Blockchain+Project';">
                     <h3 class="text-2xl font-semibold mb-2 text-gray-100">Web Based Crowdfunding </h3>
                     <p class="text-gray-300 mb-4 line-clamp-3">Developed a decentralized platform for transparent and tamper-proof fundraising. Improved funding security with encrypted authentication and smart contract automation.</p>
                     <div class="flex flex-wrap gap-2 mb-4">
@@ -600,13 +675,14 @@
                     </div>
                     <div class="flex justify-between items-center mt-auto pt-4">
                         <a href="https://github.com/Akshayvemula" class="btn-primary text-sm px-4 py-2" target="_blank" rel="noopener noreferrer">View Repo</a>
-                        <button class="text-purple-400 hover:underline text-sm font-medium ml-4 view-details-btn">View Details</button>
+                        <button type="button" class="text-purple-400 hover:underline text-sm font-medium ml-4 view-details-btn">View Details</button>
                     </div>
                 </div>
+
                 <!-- Project Card 2: Monkeypox Detection -->
                 <div class="card project-card" data-project-id="monkeypox-project">
-                    <!-- Added onerror for project image -->
-                    <img src="./assets/deeplearning.jpeg" alt="Monkey Pox Detection using Deep Learning" class="rounded-lg mb-4 w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x200/6a0572/ffffff?text=Deep+Learning+Project';">
+                    <img src="./assets/deeplearning.jpeg" alt="Monkey Pox Detection using Deep Learning" class="rounded-lg mb-4 w-full h-48 object-cover" 
+                         onerror="this.onerror=null; this.src='https://placehold.co/400x200/6a0572/ffffff?text=Deep+Learning+Project';">
                     <h3 class="text-2xl font-semibold mb-2 text-gray-100">Monkey Pox Detection </h3>
                     <p class="text-gray-300 mb-4 line-clamp-3">Built a deep learning model for automatic Monkeypox detection from medical images. Achieved high accuracy through an optimized CNN.</p>
                     <div class="flex flex-wrap gap-2 mb-4">
@@ -614,12 +690,14 @@
                     </div>
                     <div class="flex justify-between items-center mt-auto pt-4">
                         <a href="https://github.com/Akshayvemula" class="btn-primary text-sm px-4 py-2" target="_blank" rel="noopener noreferrer">View Repo</a>
-                        <button class="text-purple-400 hover:underline text-sm font-medium ml-4 view-details-btn">View Details</button>
+                        <button type="button" class="text-purple-400 hover:underline text-sm font-medium ml-4 view-details-btn">View Details</button>
                     </div>
                 </div>
+
                 <!-- Project Card 3: E-commerce Platform (MERN) -->
                 <div class="card project-card" data-project-id="ecommerce-platform">
-                    <img src="./assets/synapse.jpg"alt="MERN E-commerce Platform" class="rounded-lg mb-4 w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x200/2a2a4a/ffffff?text=MERN+E-commerce';">
+                    <img src="./assets/synapse.jpg" alt="Synapse.AI SAAS Platform" class="rounded-lg mb-4 w-full h-48 object-cover" 
+                         onerror="this.onerror=null; this.src='https://placehold.co/400x200/2a2a4a/ffffff?text=Synapse.AI+Project';">
                     <h3 class="text-2xl font-semibold mb-2 text-gray-100">Synapse.AI</h3>
                     <p class="text-gray-300 mb-4 line-clamp-3">Developed a scalable SAAS platform using the MERN stack (MongoDB, Express, React, Node). Implemented secure authentication, payment integration, and a responsive UI.</p>
                     <div class="flex flex-wrap gap-2 mb-4">
@@ -627,7 +705,7 @@
                     </div>
                     <div class="flex justify-between items-center mt-auto pt-4">
                         <a href="https://github.com/Akshayvemula" class="btn-primary text-sm px-4 py-2" target="_blank" rel="noopener noreferrer">View Repo</a>
-                        <button class="text-purple-400 hover:underline text-sm font-medium ml-4 view-details-btn">View Details</button>
+                        <button type="button" class="text-purple-400 hover:underline text-sm font-medium ml-4 view-details-btn">View Details</button>
                     </div>
                 </div>
             </div>
@@ -640,6 +718,36 @@
             <h2 class="section-title">Education</h2>
             <div id="education-timeline" class="relative">
                 <!-- Education timeline items will be dynamically loaded here -->
+                <!-- ENHANCEMENT: Added fallback for no-JS environments -->
+                <noscript>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content card">
+                            <h3 class="text-2xl font-semibold mb-1 text-gray-100">JYOTHISHMATHI INSTITUTE OF TECHNOLOGY & SCIENCE</h3>
+                            <p class="text-purple-400 font-medium">B.TECH, CSE(AIML)</p>
+                            <p class="text-gray-400 text-sm mt-1 mb-3">Karimnagar | 2021-2025</p>
+                            <p class="text-gray-400 text-sm mt-3 font-code">Cumulative GPA: 6.70</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content card">
+                            <h3 class="text-2xl font-semibold mb-1 text-gray-100">ALPHORES JUNIOR COLLEGE</h3>
+                            <p class="text-purple-400 font-medium">Intermediate</p>
+                            <p class="text-gray-400 text-sm mt-1 mb-3">Karimnagar | 2019-2021</p>
+                            <p class="text-gray-400 text-sm mt-3 font-code">Cumulative GPA: 7.42</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content card">
+                            <h3 class="text-2xl font-semibold mb-1 text-gray-100">KERALA ENGLISH MEDIUM HIGH SCHOOL</h3>
+                            <p class="text-purple-400 font-medium">High School</p>
+                            <p class="text-gray-400 text-sm mt-1 mb-3">Dharmapuri | 2018-2019</p>
+                            <p class="text-gray-400 text-sm mt-3 font-code">Cumulative GPA: 9.2</p>
+                        </div>
+                    </div>
+                </noscript>
             </div>
         </div>
     </section>
@@ -649,12 +757,13 @@
         <div class="container">
             <h2 class="section-title">Certifications</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-                <div class="card certification-card block cursor-pointer" data-certification-id="cpp-programming"><h3 class="text-xl font-semibold mb-2 text-gray-100">C++ Programming</h3><p class="text-gray-300">By UDEMY</p></div>
-                <div class="card certification-card block cursor-pointer" data-certification-id="web-development"><h3 class="text-xl font-semibold mb-2 text-gray-100">Web Development</h3><p class="text-gray-300">By UDEMY</p></div>
-                <div class="card certification-card block cursor-pointer" data-certification-id="python-programming"><h3 class="text-xl font-semibold mb-2 text-gray-100">Python Programming</h3><p class="text-gray-300">By UDEMY</p></div>
-                <div class="card certification-card block cursor-pointer" data-certification-id="cyber-security"><h3 class="text-xl font-semibold mb-2 text-gray-100">Cyber Security</h3><p class="text-gray-300">By CISCO</p></div>
-                <div class="card certification-card block cursor-pointer" data-certification-id="data-analytics"><h3 class="text-xl font-semibold mb-2 text-gray-100">Data Analytics</h3><p class="text-gray-300">By CISCO</p></div>
-                <div class="card certification-card block cursor-pointer" data-certification-id="genai-data-analytics"><h3 class="text-xl font-semibold mb-2 text-gray-100">GenAI Powered Data Analytics</h3><p class="text-gray-300">By TATA Forage</p></div>
+                <!-- ENHANCEMENT: Changed to <button> for semantics and accessibility -->
+                <button type="button" class="card certification-card block cursor-pointer text-left" data-certification-id="cpp-programming"><h3 class="text-xl font-semibold mb-2 text-gray-100">C++ Programming</h3><p class="text-gray-300">By UDEMY</p></button>
+                <button type="button" class="card certification-card block cursor-pointer text-left" data-certification-id="web-development"><h3 class="text-xl font-semibold mb-2 text-gray-100">Web Development</h3><p class="text-gray-300">By UDEMY</p></button>
+                <button type="button" class="card certification-card block cursor-pointer text-left" data-certification-id="python-programming"><h3 class="text-xl font-semibold mb-2 text-gray-100">Python Programming</h3><p class="text-gray-300">By UDEMY</p></button>
+                <button type="button" class="card certification-card block cursor-pointer text-left" data-certification-id="cyber-security"><h3 class="text-xl font-semibold mb-2 text-gray-100">Cyber Security</h3><p class="text-gray-300">By CISCO</p></button>
+                <button type="button" class="card certification-card block cursor-pointer text-left" data-certification-id="data-analytics"><h3 class="text-xl font-semibold mb-2 text-gray-100">Data Analytics</h3><p class="text-gray-300">By CISCO</p></button>
+                <button type="button" class="card certification-card block cursor-pointer text-left" data-certification-id="genai-data-analytics"><h3 class="text-xl font-semibold mb-2 text-gray-100">GenAI Powered Data Analytics</h3><p class="text-gray-300">By TATA Forage</p></button>
             </div>
         </div>
     </section>
@@ -670,15 +779,18 @@
                 <form id="contactForm" action="https://formspree.io/f/xanbbqwo" method="POST" class="contact-form text-left">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div>
+                            <!-- Accessibility: Linked label to input -->
                             <label for="name" class="sr-only">Your Name</label>
-                            <input type="text" id="name" name="name" placeholder="Your Name" class="form-input" required aria-required="true">
+                            <input type="text" id="name" name="name" placeholder="Your Name" class="form-input" required aria-required="true" autocomplete="name">
                         </div>
                         <div>
+                            <!-- Accessibility: Linked label to input -->
                             <label for="email" class="sr-only">Your Email</label>
-                            <input type="email" id="email" name="email" placeholder="Your Email" class="form-input" required aria-required="true">
+                            <input type="email" id="email" name="email" placeholder="Your Email" class="form-input" required aria-required="true" autocomplete="email">
                         </div>
                     </div>
                     <div class="mb-6">
+                        <!-- Accessibility: Linked label to input -->
                         <label for="message" class="sr-only">Your Message</label>
                         <textarea id="message" name="message" placeholder="Your Message" class="form-textarea" required aria-required="true"></textarea>
                     </div>
@@ -686,6 +798,7 @@
                         <button type="submit" class="btn-primary w-full md:w-auto">Send Message</button>
                     </div>
                 </form>
+                
                 <!-- Form Status Messages -->
                 <div id="form-success-message" role="alert" aria-live="assertive">
                     <p>Thank you for your message! I will get back to you shortly.</p>
@@ -701,31 +814,34 @@
     <footer class="bg-gray-900 text-gray-400 py-8 text-center">
         <div class="container">
              <div class="flex justify-center space-x-6 mb-6">
-                <a href="https://www.linkedin.com/in/akshay-vemula-111910250" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition-colors duration-300 transform hover:scale-125" aria-label="LinkedIn Profile">
-                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                </a>
-                <a href="https://github.com/Akshayvemula" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition-colors duration-300 transform hover:scale-125" aria-label="GitHub Profile">
-                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.08-.731.084-.716.084-.716 1.192.085 1.816 1.229 1.816 1.229 1.062 1.815 2.781 1.299 3.45.993.108-.775.418-1.299.762-1.594-2.646-.295-5.43-1.321-5.43-5.921 0-1.31.465-2.381 1.236-3.221-.124-.295-.536-1.523.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.003.404 2.293-1.552 3.301-1.23 3.301-1.23.653 1.653.241 2.881.117 3.176.77.84 1.235 1.911 1.235 3.221 0 4.61-2.783 5.624-5.445 5.91-.42.365-.793.947-.793 1.903v2.809c0 .319.192.694.8.576 4.766-1.587 8.205-6.085 8.205-11.385 0-6.627-5.373-12-12-12z"/></svg>
-                </a>
-                <a href="mailto:akshayvemula112@gmail.com" class="text-gray-400 hover:text-purple-400 transition-colors duration-300 transform hover:scale-125" aria-label="Email Akshay Vemula">
-                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.728v15.454h24v-15.454l-12 9.728z"/></svg>
-                </a>
-            </div>
-            <p>&copy; <span id="year"></span> Akshay Vemula. All rights reserved.</p>
+                 <a href="https://www.linkedin.com/in/akshay-vemula-111910250" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition-colors duration-300 transform hover:scale-125" aria-label="LinkedIn Profile">
+                     <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                 </a>
+                 <a href="https://github.com/Akshayvemula" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-400 transition-colors duration-300 transform hover:scale-125" aria-label="GitHub Profile">
+                     <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.08-.731.084-.716.084-.716 1.192.085 1.816 1.229 1.816 1.229 1.062 1.815 2.781 1.299 3.45.993.108-.775.418-1.299.762-1.594-2.646-.295-5.43-1.321-5.43-5.921 0-1.31.465-2.381 1.236-3.221-.124-.295-.536-1.523.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.003.404 2.293-1.552 3.301-1.23 3.301-1.23.653 1.653.241 2.881.117 3.176.77.84 1.235 1.911 1.235 3.221 0 4.61-2.783 5.624-5.445 5.91-.42.365-.793.947-.793 1.903v2.809c0 .319.192.694.8.576 4.766-1.587 8.205-6.085 8.205-11.385 0-6.627-5.373-12-12-12z"/></svg>
+                 </a>
+                 <a href="mailto:akshayvemula112@gmail.com" class="text-gray-400 hover:text-purple-400 transition-colors duration-300 transform hover:scale-125" aria-label="Email Akshay Vemula">
+                     <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.728v15.454h24v-15.454l-12 9.728z"/></svg>
+                 </a>
+             </div>
+            <p>&copy; <span id="year">2025</span> Akshay Vemula. All rights reserved.</p> <!-- JS will update year -->
             <p class="text-sm mt-2">Designed and Developed with Passion</p>
         </div>
     </footer>
 
     <!-- Project Detail Modal -->
-    <div id="projectModal" class="project-modal" role="dialog" aria-modal="true" aria-labelledby="modalProjectTitle">
+    <!-- FIX: Corrected aria-labelledby to match the h3 ID -->
+    <div id="projectModal" class="project-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true" style="display: none;">
         <div class="project-modal-content">
-            <span class="close-button" id="closeProjectModal" aria-label="Close Project Details">&times;</span>
+            <button type="button" class="close-button" id="closeProjectModal" aria-label="Close Project Details">&times;</button>
             <h3 class="text-3xl font-bold text-gray-100 mb-4" id="modalTitle"></h3>
-            <!-- Added onerror for modal image -->
-            <img src="" alt="Project or Certification Media" id="modalMedia" class="rounded-lg mb-4 w-full h-auto max-h-[70vh] object-contain" onerror="this.onerror=null;this.src='https://placehold.co/800x450/6a0572/ffffff?text=Image+Not+Found';">
+            
+            <img src="" alt="Project or Certification Media" id="modalMedia" class="rounded-lg mb-4 w-full h-auto max-h-[60vh] object-contain" 
+                 onerror="this.onerror=null; this.src='https://placehold.co/800x450/6a0572/ffffff?text=Image+Not+Found';">
+            
             <p class="text-gray-300 mb-4" id="modalDescription"></p>
             <div class="flex flex-wrap gap-2 mb-4" id="modalTags"></div>
-            <a href="#" class="btn-primary" id="modalActionLink" target="_blank" rel="noopener noreferrer"></a>
+            <a href="#" class="btn-primary" id="modalActionLink" target="_blank" rel="noopener noreferrer" style="display: none;"></a>
         </div>
     </div>
 
@@ -738,166 +854,138 @@
             const ctx = canvas.getContext('2d');
             let particles = [];
             const particleCount = 50;
+            let animationFrameId; // To manage animation frame
 
-            /**
-             * Resizes the canvas to match the window dimensions.
-             */
             function resizeCanvas() {
                 canvas.width = window.innerWidth;
                 canvas.height = canvas.parentElement.offsetHeight;
             }
 
-            /**
-             * Represents a single particle in the hero canvas animation.
-             */
             class Particle {
                 constructor() {
                     this.x = Math.random() * canvas.width;
                     this.y = Math.random() * canvas.height;
                     this.radius = Math.random() * 2 + 0.5;
                     this.color = `rgba(142, 45, 226, ${Math.random() * 0.5 + 0.1})`;
-                    this.vx = (Math.random() - 0.5) * 0.5; // Velocity in x-direction
-                    this.vy = (Math.random() - 0.5) * 0.5; // Velocity in y-direction
+                    this.vx = (Math.random() - 0.5) * 0.5;
+                    this.vy = (Math.random() - 0.5) * 0.5;
                 }
-
-                /**
-                 * Draws the particle on the canvas.
-                 */
                 draw() {
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                     ctx.fillStyle = this.color;
                     ctx.fill();
                 }
-
-                /**
-                 * Updates the particle's position and handles boundary collisions.
-                 */
                 update() {
                     this.x += this.vx;
                     this.y += this.vy;
-                    // Reverse velocity if particle hits canvas edges
                     if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
                     if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
                 }
             }
 
-            /**
-             * Creates an array of particles.
-             */
             function createParticles() {
-                particles = []; // Clear existing particles
+                particles = [];
                 for (let i = 0; i < particleCount; i++) {
                     particles.push(new Particle());
                 }
             }
 
-            /**
-             * Animation loop for particles.
-             */
             function animateParticles() {
-                requestAnimationFrame(animateParticles); // Request next frame
-                ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-                particles.forEach(p => { p.update(); p.draw(); }); // Update and draw each particle
+                animationFrameId = requestAnimationFrame(animateParticles);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => { p.update(); p.draw(); });
             }
 
-            // Event listeners for canvas resizing and initialization
-            window.addEventListener('resize', resizeCanvas);
-            resizeCanvas(); // Initial resize
-            createParticles(); // Create particles
-            animateParticles(); // Start animation
+            // ENHANCEMENT: Respects reduced motion preferences
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                window.addEventListener('resize', () => {
+                    resizeCanvas();
+                    createParticles(); // Re-create particles for new size
+                });
+                resizeCanvas();
+                createParticles();
+                animateParticles();
+            } else {
+                // On reduced motion, just draw static particles once
+                resizeCanvas();
+                createParticles();
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => { p.draw(); });
+            }
         }
 
         // Register GSAP plugins
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
         document.addEventListener('DOMContentLoaded', () => {
-            initHeroCanvas(); // Initialize hero canvas animation
+            initHeroCanvas();
             
-            // Set dynamic year in footer
             document.getElementById('year').textContent = new Date().getFullYear();
 
             // --- Smooth Scrolling ---
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
-                    e.preventDefault(); // Prevent default anchor click behavior
+                    e.preventDefault();
                     const targetId = this.getAttribute('href');
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        // Use GSAP ScrollToPlugin for smooth scroll
                         gsap.to(window, {
                             duration: 1,
-                            scrollTo: { y: targetElement, offsetY: 70 }, // Scroll to target with offset for fixed header
+                            // ENHANCEMENT: Increased offset for better spacing
+                            scrollTo: { y: targetElement, offsetY: 90 }, 
                             ease: "power2.inOut"
                         });
                         // Close mobile menu if open
-                        const mobileNavOverlay = document.getElementById('mobileNavOverlay');
-                        if (mobileNavOverlay.classList.contains('active')) {
+                        if (document.getElementById('mobileNavOverlay').classList.contains('active')) {
                             toggleMobileMenu();
                         }
                     }
                 });
             });
 
-            // --- Scroll Reveal Animations (Titles) ---
-            const revealElements = document.querySelectorAll('.section-title'); 
-            revealElements.forEach(el => {
-                // Ensure initial state for title animation is set
-                gsap.set(el, { opacity: 0, y: 30 });
-                gsap.to(el, {
-                    opacity: 1,
-                    y: 0,
-                    duration: 1,
-                    ease: "power2.out",
-                    scrollTrigger: {
-                        trigger: el,
-                        start: "top 85%", 
-                        toggleActions: "play none none none",
-                    }
-                });
-            });
+            // --- Scroll Reveal Animations ---
 
-            // Apply GSAP animation to .card elements (excluding timeline-content, which is handled separately)
-            document.querySelectorAll('.card:not(.timeline-content)').forEach(card => {
-                gsap.set(card, { opacity: 0, y: 30 }); // Initial state
-                gsap.to(card, {
-                    opacity: 1,
-                    y: 0,
-                    duration: 1,
-                    ease: "power2.out",
-                    scrollTrigger: {
-                        trigger: card,
-                        start: "top 85%",
-                        toggleActions: "play none none none",
-                    }
-                });
-            });
-
-            // Animation for the underline of section titles
-            document.querySelectorAll('.section-title').forEach(title => {
+            // FIX: Simplified and corrected title animation
+            gsap.utils.toArray('.section-title').forEach(title => {
                 gsap.to(title, {
-                    '--title-scaleX': 1, // Custom property for pseudo-element animation
+                    opacity: 1,
+                    y: 0,
                     duration: 0.8,
                     ease: "power2.out",
                     scrollTrigger: {
                         trigger: title,
                         start: "top 85%",
-                        toggleActions: "play none none none",
-                    },
-                    onStart: () => {
-                        // Manually trigger the pseudo-element animation (since GSAP doesn't directly animate pseudo-elements, we rely on the title element's ScrollTrigger)
-                        title.style.setProperty('--title-scaleX', 0); // Reset for first time trigger
-                        gsap.to(title.querySelector('::after'), { scaleX: 1, duration: 0.8 }); // This is conceptual, CSS handles the initial state/transition
+                        once: true,
+                        // This class triggers the CSS transition for the ::after
+                        onEnter: () => title.classList.add('is-visible')
                     }
                 });
             });
-            
+
+            // Animate Cards
+            gsap.utils.toArray('.card:not(.timeline-content)').forEach(card => {
+                gsap.fromTo(card, 
+                    { opacity: 0, y: 30 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: card,
+                            start: "top 85%",
+                            once: true // Performance enhancement
+                        }
+                    }
+                );
+            });
 
             // --- Hero Section Animations ---
             const heroTimeline = gsap.timeline({ defaults: { ease: "power3.out" } });
-            heroTimeline.from(".hero-title", { duration: 1.2, y: 50, opacity: 0 })
-                        .from("#typed-text", { duration: 1.2, y: 50, opacity: 0 }, "-=0.8")
-                        .from(".hero-buttons a", { duration: 1, y: 30, opacity: 0, stagger: 0.2 }, "-=0.7");
+            heroTimeline.from(".hero-title", { duration: 1.0, y: 50, opacity: 0, delay: 0.2 })
+                        .from("#typed-text", { duration: 1.0, y: 50, opacity: 0 }, "-=0.7")
+                        .from(".hero-buttons a", { duration: 0.8, y: 30, opacity: 0, stagger: 0.2 }, "-=0.6");
 
             // --- Typewriter Effect for Hero Subtitle ---
             const typedTextElement = document.getElementById('typed-text');
@@ -909,48 +997,61 @@
             let phraseIndex = 0;
             let charIndex = 0;
             let isDeleting = false;
-            const typingSpeed = 100;
-            const deletingSpeed = 50;
-            const pauseBeforeDelete = 1500;
-            const pauseBeforeType = 500;
+            let typeTimeout;
 
             function typeWriter() {
                 const currentPhrase = phrases[phraseIndex];
+                let text = '';
+                
                 if (isDeleting) {
-                    typedTextElement.textContent = currentPhrase.substring(0, charIndex--);
+                    text = currentPhrase.substring(0, charIndex--);
                 } else {
-                    typedTextElement.textContent = currentPhrase.substring(0, charIndex++);
+                    text = currentPhrase.substring(0, charIndex++);
                 }
+                typedTextElement.textContent = text;
 
-                let typeSpeed = isDeleting ? deletingSpeed : typingSpeed;
+                let typeSpeed = isDeleting ? 50 : 100;
 
                 if (!isDeleting && charIndex === currentPhrase.length + 1) {
-                    typeSpeed = pauseBeforeDelete;
+                    typeSpeed = 1500; // Pause before deleting
                     isDeleting = true;
                 } else if (isDeleting && charIndex === 0) {
                     isDeleting = false;
                     phraseIndex = (phraseIndex + 1) % phrases.length;
-                    typeSpeed = pauseBeforeType;
+                    typeSpeed = 500; // Pause before typing
                 }
-
-                setTimeout(typeWriter, typeSpeed);
+                
+                clearTimeout(typeTimeout); // Clear previous timeout
+                typeTimeout = setTimeout(typeWriter, typeSpeed);
             }
+            // ENHANCEMENT: Blinking cursor interval
+            setInterval(() => {
+                typedTextElement.style.borderRightColor = 
+                    typedTextElement.style.borderRightColor === 'transparent' ? 'var(--text-light)' : 'transparent';
+            }, 400);
 
-            // Start the typewriter effect after initial hero animation
             heroTimeline.call(typeWriter, null, "-=0.5");
 
-            // --- Hamburger Menu Functionality ---
+            // --- Hamburger Menu Functionality (with Accessibility) ---
             const hamburgerMenu = document.getElementById('hamburgerMenu');
             const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+            let isMenuOpen = false;
             
-            /**
-             * Toggles the mobile navigation menu's visibility and animation.
-             */
             const toggleMobileMenu = () => {
-                const isActive = hamburgerMenu.classList.toggle('active');
-                mobileNavOverlay.classList.toggle('active', isActive);
-                hamburgerMenu.setAttribute('aria-expanded', isActive);
-                document.body.style.overflow = isActive ? 'hidden' : '';
+                isMenuOpen = !isMenuOpen;
+                hamburgerMenu.classList.toggle('active', isMenuOpen);
+                mobileNavOverlay.classList.toggle('active', isMenuOpen);
+                hamburgerMenu.setAttribute('aria-expanded', isMenuOpen);
+                document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+                
+                if (isMenuOpen) {
+                    mobileNavOverlay.style.visibility = 'visible';
+                } else {
+                    // Let transition finish before hiding
+                    setTimeout(() => {
+                        if (!isMenuOpen) mobileNavOverlay.style.visibility = 'hidden';
+                    }, 300);
+                }
             };
             hamburgerMenu.addEventListener('click', toggleMobileMenu);
 
@@ -958,12 +1059,12 @@
             document.querySelectorAll('.skill-bar-fill').forEach(bar => {
                 gsap.to(bar, {
                     width: bar.dataset.skillLevel,
-                    duration: 1.8,
+                    duration: 1.5,
                     ease: "power2.out",
                     scrollTrigger: {
                         trigger: bar.closest('.card'),
                         start: "top 80%",
-                        toggleActions: "play none none none",
+                        once: true // Performance enhancement
                     }
                 });
             });
@@ -971,8 +1072,17 @@
             // --- Project/Certification Modal Logic and Data ---
             const projectModal = document.getElementById('projectModal');
             const closeProjectModalBtn = document.getElementById('closeProjectModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalMedia = document.getElementById('modalMedia');
+            const modalDescription = document.getElementById('modalDescription');
+            const modalTags = document.getElementById('modalTags');
+            const modalActionLink = document.getElementById('modalActionLink');
+            let previouslyFocusedElement = null;
             
-            // Data for projects, certifications, and education to populate the modal
+            // ENHANCEMENT: Centralized placeholder function
+            const PLACEHOLDER_IMG_URL = (text) => `https://placehold.co/800x450/6a0572/ffffff?text=${encodeURIComponent(text)}`;
+
+            // Data for projects, certifications, and education
             const modalData = {
                 projects: {
                     'blockchain-project': {
@@ -980,53 +1090,64 @@
                         image: './assets/blockchain.jpeg',
                         description: 'This decentralized platform revolutionized fundraising by ensuring **transparency and tamper-proof transactions**. Leveraging smart contracts, it automated funding distribution and enhanced security through encrypted authentication. Key learnings included deep dives into blockchain integration, real-time data tracking, and designing secure, scalable web architectures.',
                         tags: ['Blockchain', 'Smart Contracts', 'Web3', 'Security', 'Decentralized'],
-                        link: 'https://github.com/Akshayvemula'
+                        link: 'https://github.com/Akshayvemula',
+                        linkText: 'View Repo'
                     },
                     'monkeypox-project': {
                         title: 'Monkey Pox Detection using Deep Learning',
                         image: './assets/deeplearning.jpeg',
                         description: 'Built a deep learning model for automatic Monkeypox detection from medical images. Achieved **high accuracy (90%+)** through an optimized Convolutional Neural Network (CNN) architecture, advanced image preprocessing techniques, and data augmentation strategies. This project provided invaluable experience in medical imaging analysis, model tuning, and deploying deep learning solutions for critical health applications.',
                         tags: ['Deep Learning', 'CNN', 'Medical Imaging', 'AI/ML', 'Image Processing'],
-                        link: 'https://github.com/Akshayvemula'
+                        link: 'https://github.com/Akshayvemula',
+                        linkText: 'View Repo'
                     },
                     'ecommerce-platform': {
-                        title: 'Full Stack SAAS Platform (MERN)',
-                        image: 'https://placehold.co/800x450/2a2a4a/ffffff?text=MERN+E-commerce',
-                        description: 'Developed a robust and scalable SAAS application from scratch using the **MERN stack**. Key features included  user authentication,  payment gateway integration, secure user dashboards, and an admin panel for product management. Focused on modular design and state management for performance.',
+                        title: 'Full Stack SAAS Platform (Synapse.AI)',
+                        // FIX: Point to local image instead of placeholder
+                        image: './assets/synapse.jpg', 
+                        description: 'Developed a robust and scalable SAAS application from scratch using the **MERN stack**. Key features included user authentication, payment gateway integration, secure user dashboards, and an admin panel for product management. Focused on modular design and state management for performance.',
                         tags: ['MERN Stack', 'React', 'Node.js', 'Express', 'MongoDB', 'Authentication'],
-                        link: 'https://github.com/Akshayvemula'
+                        link: 'https://github.com/Akshayvemula',
+                        linkText: 'View Repo'
                     }
                 },
                 certifications: {
                     'cpp-programming': { 
                         title: 'C++ Programming (UDEMY)', 
-                        image:  './assets/cpp.jpg',
-                        description: 'Certified proficiency in core C++ concepts, including object-oriented programming, standard template library (STL), and effective memory management practices. Fundamental preparation for competitive programming.'
+                        image: './assets/cpp.jpg',
+                        description: 'Certified proficiency in core C++ concepts, including object-oriented programming, standard template library (STL), and effective memory management practices. Fundamental preparation for competitive programming.',
+                        tags: ['C++', 'OOP', 'STL', 'Udemy']
                     },
                     'web-development': { 
                         title: 'Web Development (UDEMY)', 
                         image: './assets/webdev.jpg',
-                        description: 'Comprehensive knowledge of front-end and basic back-end development, covering HTML5, CSS3, JavaScript (ES6+), React.js, and API integration for building modern, responsive web applications.'
+                        description: 'Comprehensive knowledge of front-end and basic back-end development, covering HTML5, CSS3, JavaScript (ES6+), React.js, and API integration for building modern, responsive web applications.',
+                        tags: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Udemy']
                     },
                     'python-programming': { 
                         title: 'Python Programming (UDEMY)', 
                         image: './assets/python.jpg',
-                        description: 'Mastery of Python programming language fundamentals, covering data structures, algorithmic scripting, and application in data analysis and machine learning libraries like Pandas and NumPy.'
+                        description: 'Mastery of Python programming language fundamentals, covering data structures, algorithmic scripting, and application in data analysis and machine learning libraries like Pandas and NumPy.',
+                        tags: ['Python', 'Data Structures', 'Pandas', 'NumPy', 'Udemy']
                     },
                     'cyber-security': { 
                         title: 'Cyber Security (CISCO)', 
                         image: './assets/cyber.jpg',
-                        description: 'Completed foundational training in network security principles, threat detection, common vulnerabilities, and defensive strategies to protect systems and data against cyber threats.'
+                        description: 'Completed foundational training in network security principles, threat detection, common vulnerabilities, and defensive strategies to protect systems and data against cyber threats.',
+                        tags: ['Cybersecurity', 'Network Security', 'Cisco']
                     },
                     'data-analytics': { 
                         title: 'Data Analytics (CISCO)', 
-                        image:'./assets/data.jpg',
-                        description: 'Trained in data collection, cleaning, visualization, and interpretation techniques, with a focus on using tools like Python and SQL for deriving actionable insights from complex datasets.'
+                        // FIX: Corrected broken image path (removed extra quotes)
+                        image: './assets/data.jpg',
+                        description: 'Trained in data collection, cleaning, visualization, and interpretation techniques, with a focus on using tools like Python and SQL for deriving actionable insights from complex datasets.',
+                        tags: ['Data Analysis', 'Python', 'SQL', 'Cisco']
                     },
                     'genai-data-analytics': { 
                         title: 'GenAI Powered Data Analytics (TATA Forage)', 
                         image: './assets/tata.jpg',
-                        description: 'Explored the integration of Generative AI tools and large language models (LLMs) into the data analysis workflow to accelerate reporting, automate insight generation, and enhance data storytelling.'
+                        description: 'Explored the integration of Generative AI tools and large language models (LLMs) into the data analysis workflow to accelerate reporting, automate insight generation, and enhance data storytelling.',
+                        tags: ['Generative AI', 'LLM', 'Data Analysis', 'Forage']
                     }
                 },
                 education: {
@@ -1044,7 +1165,7 @@
                         location: 'Karimnagar',
                         gpa: '7.42',
                         years: '2019-2021',
-                        tags: ['Mathematics', 'Physics', 'Chemistry', 'Analytical Skills']
+                        tags: ['Mathematics', 'Physics', 'Chemistry']
                     },
                     'kerala-school': {
                         title: 'High School',
@@ -1052,80 +1173,84 @@
                         location: 'Dharmapuri',
                         gpa: '9.2',
                         years: '2018-2019',
-                        tags: ['Academic Excellence', 'Leadership', 'Teamwork', 'Communication']
+                        tags: ['Academic Excellence', 'Leadership', 'Teamwork']
                     }
                 }
             };
-
+            
             /**
-             * Opens the project/certification modal with provided data.
-             * @param {Object} data - The data object containing title, image, description, tags, and link.
-             * @param {string} type - The type of data ('project', 'certification').
+             * Opens the project/certification modal.
+             * @param {Object} data - The data object.
              */
-            const openModal = (data, type) => {
-                document.getElementById('modalTitle').textContent = data.title;
-                document.getElementById('modalMedia').src = data.image;
-                document.getElementById('modalMedia').onerror = function() {
-                    this.onerror=null;
-                    this.src='https://placehold.co/800x450/6a0572/ffffff?text=Image+Not+Found';
+            const openModal = (data) => {
+                previouslyFocusedElement = document.activeElement; // Save focus
+                
+                modalTitle.textContent = data.title;
+                modalMedia.src = data.image || PLACEHOLDER_IMG_URL(data.title);
+                modalMedia.alt = data.title + " preview";
+                
+                modalMedia.onerror = function() { // Robust onerror
+                    this.onerror = null;
+                    this.src = PLACEHOLDER_IMG_URL(data.title);
                 };
 
-                const descriptionEl = document.getElementById('modalDescription');
-                const tagsEl = document.getElementById('modalTags');
-                const linkEl = document.getElementById('modalActionLink');
-
-                // Populate description
-                descriptionEl.innerHTML = data.description || '';
-                descriptionEl.style.display = data.description ? 'block' : 'none';
+                modalDescription.innerHTML = data.description || '';
+                modalDescription.style.display = data.description ? 'block' : 'none';
                 
-                // Populate link/button
                 if (data.link) {
-                    linkEl.href = data.link;
-                    linkEl.textContent = type === 'project' ? 'View Project/Repo' : 'View Certificate';
-                    linkEl.style.display = 'inline-block';
+                    modalActionLink.href = data.link;
+                    modalActionLink.textContent = data.linkText || 'View Details';
+                    modalActionLink.style.display = 'inline-block';
                 } else {
-                    linkEl.style.display = 'none';
+                    modalActionLink.style.display = 'none';
                 }
                 
-                // Populate tags
-                tagsEl.innerHTML = '';
+                modalTags.innerHTML = '';
                 if (data.tags && data.tags.length > 0) {
                     data.tags.forEach(tag => {
                         const span = document.createElement('span');
                         span.className = 'skill-tag';
                         span.textContent = tag;
-                        tagsEl.appendChild(span);
+                        modalTags.appendChild(span);
                     });
-                    tagsEl.style.display = 'flex';
+                    modalTags.style.display = 'flex';
                 } else {
-                    tagsEl.style.display = 'none';
+                    modalTags.style.display = 'none';
                 }
 
-                projectModal.classList.add('active'); // Use class for display and animation
-                projectModal.style.display = 'flex'; 
+                projectModal.style.display = 'flex';
+                projectModal.setAttribute('aria-hidden', 'false');
                 document.body.style.overflow = 'hidden';
+                
+                projectModal.classList.add('active'); // Triggers CSS animation
+                closeProjectModalBtn.focus(); // Set focus
             };
 
             /**
              * Closes the project/certification modal.
              */
             const closeModal = () => {
-                // GSAP animation for modal content exit
-                gsap.to(projectModal.querySelector('.project-modal-content'), {
-                    opacity: 0, y: 50, scale: 0.9, duration: 0.4, ease: "power2.in",
-                    onComplete: () => {
-                        projectModal.style.display = 'none';
-                        projectModal.classList.remove('active');
-                        document.body.style.overflow = '';
+                projectModal.classList.remove('active'); // Triggers exit animation
+                
+                // Wait for animation to finish before hiding
+                setTimeout(() => {
+                    projectModal.style.display = 'none';
+                    projectModal.setAttribute('aria-hidden', 'true');
+                    document.body.style.overflow = '';
+                    
+                    if (previouslyFocusedElement) {
+                        previouslyFocusedElement.focus(); // Restore focus
                     }
-                });
+                }, 500); // Matches .project-modal-content transition
             };
 
             // Event listeners for opening project modals
             document.querySelectorAll('.project-card .view-details-btn').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const projectId = e.target.closest('.project-card').dataset.projectId;
-                    openModal(modalData.projects[projectId], 'project');
+                    if (modalData.projects[projectId]) {
+                        openModal(modalData.projects[projectId]);
+                    }
                 });
             });
 
@@ -1133,18 +1258,19 @@
             document.querySelectorAll('.certification-card').forEach(card => {
                 card.addEventListener('click', (e) => {
                     const certId = e.target.closest('.certification-card').dataset.certificationId;
-                    openModal(modalData.certifications[certId], 'certification');
+                    if (modalData.certifications[certId]) {
+                        openModal(modalData.certifications[certId]);
+                    }
                 });
             });
 
             // --- Dynamic Education Section Rendering (Timeline) ---
             const educationTimelineContainer = document.getElementById('education-timeline');
 
-            /**
-             * Renders the education timeline dynamically from modalData.education.
-             */
             function renderEducationTimeline() {
-                educationTimelineContainer.innerHTML = ''; 
+                if (!educationTimelineContainer) return; // Guard clause
+                
+                educationTimelineContainer.innerHTML = '';
                 const educationKeys = Object.keys(modalData.education); 
 
                 educationKeys.forEach(eduId => {
@@ -1153,13 +1279,13 @@
                     timelineItemDiv.className = 'timeline-item';
                     timelineItemDiv.dataset.educationId = eduId;
 
+                    // Remove description from here, it's not in the data object
                     timelineItemDiv.innerHTML = `
                         <div class="timeline-dot"></div>
                         <div class="timeline-content card">
                             <h3 class="text-2xl font-semibold mb-1 text-gray-100">${edu.institution}</h3>
                             <p class="text-purple-400 font-medium">${edu.title}</p>
                             <p class="text-gray-400 text-sm mt-1 mb-3">${edu.location} | ${edu.years}</p>
-                            <p class="text-gray-300 text-base">${edu.description}</p>
                             ${edu.gpa ? `<p class="text-gray-400 text-sm mt-3 font-code">Cumulative GPA: ${edu.gpa}</p>` : ''}
                             ${edu.tags && edu.tags.length > 0 ? `
                                 <div class="flex flex-wrap gap-2 mt-3">
@@ -1170,30 +1296,35 @@
                     `;
                     educationTimelineContainer.appendChild(timelineItemDiv);
 
-                    // Apply GSAP scroll reveal animation to the dynamically added timeline item
-                    gsap.fromTo(timelineItemDiv, { opacity: 0, y: 30 }, {
-                        opacity: 1,
-                        y: 0,
-                        duration: 1,
-                        ease: "power2.out",
-                        scrollTrigger: {
-                            trigger: timelineItemDiv,
-                            start: "top 85%",
-                            toggleActions: "play none none none",
+                    // Apply GSAP scroll reveal animation
+                    gsap.fromTo(timelineItemDiv, 
+                        { opacity: 0, y: 30 }, 
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.8,
+                            ease: "power2.out",
+                            scrollTrigger: {
+                                trigger: timelineItemDiv,
+                                start: "top 85%",
+                                once: true
+                            }
                         }
-                    });
+                    );
                 });
             }
-
-            // Call renderEducationTimeline on DOMContentLoaded
             renderEducationTimeline();
-
 
             // Event listeners for closing the modal
             closeProjectModalBtn.addEventListener('click', closeModal);
-            // Close modal if clicking outside the content
             projectModal.addEventListener('click', (e) => {
                 if (e.target === projectModal) {
+                    closeModal();
+                }
+            });
+            // Accessibility: Close modal on 'Escape' key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && projectModal.classList.contains('active')) {
                     closeModal();
                 }
             });
@@ -1213,7 +1344,6 @@
                 submitButton.disabled = true;
                 submitButton.textContent = 'Sending...';
 
-                // Hide messages before sending
                 gsap.to([successMessage, errorMessage], { opacity: 0, duration: 0.3, onComplete: () => {
                     successMessage.style.display = 'none';
                     errorMessage.style.display = 'none';
@@ -1223,32 +1353,31 @@
                     const response = await fetch(this.action, {
                         method: 'POST',
                         body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
+                        headers: { 'Accept': 'application/json' }
                     });
 
                     if (response.ok) {
                         successMessage.style.display = 'block';
                         gsap.fromTo(successMessage, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
                         contactForm.reset();
-                        setTimeout(() => {
-                            gsap.to(successMessage, { opacity: 0, duration: 0.5, onComplete: () => successMessage.style.display = 'none' });
-                        }, 5000); 
                     } else {
-                        const errorData = await response.json();
-                        throw new Error(errorData.error || 'Network response was not ok.');
+                        throw new Error('Network response was not ok.');
                     }
                 } catch (error) {
                     console.error('Form submission error:', error);
                     errorMessage.style.display = 'block';
                     gsap.fromTo(errorMessage, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
-                    setTimeout(() => {
-                        gsap.to(errorMessage, { opacity: 0, duration: 0.5, onComplete: () => errorMessage.style.display = 'none' });
-                    }, 5000);
                 } finally {
                     submitButton.disabled = false;
                     submitButton.textContent = originalButtonText;
+                    
+                    // Auto-hide messages after 5 seconds
+                    setTimeout(() => {
+                        gsap.to([successMessage, errorMessage], { opacity: 0, duration: 0.5, onComplete: () => {
+                            successMessage.style.display = 'none';
+                            errorMessage.style.display = 'none';
+                        }});
+                    }, 5000);
                 }
             });
         });
