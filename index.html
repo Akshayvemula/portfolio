@@ -235,6 +235,7 @@
         }
         /* Blinking cursor for typewriter */
         #typed-text {
+            /* This ID is now on the span, fixing the alignment */
             border-right: 2px solid var(--text-light);
             transition: border-color 0.1s;
         }
@@ -551,7 +552,10 @@
         <div class="container relative z-10 text-white text-center hero-content">
             <h1 class="text-6xl md:text-7xl font-extrabold mb-4 hero-title">Hi, I'm <span class="text-purple-400">Akshay Vemula</span>.</h1>
             <!-- Accessibility: Added aria-label -->
-            <p class="text-2xl md:text-3xl font-light mb-8 hero-subtitle" id="typed-text" aria-label="I am a: MERN Stack Developer, AI/ML Enthusiast, and Software Engineer"></p>
+            <!-- FIX: Wrapped typewriter text in a span to fix cursor alignment -->
+            <p class="text-2xl md:text-3xl font-light mb-8 hero-subtitle" id="typed-text-parent" aria-label="I am a: MERN Stack Developer, AI/ML Enthusiast, and Passionate Problem Solver">
+                <span id="typed-text" class="inline"></span>
+            </p>
             <div class="space-x-4 hero-buttons">
                 <a href="#projects" class="btn-primary">View My Work</a>
                 <a href="#contact" class="btn-primary">Get in Touch</a>
@@ -984,11 +988,12 @@
             // --- Hero Section Animations ---
             const heroTimeline = gsap.timeline({ defaults: { ease: "power3.out" } });
             heroTimeline.from(".hero-title", { duration: 1.0, y: 50, opacity: 0, delay: 0.2 })
-                        .from("#typed-text", { duration: 1.0, y: 50, opacity: 0 }, "-=0.7")
+                        .from("#typed-text-parent", { duration: 1.0, y: 50, opacity: 0 }, "-=0.7") // Target the parent p
                         .from(".hero-buttons a", { duration: 0.8, y: 30, opacity: 0, stagger: 0.2 }, "-=0.6");
 
             // --- Typewriter Effect for Hero Subtitle ---
-            const typedTextElement = document.getElementById('typed-text');
+            // FIX: This now correctly targets the span
+            const typedTextElement = document.getElementById('typed-text'); 
             const phrases = [
                 "MERN Stack Developer",
                 "AI/ML Enthusiast",
@@ -1008,7 +1013,10 @@
                 } else {
                     text = currentPhrase.substring(0, charIndex++);
                 }
-                typedTextElement.textContent = text;
+                // Check if element exists before setting textContent
+                if (typedTextElement) {
+                    typedTextElement.textContent = text;
+                }
 
                 let typeSpeed = isDeleting ? 50 : 100;
 
@@ -1024,11 +1032,14 @@
                 clearTimeout(typeTimeout); // Clear previous timeout
                 typeTimeout = setTimeout(typeWriter, typeSpeed);
             }
+            
             // ENHANCEMENT: Blinking cursor interval
-            setInterval(() => {
-                typedTextElement.style.borderRightColor = 
-                    typedTextElement.style.borderRightColor === 'transparent' ? 'var(--text-light)' : 'transparent';
-            }, 400);
+            if (typedTextElement) {
+                setInterval(() => {
+                    typedTextElement.style.borderRightColor = 
+                        typedTextElement.style.borderRightColor === 'transparent' ? 'var(--text-light)' : 'transparent';
+                }, 400);
+            }
 
             heroTimeline.call(typeWriter, null, "-=0.5");
 
@@ -1384,3 +1395,4 @@
     </script>
 </body>
 </html>
+
